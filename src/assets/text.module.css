@@ -1,0 +1,39 @@
+.headline {
+   font-size: 3.4rem;
+   line-height: 3.4rem;
+}
+
+.headline2 {
+   font-size: 2.4rem;
+   line-height: 120%;
+}
+
+.headline3 {
+   font-size: 1.8rem;
+   line-height: 2.2rem;
+}
+
+.subheads {
+   font-size: 1.6rem;
+   line-height: 1.6rem;
+}
+
+.text {
+   font-size: 1.6rem;
+   line-height: 1.6rem;
+}
+
+.descriptiveItems {
+   font-size: 1.4rem;
+   line-height: 2rem;
+}
+
+.descriptionText {
+   font-size: 1.4rem;
+   line-height: 2rem;
+}
+
+.helperText {
+   font-size: 1.1rem;
+   line-height: 1.1rem;
+}
