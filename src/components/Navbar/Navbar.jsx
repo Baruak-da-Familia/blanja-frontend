@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styles from "./styles.module.css";
 import ImgWithContainer from "../ImgWithContainer/ImgWithContainer";
 import SearchBar from "../SearchBar/SearchBar";
+import textStyle from "../../assets/img/text.module.css";
 
 const Navbar = (props) => {
 	const inputRef = React.useRef();
