@@ -1,0 +1,26 @@
+.navbar {
+	width: 100vw;
+	height: 100px;
+	display: flex;
+	flex-direction: row;
+	padding-left: 156px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.buttoCcontainer {
+	display: flex;
+	flex-direction: row;
+}
+
+.loginButton {
+	width: 100px;
+	height: 36px;
+	border-radius: 25px;
+}
+
+.signupButton {
+	width: 100px;
+	height: 36px;
+	border-radius: 25px;
+}
