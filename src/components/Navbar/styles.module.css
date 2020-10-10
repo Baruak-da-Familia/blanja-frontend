@@ -6,21 +6,127 @@
 	padding-left: 156px;
 	padding-top: 30px;
 	padding-bottom: 30px;
+	box-shadow: 0px 6px 40px rgba(173, 173, 173, 0.25);
 }
 
-.buttoCcontainer {
+.logo {
+	display: flex;
+	width: 19.9rem;
+	height: 4.4rem;
+	align-self: center;
+	border-width: 0px;
+}
+
+.logoImg {
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+	margin: auto;
+}
+
+.filter {
+	margin-left: 10px;
+	display: flex;
+	width: 4rem;
+	height: 4rem;
+	align-self: center;
+	border-width: 1px;
+	border-radius: 12px;
+	border-color: #9b9b9b;
+	border-style: solid;
+}
+
+.filterImg {
+	height: 1.8rem;
+	width: 2rem;
+	object-fit: cover;
+	margin: auto;
+}
+
+.navList {
 	display: flex;
 	flex-direction: row;
+	width: 16.8rem;
+	justify-content: space-between;
+	margin-left: 41px;
+}
+
+.cart {
+	margin-left: 10px;
+	display: flex;
+	width: 2.4rem;
+	height: 2.4rem;
+	align-self: center;
+	margin-left: 120px;
+}
+
+.cartImg {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+	margin: auto;
+}
+.navIcon {
+	display: flex;
+	width: 2.4rem;
+	height: 2.4rem;
+	align-self: center;
+}
+
+.navIconImg {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+	margin: auto;
+}
+
+.profile {
+	width: 3rem;
+	height: 3rem;
+	border-radius: 50%;
+	display: flex;
+	align-self: center;
+}
+
+.profileImg {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+	margin: auto;
+}
+
+.buttonContainer {
+	display: flex;
+	flex-direction: row;
+	width: 24rem;
+	padding-right: 10;
+	padding-left: 10;
+	justify-content: space-evenly;
+	align-self: center;
+	margin-left: 41px;
 }
 
 .loginButton {
-	width: 100px;
-	height: 36px;
+	width: 10rem;
+	height: 3.6rem;
 	border-radius: 25px;
+	border-width: 0;
+	color: white;
+	outline: 0;
 }
 
 .signupButton {
-	width: 100px;
-	height: 36px;
+	width: 10rem;
+	height: 3.6rem;
 	border-radius: 25px;
+	border-width: 1px;
+	border-color: #9b9b9b;
+	border-style: solid;
+	color: #9b9b9b;
+	outline: 0;
+}
+
+.loginButton:focus,
+.signupButton:focus {
+	outline: none;
 }

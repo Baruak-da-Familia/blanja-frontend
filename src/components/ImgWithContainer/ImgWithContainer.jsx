@@ -1,19 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const ImgWithContainer = (props) => {
+const Img = (props) => {
 	return (
 		<div className={props.containerStyle} onClick={props.onClick}>
-			<img source={props.source} className={props.imgStyle}></img>
+			<img src={props.source} className={props.imgStyle} alt="" />
 		</div>
 	);
 };
 
-ImgWithContainer.propTypes = {
+Img.propTypes = {
 	source: PropTypes.string,
-	containerStyle: PropTypes.object,
+	containerStyle: PropTypes.string,
+	imgStyle: PropTypes.string,
 	onClick: PropTypes.func,
-	imgStyle: PropTypes.object,
 };
 
-export default ImgWithContainer;
+export default Img;
