@@ -1,0 +1,59 @@
+.carouselItem {
+	width: 456px;
+	height: 180px;
+	border-radius: 8px;
+	position: relative;
+	/* display: table; */
+}
+
+.carouselImg {
+	width: 100%;
+	height: 100%;
+	border-radius: 8px;
+	object-fit: cover;
+}
+
+.legendText {
+	align-self: center;
+	font-weight: bold;
+	color: white;
+	top: 50%;
+	left: 50%;
+	/* make sure padding and margin do not disturb the calculation of the center point */
+	padding: 0;
+	margin: 0;
+	/* using centers for the transform */
+	transform-origin: center center;
+	/* calling calc() function for the calculation to move left and up the element from the center point */
+	transform: translateX(calc((100% / 2) * (-1)))
+		translateY(calc((100% / 2) * (-1)));
+	position: absolute;
+}
+
+.arrowRight {
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	background-color: white;
+	z-index: 10;
+	align-self: center;
+	margin-right: 50px;
+}
+
+.arrowLeft {
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	background-color: white;
+	z-index: 10;
+	align-self: center;
+	margin-left: 50px;
+}
+
+.arrowImg {
+	width: 9.88px;
+	height: 16px;
+	object-fit: contain;
+	margin: auto;
+	align-self: center;
+}
