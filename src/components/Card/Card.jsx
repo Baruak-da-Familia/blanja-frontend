@@ -21,6 +21,7 @@ const Rating = (props) => {
 				);
 			})}
 			<p className={classname(text.helperText, styles.ratingText)}>
+				{/* ini dummy bro */}
 				(10)
 			</p>
 		</div>
