@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Slider from "react-slick";
+import useWindowDimensions from "../../utils/viewportHooks";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Img from "../ImgWithContainer/ImgWithContainer";
@@ -35,7 +36,6 @@ const CustomLeftArrow = (props) => {
 
 const CustomRightArrow = (props) => {
 	const { className, style, onClick } = props;
-	console.log(props);
 	return (
 		<Img
 			key="rightarrow"
@@ -81,58 +81,62 @@ const CategoryItem = (props) => {
 	);
 };
 
-const settingsPreview = {
-	className: "center",
-	centerMode: true,
-	infinite: true,
-	centerPadding: "-70px",
-	slidesToShow: 3,
-	speed: 500,
-	autoplay: true,
-	nextArrow: <CustomRightArrow />,
-	prevArrow: <CustomLeftArrow />,
-	arrows: true,
-	dots: true,
-	appendDots: (dots) => (
-		<div
-			style={{
-				// backgroundColor: "#ddd",
-				borderRadius: "10px",
-				padding: "0",
-				display: "flex",
-				flexDirection: "row",
-				justifyContent: "flex-start",
-			}}
-		>
-			<ul
+const getSettingsPreview = (width) => {
+	return {
+		className: "center",
+		centerMode: true,
+		infinite: true,
+		// centerPadding: `-${0.065 * width}px`,
+		//TODO: make center padding dynamic
+		centerPadding: `-12%`,
+		slidesToShow: 3,
+		speed: 500,
+		autoplay: true,
+		nextArrow: <CustomRightArrow />,
+		prevArrow: <CustomLeftArrow />,
+		arrows: true,
+		dots: true,
+		appendDots: (dots) => (
+			<div
 				style={{
-					margin: "0px",
-					padding: "0px",
+					borderRadius: "10px",
+					padding: "0",
+					display: "flex",
+					flexDirection: "row",
+					justifyContent: "flex-start",
 				}}
 			>
-				{dots}
-			</ul>
-		</div>
-	),
+				<ul
+					style={{
+						margin: "0px",
+						padding: "0px",
+					}}
+				>
+					{dots}
+				</ul>
+			</div>
+		),
+	};
 };
 
 const settingsCategory = {
 	speed: 500,
-	infinite: false,
-	// centerMode: true,
+	infinite: true,
 	className: "center",
 	centerPadding: "70px",
 	slidesToShow: 5,
-	slidesToScroll: 5,
+	slidesToScroll: 2,
 	nextArrow: <CustomRightArrow />,
-	// prevArrow: <CustomLeftArrow />,
+	prevArrow: <CustomLeftArrow />,
 	arrows: true,
 };
 
 const Carousel = (props) => {
+	const { width, height } = useWindowDimensions();
+	console.log(width, height);
 	const settings =
 		props.carouselType === "previewItem"
-			? settingsPreview
+			? getSettingsPreview(width)
 			: settingsCategory;
 	return (
 		<Slider {...settings}>

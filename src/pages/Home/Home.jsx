@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Carousel from "../../components/Carousel/Carousel";
+import Card from "../../components/Card/Card";
 import styles from "./styles.module.css";
 import classname from "../../helpers/classJoiner";
 import text from "../../assets/text.module.css";
-import { previewData, categoryData } from "../../utils/dummydata";
+import { previewData, categoryData, newData } from "../../utils/dummydata";
 
 const Home = (props) => {
 	return (
@@ -36,10 +37,36 @@ const Home = (props) => {
 			<p className={classname(text.helperText, styles.marginbottom30)}>
 				You’ve never seen it before!
 			</p>
+			<div className="container-fluid px-0">
+				<div
+					className={classname(
+						styles.marginbottom50,
+						"row",
+						"no-gutters"
+					)}
+				>
+					{newData.map((item) => {
+						return <Card key={item.id} {...item} />;
+					})}
+				</div>
+			</div>
 			<h1 className={text.headline}>Popular</h1>
 			<p className={classname(text.helperText, styles.marginbottom30)}>
 				Find clothes that are trending recently
 			</p>
+			<div className="container-fluid px-0">
+				<div
+					className={classname(
+						"row",
+						"no-gutters",
+						"d-flex flex-row"
+					)}
+				>
+					{newData.map((item) => {
+						return <Card key={item.id} {...item} />;
+					})}
+				</div>
+			</div>
 		</main>
 	);
 };
