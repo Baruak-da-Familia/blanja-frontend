@@ -14,6 +14,8 @@ import message from "../../assets/img/message.png";
 import userDefault from "../../assets/img/default.png";
 
 const Navbar = (props) => {
+	const isLoggedIn = false;
+	const token = "test";
 	return (
 		<header className={classname(styles.navbar, colors.white)}>
 			<Img
@@ -35,7 +37,7 @@ const Navbar = (props) => {
 				containerStyle={styles.cart}
 				imgStyle={styles.cartImg}
 			/>
-			{props.isLoggedIn && props.token ? (
+			{isLoggedIn && token ? (
 				<nav className={styles.navList}>
 					<Img
 						key="notification"
@@ -82,9 +84,6 @@ const Navbar = (props) => {
 	);
 };
 
-Navbar.propTypes = {
-	isLoggedIn: PropTypes.bool,
-	token: PropTypes.string,
-};
+Navbar.propTypes = {};
 
 export default Navbar;
