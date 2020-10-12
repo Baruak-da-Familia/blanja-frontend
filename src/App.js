@@ -1,13 +1,18 @@
 import React from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
-import Home from "./pages/Home/Home";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Home from './pages/Home';
 
 function App() {
 	return (
 		<>
-			<Navbar isLoggedIn={false} token={"test"} />
-			<Home />
+			<Navbar />
+			<Router>
+				<Switch>
+					<Route path="/" exact component={Home} />
+				</Switch>
+			</Router>
 		</>
 	);
 }
