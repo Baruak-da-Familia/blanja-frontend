@@ -1,10 +1,15 @@
+.container-main {
+  margin-top: 5rem;
+  padding-left: calc(0.1 * 100vw);
+  padding-right: calc(0.1 * 100vw);
+}
+
 .headline {
   font-weight: 700;
 }
 
 .container-title {
   margin-bottom: 3rem;
-  margin-top: 5rem;
 }
 
 .container-item {
