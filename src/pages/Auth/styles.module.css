@@ -31,7 +31,7 @@
     font-weight: bold;
     font-size: 18px;
     padding: 15px;
-    width: 320px;
+    width: 400px;
     margin-top: 80px
 }
 .userType {
@@ -130,4 +130,11 @@
 }
 .bla {
     color: #DB3022;
+}
+.errMsg {
+    /* display: flex; */
+    /* justify-content: center; */
+    font-size: 14px;
+
+    color: red;
 }
