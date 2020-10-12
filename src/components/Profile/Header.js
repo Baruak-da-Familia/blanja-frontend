@@ -33,15 +33,15 @@ export default function HeaderProfile() {
         </div>
         <div className='menu'>
           {/* <div className='list-group'> */}
-          <a href='#' className='list-group-item menu-item'>
+          <a href='#' className='menu-item'>
             <img src={cart} alt='' />
             {/* <i className='fa fa-shopping-cart fa-lg' aria-hidden='true'></i> */}
           </a>
-          <a href='#' className='list-group-item menu-item'>
+          <a href='#' className='menu-item'>
             <img src={bell} alt='' />
             {/* <i className='fa fa-bell-o fa-lg' aria-hidden='true'></i> */}
           </a>
-          <a href='#' className='list-group-item menu-item'>
+          <a href='#' className='menu-item'>
             <img src={message} />
             {/* <i className='fa fa-envelope-o fa-lg' aria-hidden='true'></i> */}
           </a>

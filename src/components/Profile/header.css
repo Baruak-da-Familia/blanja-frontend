@@ -77,10 +77,12 @@
   justify-content: center;
   align-items: center;
   flex: 1;
+  border: none;
 }
 .menu-item {
   margin-right: 5%;
   color: #8e8e93;
+  border: none;
 }
 .menu-item img {
   width: 23px;

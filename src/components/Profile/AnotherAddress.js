@@ -3,7 +3,7 @@ import styles from "./anotheraddress.module.css";
 import "./myprofile.module.css";
 import bear from "../../assets/image/bear.jpg";
 
-export default function AnotherAddress() {
+export default function AnotherAddress(props) {
   return (
     <div className={styles.container}>
       {/* Header */}
@@ -15,7 +15,9 @@ export default function AnotherAddress() {
       {/* FormContainer */}
       <div className={styles.addresscontainer}>
         <div className={styles.addnewaddress}>
-          <h5 className={styles.addtext}>Add new address</h5>
+          <h5 className={styles.addtext} onClick={props.onShow}>
+            Add new address
+          </h5>
         </div>
         <div className={styles.listaddress}>
           <h5 className={styles.listtitle}>Address Jane</h5>
