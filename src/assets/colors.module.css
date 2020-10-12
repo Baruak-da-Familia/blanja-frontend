@@ -1,31 +1,65 @@
 .black {
-   background-color: #222222;
+  background-color: #222222;
 }
 
 .gray {
-   background-color: #9B9B9B;
+  background-color: #9b9b9b;
 }
 
 .lightGray {
-   background-color: #D4D4D4;
+  background-color: #d4d4d4;
 }
 
 .white {
-   background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .lightWhite {
-   background-color: #F9F9F9;
+  background-color: #f9f9f9;
 }
 
 .error {
-   background-color: #F01F0E;
+  background-color: #f01f0e;
 }
 
 .primary {
-   background-color: #DB3022;
+  background-color: #db3022;
 }
 
 .success {
-   background-color: #2AA952;
+  background-color: #2aa952;
+}
+
+/* text */
+
+.blackText {
+  color: #222222;
+}
+
+.grayText {
+  color: #9b9b9b;
+}
+
+.lightGrayText {
+  color: #d4d4d4;
+}
+
+.whiteText {
+  color: #ffffff;
+}
+
+.lightWhiteText {
+  color: #f9f9f9;
+}
+
+.errorText {
+  color: #f01f0e;
+}
+
+.primaryText {
+  color: #db3022;
+}
+
+.successText {
+  color: #2aa952;
 }
