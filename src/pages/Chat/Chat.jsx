@@ -1,26 +1,47 @@
 import React from "react";
 import PropTypes from "prop-types";
+import UserCard from "./UserCard";
 import styles from "./styles.module.css";
 import text from "../../assets/text.module.css";
 import classname from "../../helpers/classJoiner";
 import { isEmpty } from "underscore";
+import { DateTime } from "luxon";
+import { update } from "ramda";
 
 const myId = 99;
 
-const initSelectedChat = {
+const initialSelectedChat = {
 	id: 1,
 	name: "Jonas Adam",
 };
 
-const initChatList = [{ id: 1, name: "Jonas Adam", lasMessage: "Hallo" }];
+// const initialChatList = [{ user, lastMessage: "Hallo" }];
 
-const initMessages = [
+const initialMessages = [
 	{
 		id: 1,
 		name: "Jonas Adam",
+		avatar: null,
 		messages: [
 			{
 				id: 1,
+				message: "Hallo",
+				time: "21:16 12-10-2020",
+			},
+			{
+				id: myId,
+				message: "Hai",
+				time: "21:16 12-10-2020",
+			},
+		],
+	},
+	{
+		id: 2,
+		name: "Bill Gates",
+		avatar: null,
+		messages: [
+			{
+				id: 2,
 				message: "Hallo",
 				time: "21:16 12-10-2020",
 			},
@@ -39,18 +60,27 @@ const renderChat = ({ messages }, id) => {
 			{messages.map((item, index) => {
 				if (item.id === id) {
 					return (
-						<div
-							key={index}
-							className={classname(styles.otherchat)}
-						>
-							<p key={index}>{item.message}</p>
-						</div>
+						<>
+							<div
+								key={index}
+								className={classname(styles.otherchat)}
+							>
+								<p key={index}>{item.message}</p>
+							</div>
+							<p>{item.time}</p>
+						</>
 					);
 				} else {
 					return (
-						<div key={index} className={classname(styles.mychat)}>
-							<p key={index}>{item.message}</p>
-						</div>
+						<>
+							<div
+								key={index}
+								className={classname(styles.mychat)}
+							>
+								<p key={index}>{item.message}</p>
+							</div>
+							<p className="text-right">{item.time}</p>
+						</>
 					);
 				}
 			})}
@@ -58,25 +88,76 @@ const renderChat = ({ messages }, id) => {
 	);
 };
 
-// const apeendMessage = (messages, message, id)
+const appendMessage = (message, { messages }) => {
+	const newMessage = [...messages];
+	newMessage.push(message);
+	return newMessage;
+};
 
 const Chat = (props) => {
-	const [selectedChat, setSelectedChat] = React.useState(initSelectedChat);
-	const [chatList, setChatList] = React.useState(initChatList);
-	const [messages, setMessage] = React.useState(initMessages);
+	const [idx, setIdx] = React.useState(-1);
+	// const [chatList, setChatList] = React.useState(initialChatList);
+	const [messages, setMessage] = React.useState(initialMessages);
+
 	const inputRef = React.useRef();
 
-	const idx = messages.findIndex((message) => {
-		return message.id === selectedChat.id;
-	});
+	const inputHandler = (e) => {
+		if (e.key === "Enter") {
+			setMessage(
+				update(
+					idx,
+					{
+						...messages[idx],
+						messages: appendMessage(
+							{
+								id: myId,
+								message: inputRef.current.value,
+								time: DateTime.local().toFormat(
+									"hh:mm dd-MM-yyyy"
+								),
+							},
+							messages[idx]
+						),
+					},
+					messages
+				)
+			);
+			inputRef.current.value = "";
+		}
+	};
+
+	const onClickHandler = (id) => {
+		setIdx(
+			messages.findIndex((message) => {
+				return message.id === id;
+			})
+		);
+	};
+
 	return (
 		<div className={classname(styles.chat)}>
 			<div className={classname(styles.chatlistContainer)}>
 				<div className={classname(styles.chatlistHeader)}>
 					<h1 className={classname(text.headline2)}>Chats</h1>
 				</div>
-				{!isEmpty(chatList) ? (
-					<div className={classname(styles.chatlist)}></div>
+				{!isEmpty(messages) ? (
+					<div className={classname(styles.chatlist)}>
+						{messages.map((item) => {
+							return (
+								<UserCard
+									key={String(item.id)}
+									lastChat={
+										item.messages[item.messages.length - 1]
+											.message
+									}
+									name={item.name}
+									avatar={item.avatar}
+									id={item.id}
+									onClick={onClickHandler}
+								/>
+							);
+						})}
+					</div>
 				) : (
 					<h1 className={classname(text.headline2, styles.nochat)}>
 						You haven't chat with anyone!
@@ -84,12 +165,18 @@ const Chat = (props) => {
 				)}
 			</div>
 			<div className={classname(styles.chatroomContainer)}>
-				{!isEmpty(selectedChat) ? (
+				{idx >= 0 ? (
 					<>
-						<div className={classname(styles.chatroomHeader)}></div>
+						<div className={classname(styles.chatroomHeader)}>
+							<UserCard
+								key={String(messages[idx].id)}
+								name={messages[idx].name}
+								avatar={messages[idx].avatar}
+							/>
+						</div>
 						<div className={classname(styles.chatroom)}>
 							{idx >= 0 ? (
-								renderChat(messages[idx], selectedChat.id)
+								renderChat(messages[idx], messages[idx].id)
 							) : (
 								<h1
 									className={classname(
@@ -108,6 +195,7 @@ const Chat = (props) => {
 								ref={inputRef}
 								placeholder="type message"
 								className={classname(styles.inputmessage)}
+								onKeyPress={inputHandler}
 							/>
 						</div>
 					</>
