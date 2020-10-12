@@ -75,6 +75,19 @@ const Login = () => {
                         />
                     </div>
 
+                    {errors.storeName && errors.storeName.message}
+                    <div>
+                        <input
+                            className={classname(styles.emailInput)}
+                            placeholder="Store Name"
+                            name="storeName"
+                            ref={register({
+                                required: "Required",
+                            })}
+                        />
+
+                    </div>
+
                     {errors.password && errors.password.message}
                     <div>
                         <input
