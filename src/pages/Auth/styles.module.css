@@ -56,12 +56,32 @@
     filter: drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.05));
 
 }
+.userTypeBtnSellerActive {
+    width: 123px;
+    height: 48px;
+    color: white;
+    background-color: #DB3022;
+    border: 1px solid #DB3022;
+    border-radius: 0px 4px 4px 0px;
+    box-sizing: border-box;
+    filter: drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.05));
+}
 .userTypeBtnCustomer {
     width: 123px;
     height: 48px;
     color: #9B9B9B;
     background-color: white;
     border: 1px solid #9B9B9B;
+    border-radius: 4px 0px 0px 4px;
+    box-sizing: border-box;
+    filter: drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.05));
+}
+.userTypeBtnCustomerActive {
+    width: 123px;
+    height: 48px;
+    color: white;
+    background-color: #DB3022;
+    border: 1px solid #DB3022;
     border-radius: 4px 0px 0px 4px;
     box-sizing: border-box;
     filter: drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.05));
