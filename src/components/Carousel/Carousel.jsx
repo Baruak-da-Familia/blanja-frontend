@@ -18,6 +18,17 @@ const colors = [
 	styles.blue,
 	styles.orange,
 	styles.pink,
+	styles.darkblue,
+	styles.yellowishgreen,
+	styles.teal,
+	styles.purple,
+	styles.lightpink,
+	styles.lightpurple,
+	styles.tosca,
+	styles.brightblue,
+	styles.lightgreen,
+	styles.gold,
+	styles.lightred,
 ];
 
 const CustomLeftArrow = (props) => {
@@ -65,7 +76,7 @@ const PreviewItem = (props) => {
 };
 
 const CategoryItem = (props) => {
-	const color = colors[Math.round(Math.random() * 4)];
+	const color = colors[Math.round(Math.random() * 15)];
 	return (
 		<div className={styles.categoryItem}>
 			<Img
@@ -82,13 +93,13 @@ const CategoryItem = (props) => {
 };
 
 const getSettingsPreview = (width) => {
+	const centerPadding = Math.round(-0.44 * width + 780);
 	return {
 		className: "center",
 		centerMode: true,
 		infinite: true,
-		// centerPadding: `-${0.065 * width}px`,
 		//TODO: make center padding dynamic
-		centerPadding: `-12%`,
+		centerPadding: `-${centerPadding}px`,
 		slidesToShow: 3,
 		speed: 500,
 		autoplay: true,
@@ -119,25 +130,28 @@ const getSettingsPreview = (width) => {
 	};
 };
 
-const settingsCategory = {
-	speed: 500,
-	infinite: true,
-	className: "center",
-	centerPadding: "70px",
-	slidesToShow: 5,
-	slidesToScroll: 2,
-	nextArrow: <CustomRightArrow />,
-	prevArrow: <CustomLeftArrow />,
-	arrows: true,
+const settingsCategory = (width) => {
+	const centerPadding = Math.round(0.44 * width - 300);
+	return {
+		speed: 500,
+		infinite: true,
+		className: "center",
+		centerMode: true,
+		centerPadding: `${centerPadding}px`,
+		slidesToShow: 2,
+		slidesToScroll: 2,
+		nextArrow: <CustomRightArrow />,
+		prevArrow: <CustomLeftArrow />,
+		arrows: true,
+	};
 };
 
 const Carousel = (props) => {
-	const { width, height } = useWindowDimensions();
-	console.log(width, height);
+	const { width } = useWindowDimensions();
 	const settings =
 		props.carouselType === "previewItem"
 			? getSettingsPreview(width)
-			: settingsCategory;
+			: settingsCategory(width);
 	return (
 		<Slider {...settings}>
 			{props.carouselType === "previewItem"

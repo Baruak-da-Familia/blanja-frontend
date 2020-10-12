@@ -26,13 +26,13 @@
 	height: 27.8rem;
 	background-color: white;
 	border-radius: 8px;
-	margin-bottom: 25px;
+	margin-bottom: 2.5rem;
 	box-shadow: 0px 0px 14px rgba(173, 173, 173, 0.25);
 	align-self: center;
 }
 
-.marginRight25 {
-	margin-right: 2.5rem;
+.mr37 {
+	margin-right: 3.75rem;
 }
 
 .cardImgContainer {

@@ -41,10 +41,10 @@
 	width: 90%;
 	text-align: center;
 	top: 50%;
-	left: 35%;
+	left: 32%;
 	/* make sure padding and margin do not disturb the calculation of the center point */
 	padding: 0;
-	margin: 0;
+	margin: auto;
 	/* using centers for the transform */
 	transform-origin: center center;
 	/* calling calc() function for the calculation to move left and up the element from the center point */
@@ -93,11 +93,44 @@
 .orange {
 	background-color: #f67b02;
 }
-
+.green {
+	background-color: #57cd9e;
+}
 .pink {
 	background-color: #e31f51;
 }
 
-.green {
-	background-color: #57cd9e;
+.darkblue {
+	background-color: #5650d8;
+}
+
+.yellowishgreen {
+	background-color: #b5d850;
+}
+.teal {
+	background-color: #50c8d8;
+}
+.purple {
+	background-color: #ac50d8;
+}
+.lightpink {
+	background-color: #d85089;
+}
+.brightblue {
+	background-color: #5086d8;
+}
+.lightgreen {
+	background-color: #53d850;
+}
+.gold {
+	background-color: #d8ba50;
+}
+.lightpurple {
+	background-color: #d85091;
+}
+.tosca {
+	background-color: #50d8af;
+}
+.lightred {
+	background-color: #d85050;
 }

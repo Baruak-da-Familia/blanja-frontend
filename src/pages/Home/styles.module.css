@@ -1,8 +1,8 @@
 .home {
-	padding-top: 47px;
+	padding-top: 147px;
 	padding-bottom: 97px;
-	padding-right: 150px;
-	padding-left: 150px;
+	padding-left: calc(0.1 * 100vw);
+	padding-right: calc(0.1 * 100vw);
 }
 
 .carousel {

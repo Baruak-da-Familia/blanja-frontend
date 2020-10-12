@@ -1,7 +1,7 @@
 .searchContainer {
 	display: flex;
 	flex-direction: row;
-	width: 100%;
+	width: calc(0.35 * 100vw);
 	max-width: 507px;
 	height: 40px;
 	border-radius: 23px;

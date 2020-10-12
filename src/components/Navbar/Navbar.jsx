@@ -18,68 +18,72 @@ const Navbar = (props) => {
 	const token = "test";
 	return (
 		<header className={classname(styles.navbar, colors.white)}>
-			<Img
-				key="logo"
-				containerStyle={styles.logo}
-				imgStyle={styles.logoImg}
-				source={logo}
-			/>
-			<SearchBar />
-			<Img
-				key="filter"
-				containerStyle={styles.filter}
-				imgStyle={styles.filterImg}
-				source={filter}
-			/>
-			<Img
-				key="cart"
-				source={cart}
-				containerStyle={styles.cart}
-				imgStyle={styles.cartImg}
-			/>
-			{isLoggedIn && token ? (
-				<nav className={styles.navList}>
-					<Img
-						key="notification"
-						source={notification}
-						containerStyle={styles.navIcon}
-						imgStyle={styles.navIconImg}
-					/>
-					<Img
-						key="message"
-						source={message}
-						containerStyle={styles.navIcon}
-						imgStyle={styles.navIconImg}
-					/>
-					<Img
-						key="profile"
-						source={userDefault}
-						containerStyle={styles.profile}
-						imgStyle={styles.profileImg}
-					/>
-				</nav>
-			) : (
-				<div className={styles.buttonContainer}>
-					<button
-						className={classname(
-							styles.loginButton,
-							text.descriptionText,
-							colors.error
-						)}
-					>
-						Login
-					</button>
-					<button
-						className={classname(
-							styles.signupButton,
-							text.descriptionText,
-							colors.white
-						)}
-					>
-						Signup
-					</button>
-				</div>
-			)}
+			<div className="d-flex flex-row justify-content-around">
+				<Img
+					key="logo"
+					containerStyle={styles.logo}
+					imgStyle={styles.logoImg}
+					source={logo}
+				/>
+				<SearchBar />
+				<Img
+					key="filter"
+					containerStyle={styles.filter}
+					imgStyle={styles.filterImg}
+					source={filter}
+				/>
+			</div>
+			<div className="d-flex flex-row justify-content-around">
+				<Img
+					key="cart"
+					source={cart}
+					containerStyle={styles.cart}
+					imgStyle={styles.cartImg}
+				/>
+				{isLoggedIn && token ? (
+					<nav className={styles.navList}>
+						<Img
+							key="notification"
+							source={notification}
+							containerStyle={styles.navIcon}
+							imgStyle={styles.navIconImg}
+						/>
+						<Img
+							key="message"
+							source={message}
+							containerStyle={styles.navIcon}
+							imgStyle={styles.navIconImg}
+						/>
+						<Img
+							key="profile"
+							source={userDefault}
+							containerStyle={styles.profile}
+							imgStyle={styles.profileImg}
+						/>
+					</nav>
+				) : (
+					<div className={styles.buttonContainer}>
+						<button
+							className={classname(
+								styles.loginButton,
+								text.descriptionText,
+								colors.error
+							)}
+						>
+							Login
+						</button>
+						<button
+							className={classname(
+								styles.signupButton,
+								text.descriptionText,
+								colors.white
+							)}
+						>
+							Signup
+						</button>
+					</div>
+				)}
+			</div>
 		</header>
 	);
 };

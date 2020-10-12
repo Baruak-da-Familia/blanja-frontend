@@ -37,7 +37,7 @@ const Home = (props) => {
 			<p className={classname(text.helperText, styles.marginbottom30)}>
 				You’ve never seen it before!
 			</p>
-			<div className="container-fluid px-0">
+			<div className="w-100">
 				<div
 					className={classname(
 						styles.marginbottom50,
@@ -54,7 +54,7 @@ const Home = (props) => {
 			<p className={classname(text.helperText, styles.marginbottom30)}>
 				Find clothes that are trending recently
 			</p>
-			<div className="container-fluid px-0">
+			<div className="w-100">
 				<div
 					className={classname(
 						"row",

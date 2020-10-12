@@ -36,8 +36,8 @@ const Card = (props) => {
 	return (
 		<div
 			className={classname(
-				"col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2 mr-5",
-				styles.marginRight25
+				"col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2",
+				styles.mr37
 			)}
 		>
 			<div className={styles.cardContainer}>

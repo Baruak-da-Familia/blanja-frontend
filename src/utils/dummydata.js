@@ -1,5 +1,20 @@
 import exp from "../assets/img/trend2020.jpeg";
-import cat from "../assets/img/shorts.png";
+import shorts from "../assets/img/shorts.png";
+import pants from "../assets/img/pants.png";
+import tshirt from "../assets/img/tshirt.png";
+import accessories from "../assets/img/accessories.png";
+import backbag from "../assets/img/backbag.png";
+import dress from "../assets/img/dress.png";
+import shoes from "../assets/img/shoes.png";
+import jacket from "../assets/img/jacket.png";
+import formalsuit from "../assets/img/formalsuit.png";
+import highheels from "../assets/img/highheels.png";
+import handbag from "../assets/img/handbag.png";
+import glasses from "../assets/img/glasses.png";
+import socks from "../assets/img/socks.png";
+import tie from "../assets/img/tie.png";
+import watch from "../assets/img/watch.png";
+import cap from "../assets/img/cap.png";
 import card from "../assets/img/card.png";
 
 export const previewData = [
@@ -11,12 +26,22 @@ export const previewData = [
 ];
 
 export const categoryData = [
-	{ id: 1, image: cat, desc: "Shorts" },
-	{ id: 2, image: cat, desc: "T-Shirts" },
-	{ id: 3, image: cat, desc: "Jacket" },
-	{ id: 4, image: cat, desc: "Pants" },
-	{ id: 5, image: cat, desc: "Shoes" },
-	{ id: 6, image: cat, desc: "Shirts" },
+	{ id: 2, image: shorts, desc: "Shorts" },
+	{ id: 1, image: tshirt, desc: "T-Shirts" },
+	{ id: 3, image: jacket, desc: "Jacket" },
+	{ id: 4, image: pants, desc: "Pants" },
+	{ id: 5, image: shoes, desc: "Shoes" },
+	{ id: 6, image: cap, desc: "Cap" },
+	{ id: 7, image: watch, desc: "Wristwatch" },
+	{ id: 15, image: accessories, desc: "Accessories" },
+	{ id: 14, image: formalsuit, desc: "Formal Suit" },
+	{ id: 9, image: backbag, desc: "Backbag" },
+	{ id: 12, image: tie, desc: "Tie" },
+	{ id: 11, image: glasses, desc: "Glasses" },
+	{ id: 10, image: socks, desc: "Socks" },
+	{ id: 13, image: dress, desc: "Dress" },
+	{ id: 16, image: highheels, desc: "High Heels" },
+	{ id: 8, image: handbag, desc: "Handbag" },
 ];
 
 export const newData = [
@@ -78,6 +103,22 @@ export const newData = [
 	},
 	{
 		id: 8,
+		img: card,
+		name: "Men's formal suit - Black & White",
+		price: "100000",
+		category: "Zalora Cloth",
+		rate: 4,
+	},
+	{
+		id: 9,
+		img: card,
+		name: "Men's formal suit - Black & White",
+		price: "100000",
+		category: "Zalora Cloth",
+		rate: 4,
+	},
+	{
+		id: 10,
 		img: card,
 		name: "Men's formal suit - Black & White",
 		price: "100000",
