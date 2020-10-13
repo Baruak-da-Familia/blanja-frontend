@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import colors from '../assets/colors.module.css';
-import text from '../assets/text.module.css';
-import classname from '../helpers/classJoiner';
-import './Checkout.css';
+import colors from '../../assets/colors.module.css';
+import text from '../../assets/text.module.css';
+import classname from '../../helpers/classJoiner';
+import './MyBag.css';
 
-const CheckOut = () => {
+const MyBag = () => {
    const [cart, setCart] = useState([
       {
          id: 1,
@@ -27,32 +27,36 @@ const CheckOut = () => {
    ]);
 
 
-   // const handleSelectAll = (evt) => {
+   const handleSelectAll = (evt) => {
 
-   // };
+   };
 
-   // const handleSelectItem = (evt) => {
-   //    console.log(evt.target);
-   // };
+   const handleSelectItem = (evt) => {
+      console.log(evt.target);
+   };
 
-   // const handleIncrease = () => {
-   //    console.log(cart);
-   // };
+   const handleIncrease = () => {
+      console.log(cart);
+   };
 
    return (
       <div className="container-main">
          <div className="container-title">
-            <h1 className={classname(text.headline, "headline")}>Checkout</h1>
+            <h1 className={classname(text.headline, "headline")}>My bag</h1>
          </div>
          <div className="row">
             {/* left item */}
             <div className="col-lg-7">
-               <p className={classname(text.text, "text-title")}>Shipping Adress</p>
+
                <div className="row no-gutters shadow align-content-center container-select-all">
+                  <div className="col-1 align-self-center">
+                     <input type="checkbox" name="selectAll" />
+                  </div>
                   <div className="col">
-                     <p className={classname(text.text, "text-title")}>Andreas Jane</p>
-                     <p className="text-addres mb-4">Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c 16] Sokaraja, Kab. Banyumas, 53181</p>
-                     <button type="button" className={classname(colors.grayText, "btn btn-outline-secondary btn-choose-address")}>Choose another address</button>
+                     <p className={classname(text.text, "text-title")}>{`Select all item (${cart.length} items selected)`}</p>
+                  </div>
+                  <div className="col-1">
+                     <a href className={classname(text.text, colors.errorText, "text-title")}>Delete</a>
                   </div>
                </div>
 
@@ -60,12 +64,22 @@ const CheckOut = () => {
                {cart.map(item => {
                   return (
                      <div className="row no-gutters shadow align-items-center container-items">
+                        <div className="col-1 align-self-center">
+                           <input type="checkbox" name="items" onChange={handleSelectItem} />
+                        </div>
                         <div className="col-2">
                            <img src={item.img} alt="" />
                         </div>
                         <div className="col">
                            <p className={classname(text.text, "text-title")}>{item.name}</p>
                            <p className={classname(colors.grayText, "text-seller")}>{item.seller}</p>
+                        </div>
+                        <div className="col-2">
+                           <div className="row container-counter align-items-center justify-content-between">
+                              <button className={classname(colors.lightGray, "btn btn-secondary btn-quantity")}>-</button>
+                              <p>{item.quantity}</p>
+                              <button className={classname(colors.white, "btn btn-light btn-quantity")} onClick={handleIncrease}>+</button>
+                           </div>
                         </div>
                         <div className="col-2">
                            <p href className={classname(text.text, colors.blackText, "text-title text-right")}>
@@ -81,25 +95,15 @@ const CheckOut = () => {
             <div className="col-lg-4 shadow container-summary ml-lg-auto">
                <div>
                   <p className={classname(text.text, "text-title mb-5")}>Shopping summary</p>
-                  <div className="row no-gutters mb-4 align-items-center order-deliv">
+                  <div className="row no-gutters mb-5 align-items-center">
                      <div className="col">
-                        <p className={classname(text.text, colors.grayText, "text-title")}>Order</p>
-                        <p className={classname(text.text, colors.grayText, "text-title")}>Delivery</p>
+                        <p className={classname(text.text, colors.grayText, "text-title")}>Total Price</p>
                      </div>
                      <div className="col">
                         <p className={classname(text.headline3, "text-title text-right")}>$ 40.0</p>
-                        <p className={classname(text.headline3, "text-title text-right")}>$ 5.0</p>
                      </div>
                   </div>
-                  <div className="row">
-                     <div className="col">
-                        <p className={classname(text.text, "text-title mb-5")}>Shopping summary</p>
-                     </div>
-                     <div className="col">
-                        <p className={classname(text.headline3, colors.primaryText, "text-title text-right")}>$ 45.0</p>
-                     </div>
-                  </div>
-                  <button className={classname("btn btn-danger btn-buy", colors.primary)}>Select payment</button>
+                  <button className={classname("btn btn-danger btn-buy", colors.primary)}>Buy</button>
                </div>
             </div>
          </div>
@@ -107,4 +111,4 @@ const CheckOut = () => {
    )
 }
 
-export default CheckOut;
+export default MyBag;
