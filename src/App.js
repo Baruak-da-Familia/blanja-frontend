@@ -7,17 +7,19 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 
 import Home from "./pages/Home/Home";
+import Chat from "./pages/Chat/Chat";
 
 function App() {
 	return (
 		<>
 			<Navbar />
-			<Router>
+			<Chat />
+			{/* <Router>
 				<Switch>
 					<Route path="/" exact component={Login} />
 					<Route path="/Register" exact component={Register} />
 				</Switch>
-			</Router>
+			</Router> */}
 		</>
 	);
 }
