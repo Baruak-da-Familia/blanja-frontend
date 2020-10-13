@@ -18,20 +18,19 @@ const Login = () => {
 
 	const { handleSubmit, register, errors } = useForm();
 
-	const registerCustomer = useSelector((state) => state.auth.customer);
-	const registerSeller = useSelector((state) => state.auth.seller);
+	const registerUser = useSelector((state) => state.auth.user);
 
 	useEffect(() => {
-		if (registerCustomer.msg === "Register Success") {
+		if (registerUser.msg === "Register Success") {
 			return console.log("customer dah register");
 		}
-	}, [registerSeller.msg]);
+	}, [registerUser.msg]);
 
 	useEffect(() => {
-		if (registerSeller.msg === "Register Success") {
+		if (registerUser.msg === "Register Success") {
 			return console.log("seller dah register");
 		}
-	}, [registerSeller.msg]);
+	}, [registerUser.msg]);
 
 	const onSubmitCustomer = (data) => {
 		// console.log('kambing')
