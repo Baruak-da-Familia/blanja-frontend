@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./anotheraddress.module.css";
 import "./myprofile.module.css";
-import bear from "../../assets/image/bear.jpg";
 
 export default function AnotherAddress(props) {
   return (

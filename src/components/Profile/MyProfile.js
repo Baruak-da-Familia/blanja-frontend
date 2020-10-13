@@ -96,7 +96,7 @@ export default function MyProfile() {
         <div className={styles.imagecontainer}>
           <div className={styles.boximage}>
             <img className={styles.imageprofile} src={bear} alt='' />
-            <button className={styles.btnedit}>Edit image</button>
+            <button className={styles.btnedit}>Select image</button>
           </div>
         </div>
       </div>
