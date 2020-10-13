@@ -49,8 +49,32 @@ const MyBag = () => {
       }
    };
 
-   const handleIncrease = (evt) => {
+   const handleIncrease = (id) => {
+      const newCart = [...cart];
+      const index = cart.findIndex(item => {
+         return id === item.id
+      })
+      newCart[index] = {
+         ...newCart[index],
+         quantity: cart[index].quantity + 1,
+      }
+      return setCart(newCart)
+   };
 
+   const handleDecrease = (id) => {
+      const newCart = [...cart];
+      const index = cart.findIndex(item => {
+         return id === item.id
+      })
+      if (newCart[index].quantity === 1) {
+         return
+      } else {
+         newCart[index] = {
+            ...newCart[index],
+            quantity: cart[index].quantity - 1,
+         }
+         return setCart(newCart)
+      }
    };
 
    return (
@@ -74,7 +98,7 @@ const MyBag = () => {
                      <p className={classname(text.text, "text-title")}>{`Select all item (${cart.length} items selected)`}</p>
                   </div>
                   <div className="col-1">
-                     <a href="#" className={classname(text.text, colors.errorText, "text-title")}>Delete</a>
+                     <a href="#" className={classname(text.text, colors.errorText, "text-title")} >Delete</a>
                   </div>
                </div>
 
@@ -100,14 +124,16 @@ const MyBag = () => {
                         </div>
                         <div className="col-2">
                            <div className="row container-counter align-items-center justify-content-between">
-                              <button className={classname(colors.lightGray, "btn btn-secondary btn-quantity")}>-</button>
+                              <button
+                                 className={classname(colors.lightGray, "btn btn-secondary btn-quantity")}
+                                 onClick={() => handleDecrease(item.id)}>-</button>
                               <p>{item.quantity}</p>
-                              <button className={classname(colors.white, "btn btn-light btn-quantity")} onClick={handleIncrease}>+</button>
+                              <button className={classname(colors.white, "btn btn-light btn-quantity")} onClick={() => handleIncrease(item.id)} >+</button>
                            </div>
                         </div>
                         <div className="col-2">
                            <p href="#" className={classname(text.text, colors.blackText, "text-title text-right")}>
-                              {`$ ${item.price.toFixed(1)}`}
+                              {`$ ${(item.price * item.quantity).toFixed(1)}`}
                            </p>
                         </div>
                      </div>
