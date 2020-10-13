@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import colors from '../../assets/colors.module.css';
 import text from '../../assets/text.module.css';
@@ -19,7 +19,7 @@ const ModalChooseAddress = (props) => {
                <div>
                   <h4 className="text-top">Choose another address</h4>
                </div>
-               <div className="add-address" onClick={props.onHide}>
+               <div className="add-address" onClick={props.showAddAddress}>
                   <h4 className={classname(colors.grayText, "text-add-addres")}>Add new address</h4>
                </div>
                <div className="container-address-list">

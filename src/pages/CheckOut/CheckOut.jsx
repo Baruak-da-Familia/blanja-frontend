@@ -3,6 +3,7 @@ import colors from '../../assets/colors.module.css';
 import text from '../../assets/text.module.css';
 import classname from '../../helpers/classJoiner';
 import ModalChooseAddress from "../../components/CheckOut/ModalChooseAddress";
+import ModalAddAddress from "../../components/Profile/ModalAddAddress";
 import './Checkout.css';
 
 const CheckOut = () => {
@@ -27,7 +28,8 @@ const CheckOut = () => {
       },
    ]);
 
-   const [showChooseAddres, setShowChooseAddres] = useState(false);
+   const [showChooseAddress, setShowChooseAddress] = useState(false);
+   const [showAddAddress, setShowAddAddress] = useState(false);
 
    // const handleSelectAll = (evt) => {
 
@@ -54,7 +56,7 @@ const CheckOut = () => {
                   <div className="col">
                      <p className={classname(text.text, "text-title")}>Andreas Jane</p>
                      <p className="text-addres mb-4">Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c 16] Sokaraja, Kab. Banyumas, 53181</p>
-                     <button type="button" className={classname(colors.grayText, "btn btn-outline-secondary btn-choose-address")} onClick={() => setShowChooseAddres(true)}>Choose another address</button>
+                     <button type="button" className={classname(colors.grayText, "btn btn-outline-secondary btn-choose-address")} onClick={() => setShowChooseAddress(true)}>Choose another address</button>
                   </div>
                </div>
 
@@ -106,8 +108,13 @@ const CheckOut = () => {
             </div>
          </div>
          <ModalChooseAddress
-            show={showChooseAddres}
-            onHide={() => setShowChooseAddres(false)}
+            show={showChooseAddress}
+            onHide={() => setShowChooseAddress(false)}
+            showAddAddress={() => setShowAddAddress(true)}
+         />
+         <ModalAddAddress
+            show={showAddAddress}
+            onHide={() => setShowAddAddress(false)}
          />
       </div >
    )
