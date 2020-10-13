@@ -32,7 +32,7 @@ const UserCard = (props) => {
 };
 
 UserCard.propTypes = {
-	id: PropTypes.number,
+	// id: PropTypes.string,
 	avatar: PropTypes.string,
 	lastChat: PropTypes.string,
 	onClick: PropTypes.func,

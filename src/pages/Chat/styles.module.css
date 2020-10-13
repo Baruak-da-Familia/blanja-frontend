@@ -70,8 +70,10 @@
 
 .chatroom {
 	width: 100%;
-	padding: 20px 40px 80px 40px;
-	height: 517px;
+	max-height: 100%;
+	padding: 20px 40px 5px 40px;
+	height: 437px;
+	overflow-y: scroll;
 }
 
 .inputmessageContainer {
@@ -80,7 +82,7 @@
 	position: absolute;
 	padding-left: 20px;
 	padding-right: 20px;
-	bottom: 34px;
+	bottom: 20px;
 	background: #ffffff;
 	border: 1px solid #8e8e93;
 	border-radius: 23px;
@@ -153,10 +155,14 @@
 
 .name {
 	font-weight: 600;
+	width: calc(0.11 * 100vw);
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 
 .lastchat {
-	width: calc(0.15 * 100vw);
+	width: calc(0.11 * 100vw);
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
