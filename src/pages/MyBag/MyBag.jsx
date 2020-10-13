@@ -50,6 +50,7 @@ const MyBag = () => {
    };
 
    const handleIncrease = (evt) => {
+
    };
 
    return (
@@ -123,7 +124,9 @@ const MyBag = () => {
                         <p className={classname(text.text, colors.grayText, "text-title")}>Total Price</p>
                      </div>
                      <div className="col">
-                        <p className={classname(text.headline3, "text-title text-right")}>$ 40.0</p>
+                        <p className={classname(text.headline3, "text-title text-right")}>$ {cart.filter(item => item.selected === true).reduce((total, item) => {
+                           return total + (item.price * item.quantity);
+                        }, 0).toFixed(1)}</p>
                      </div>
                   </div>
                   <button className={classname("btn btn-danger btn-buy", colors.primary)}>Buy</button>
