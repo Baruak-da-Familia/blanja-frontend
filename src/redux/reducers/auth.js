@@ -37,6 +37,7 @@ const authReducer = (state = initialState, { type, payload }) => {
                 isFulfilled: true,
                 isPending: false,
                 user: payload.data.data,
+                errMsg: '',
                 status: payload.data.status,
                 isRejected: false,
                 isLogin: true,

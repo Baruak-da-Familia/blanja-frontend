@@ -24,19 +24,17 @@ const Login = () => {
     const { handleSubmit, register, errors } = useForm();
 
     useEffect(() => {
-        console.log(statusLogin, login.user_type)
+        // console.log(statusLogin, login.user_type, errMsgUser)
         
         if (statusLogin === 200 && login.user_type === 'Customer') {
             setErrMsg(null)
             return console.log("customer dah login");
-        }
-        if (statusLogin === 200 && login.user_type === 'Seller') {
+        } else if (statusLogin === 200 && login.user_type === 'Seller') {
             setErrMsg(null)
             return console.log("seller dah login");
-        }
-        if (statusLogin === 500) {
+        } else  {
             setErrMsg(errMsgUser)
-            console.log('kambing')
+            // console.log('kambing')
         }
 
     }, [statusLogin, login.user_type]);
