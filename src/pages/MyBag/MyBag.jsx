@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import colors from '../../assets/colors.module.css';
 import text from '../../assets/text.module.css';
 import classname from '../../helpers/classJoiner';
+import {
+   Alert,
+   // Row, Col, Toast
+} from 'react-bootstrap';
 import './MyBag.css';
+import { Link } from 'react-router-dom';
 
 const MyBag = () => {
    const [cart, setCart] = useState([
@@ -25,6 +30,8 @@ const MyBag = () => {
          img: "https://s3-alpha-sig.figma.com/img/d373/227e/1b077d067cc7eed45f8733fd75f5e570?Expires=1603065600&Signature=d40ckFqK4v2u2r8FCajf9MOpyiz7NQhmacmlyXyfsLXRPWu-5MQ8RndW9wtuCOVRc~kbqsGaqwrfcjB4AgWVrtxYHETotH8XBuP5~rKUpUYxq1jUSWz5fo2WcHZvYKWFaF05tyYRfWOQWF7JB-q~69HXXeWfK6S~KA4wHmlMEVwMY66Q6nSvHxAqrXejnpENTskeO1Bp5zeypr~kd7N8c5oWsC8UQUV0M6ff1hcyhjT2YbgIDcAp6Y3fOXdKH4Iefow8ChLuq~jnAAfvE8Y8JWAXwZ713jAVTUpYVV2gpP-f-IZWypkWsoVUSB~GSmuYZjQX6xZ8c98qewV0Qj38Ow__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
       },
    ]);
+
+   const [showAlert, setShowAlert] = useState(false);
 
    const handleSelectAll = (evt) => {
       if (evt.target.checked) {
@@ -77,6 +84,11 @@ const MyBag = () => {
       }
    };
 
+   const kirim = () => {
+      console.log(cart.filter(item => item.selected === true));
+      cart.filter(item => item.selected === true)
+   }
+
    return (
       <div className="container-main">
          <div className="container-title">
@@ -98,7 +110,7 @@ const MyBag = () => {
                      <p className={classname(text.text, "text-title")}>{`Select all item (${cart.length} items selected)`}</p>
                   </div>
                   <div className="col-1">
-                     <a href="#" className={classname(text.text, colors.errorText, "text-title")} >Delete</a>
+                     <a href="#" className={classname(text.text, colors.errorText, "text-title")}>Delete</a>
                   </div>
                </div>
 
@@ -155,8 +167,26 @@ const MyBag = () => {
                         }, 0).toFixed(1)}</p>
                      </div>
                   </div>
-                  <button className={classname("btn btn-danger btn-buy", colors.primary)}>Buy</button>
+                  {cart.filter(item => item.selected === true).length ? (
+                     <Link to={{
+                        pathname: "/checkout",
+                        data: cart.filter(item => item.selected === true),
+                     }}>
+                        <button className={classname("btn btn-danger btn-buy", colors.primary)} onClick={kirim}>Buy</button>
+                     </Link>
+                  ) : (
+                        <button className={classname("btn btn-danger btn-buy", colors.primary)} onClick={() => setShowAlert(true)}>Buy</button>
+                     )}
                </div>
+               {showAlert ? (
+                  setTimeout(() => { setShowAlert(false) }, 4000),
+                  < Alert className={classname("mt-5 alert-empty", colors.error, colors.whiteText)} variant="dark" onClose={() => setShowAlert(false)} dismissible>
+                     <Alert.Heading className={classname(text.headline2)}>Cart is empty!</Alert.Heading>
+                     <p className={classname(text.descriptionText)}>
+                        Select at least 1 product to buy, then continue to payment.
+                     </p>
+                  </Alert>
+               ) : ('')}
             </div>
          </div>
       </div >

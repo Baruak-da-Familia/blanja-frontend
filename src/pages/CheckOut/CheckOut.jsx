@@ -6,7 +6,7 @@ import ModalChooseAddress from "../../components/CheckOut/ModalChooseAddress";
 import ModalAddAddress from "../../components/Profile/ModalAddAddress";
 import './Checkout.css';
 
-const CheckOut = () => {
+const CheckOut = (props) => {
    const [cart, setCart] = useState([
       {
          id: 1,
@@ -28,20 +28,10 @@ const CheckOut = () => {
       },
    ]);
 
+   const { data } = props.location;
+
    const [showChooseAddress, setShowChooseAddress] = useState(false);
    const [showAddAddress, setShowAddAddress] = useState(false);
-
-   // const handleSelectAll = (evt) => {
-
-   // };
-
-   // const handleSelectItem = (evt) => {
-   //    console.log(evt.target);
-   // };
-
-   // const handleIncrease = () => {
-   //    console.log(cart);
-   // };
 
    return (
       <div className="container-main">
@@ -61,9 +51,9 @@ const CheckOut = () => {
                </div>
 
                {/* list item */}
-               {cart.map(item => {
+               {data.map(item => {
                   return (
-                     <div className="row no-gutters shadow align-items-center container-items">
+                     <div className="row no-gutters shadow align-items-center container-items" key={item.id}>
                         <div className="col-2">
                            <img src={item.img} alt="" />
                         </div>
@@ -72,8 +62,8 @@ const CheckOut = () => {
                            <p className={classname(colors.grayText, "text-seller")}>{item.seller}</p>
                         </div>
                         <div className="col-2">
-                           <p href className={classname(text.text, colors.blackText, "text-title text-right")}>
-                              {`$ ${item.price.toFixed(1)}`}
+                           <p href="#" className={classname(text.text, colors.blackText, "text-title text-right")}>
+                              {`$ ${item.price * item.quantity}`}
                            </p>
                         </div>
                      </div>
@@ -91,7 +81,7 @@ const CheckOut = () => {
                         <p className={classname(text.text, colors.grayText, "text-title")}>Delivery</p>
                      </div>
                      <div className="col">
-                        <p className={classname(text.headline3, "text-title text-right")}>$ 40.0</p>
+                        <p className={classname(text.headline3, "text-title text-right")}>{`$ ${data.reduce((total, item) => { return total + (item.price * item.quantity) }, 0).toFixed(1)}`}</p>
                         <p className={classname(text.headline3, "text-title text-right")}>$ 5.0</p>
                      </div>
                   </div>
@@ -100,7 +90,7 @@ const CheckOut = () => {
                         <p className={classname(text.text, "text-title mb-5")}>Shopping summary</p>
                      </div>
                      <div className="col">
-                        <p className={classname(text.headline3, colors.primaryText, "text-title text-right")}>$ 45.0</p>
+                        <p className={classname(text.headline3, colors.primaryText, "text-title text-right")}>{`$ ${data.reduce((total, item) => { return total + (item.price * item.quantity) }, 5).toFixed(1)}`}</p>
                      </div>
                   </div>
                   <button className={classname("btn btn-danger btn-buy", colors.primary)}>Select payment</button>
