@@ -8,25 +8,25 @@ import {
 
 export const authLoginCustomerCreator = (data) => {
 	return {
-		type: actions.AUTH_LOGIN_CUSTOMER,
+		type: actions.AUTH_LOGIN_USER,
 		payload: authLoginCustomer(data),
 	};
 };
 export const authLoginSellerCreator = (data) => {
 	return {
-		type: actions.AUTH_LOGIN_SELLER,
+		type: actions.AUTH_LOGIN_USER,
 		payload: authLoginSeller(data),
 	};
 };
 export const authRegisterCustomerCreator = (data) => {
 	return {
-		type: actions.AUTH_REGISTER_CUSTOMER,
+		type: actions.AUTH_REGISTER_USER,
 		payload: authRegisterCustomer(data),
 	};
 };
 export const authRegisterSellerCreator = (data) => {
 	return {
-		type: actions.AUTH_REGISTER_SELLER,
+		type: actions.AUTH_REGISTER_USER,
 		payload: authRegisterSeller(data),
 	};
 };

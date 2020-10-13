@@ -1,8 +1,9 @@
 import * as actions from "../actions/actionTypes";
 
 const initialState = {
-    customer: {},
-    seller: {},
+    user: {},
+    errMsg: '',
+    status: {},
     isLogin: false,
     isPending: false,
     isFulfilled: false,
@@ -11,105 +12,60 @@ const initialState = {
 
 const authReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case actions.AUTH_LOGIN_CUSTOMER + actions.PENDING:
+        case actions.AUTH_LOGIN_USER + actions.PENDING:
             return {
                 ...state,
                 isPending: true,
             };
-        case actions.AUTH_LOGIN_CUSTOMER + actions.REJECTED:
+        case actions.AUTH_LOGIN_USER + actions.REJECTED:
             return {
                 ...state,
                 isRejected: true,
-                customer: payload,
+                user: payload,
                 isPending: false,
             };
-        case actions.AUTH_LOGIN_CUSTOMER + actions.FULFILLED:
-            // console.log(payload.data.data)
-            return {
-                ...state,
-                isFulfilled: true,
-                isPending: false,
-                customer: payload.data.data,
-                isRejected: false,
-                isLogin: true,
-            };
-        case actions.AUTH_REGISTER_CUSTOMER + actions.PENDING:
-            return {
-                ...state,
-                isPending: true,
-            };
-        case actions.AUTH_REGISTER_CUSTOMER + actions.REJECTED:
-            return {
-                ...state,
-                isRejected: true,
-                customer: payload,
-                isPending: false,
-            };
-        case actions.AUTH_REGISTER_CUSTOMER + actions.FULFILLED:
-            return {
-                ...state,
-                isFulfilled: true,
-                isPending: false,
-                customer: payload.data.data,
-                isRejected: false,
-                // isLogin: true,
-            };
-
-
-        case actions.AUTH_LOGOUT_CUSTOMER:
-            return {
-                customer: {},
-                isLogin: false,
-                isPending: false,
-                isFulfilled: false,
-                isRejected: false,
+        case actions.AUTH_LOGIN_USER + actions.FULFILLED:
+            if (payload.data.success === false) {
+                return {
+                    ...state,
+                    status: payload.data.status,
+                    errMsg: payload.data.error.msg,
+                }
             }
-        case actions.AUTH_LOGIN_SELLER + actions.PENDING:
-            return {
-                ...state,
-                isPending: true,
-            };
-        case actions.AUTH_LOGIN_SELLER + actions.REJECTED:
-            return {
-                ...state,
-                isRejected: true,
-                seller: payload,
-                isPending: false,
-            };
-        case actions.AUTH_LOGIN_SELLER + actions.FULFILLED:
-            // console.log(payload.data.data)
             return {
                 ...state,
                 isFulfilled: true,
                 isPending: false,
-                seller: payload.data.data,
+                user: payload.data.data,
+                errMsg: '',
+                status: payload.data.status,
                 isRejected: false,
                 isLogin: true,
             };
-        case actions.AUTH_REGISTER_SELLER + actions.PENDING:
+        case actions.AUTH_REGISTER_USER + actions.PENDING:
             return {
                 ...state,
                 isPending: true,
             };
-        case actions.AUTH_REGISTER_SELLER + actions.REJECTED:
+        case actions.AUTH_REGISTER_USER + actions.REJECTED:
             return {
                 ...state,
                 isRejected: true,
-                seller: payload,
+                user: payload,
                 isPending: false,
             };
-        case actions.AUTH_REGISTER_SELLER + actions.FULFILLED:
+        case actions.AUTH_REGISTER_USER + actions.FULFILLED:
             return {
                 ...state,
                 isFulfilled: true,
                 isPending: false,
-                seller: payload.data.data,
+                user: payload.data.data,
                 isRejected: false,
                 // isLogin: true,
             };
-        case actions.AUTH_LOGOUT_SELLER:
+        case actions.AUTH_LOGOUT_USER:
             return {
-                seller: {},
+                user: {},
                 isLogin: false,
                 isPending: false,
                 isFulfilled: false,
