@@ -2,51 +2,31 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 // import { Button, FormGroup, FormControl } from "react-bootstrap"
-import {
-    authLoginCustomerCreator,
-    authLoginSellerCreator,
-} from "../../redux/actions/auth";
 import corpName from "../../assets/img/logo.png";
 import classname from "../../helpers/classJoiner";
 import styles from "./styles.module.css";
 import { useDispatch, useSelector } from "react-redux";
 
-const Login = () => {
-    const dispatch = useDispatch();
+const ResetPassword = () => {
+
     const [userType, setUserType] = useState(false);
     const [errMsg, setErrMsg] = useState(null)
     // const [errMsgSllr, setErrMsgSllr] = useState(null)
 
-    const login = useSelector((state) => state.auth.user);
-    const statusLogin = useSelector((state) => state.auth.status);
-    const errMsgUser = useSelector((state) => state.auth.errMsg)
 
     const { handleSubmit, register, errors } = useForm();
 
     useEffect(() => {
-        // console.log(statusLogin, login.user_type, errMsgUser)
 
-        if (statusLogin === 200 && login.user_type === 'Customer') {
-            setErrMsg(null)
-            return console.log("customer dah login");
-        } else if (statusLogin === 200 && login.user_type === 'Seller') {
-            setErrMsg(null)
-            return console.log("seller dah login");
-        } else {
-            setErrMsg(errMsgUser)
-            // console.log('kambing')
-        }
 
-    }, [statusLogin, login.user_type]);
+    }, []);
 
 
 
     const onSubmitCustomer = (data) => {
-        dispatch(authLoginCustomerCreator(data));
         // console.log('customer')
     };
     const onSubmitSeller = (data) => {
-        dispatch(authLoginSellerCreator(data));
         // console.log('seller')
     };
 
@@ -65,7 +45,7 @@ const Login = () => {
                             src={corpName}
                         />
                         <p className={classname(styles.desc)}>
-                            Please login with your account
+                            Reset password for customer
 						</p>
 
                         <div className={classname(styles.userType)}>
@@ -102,25 +82,6 @@ const Login = () => {
                         <form className={classname(styles.formContainer)}>
                             <p style={{ fontSize: 16, color: 'red' }}>
 
-                                {errors.email && errors.email.message}
-                            </p>
-                            <div>
-                                <input
-                                    className={classname(styles.emailInput)}
-                                    placeholder="Email"
-                                    name="email"
-                                    ref={register({
-                                        required: "Required",
-                                        pattern: {
-                                            value: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
-                                            message: "Bukan email",
-                                        },
-                                    })}
-                                />
-                            </div>
-
-                            <p style={{ fontSize: 16, color: 'red' }}>
-
                                 {errors.password && errors.password.message}
                             </p>
                             <div>
@@ -134,23 +95,36 @@ const Login = () => {
                                         required: "Required",
                                         pattern: {
                                             value: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/,
-                                            message: "Bukan password",
+                                            message: "bukan password",
                                         },
                                         validate: (value) =>
                                             value !== "admin" || "Nice try!",
                                     })}
                                 />
                             </div>
-                            <p className={classname(styles.forgot)}>
-                                <span onClick={() => { }}>
-                                    <Link
-                                        className={classname(styles.bla)}
-                                        to="/EmailInput"
-                                    >
-                                        Forgot password?
-								</Link>
-                                </span>
+
+                            <p style={{ fontSize: 16, color: 'red' }}>
+
+                                {errors.password && errors.password.message}
                             </p>
+                            <div>
+                                <input
+                                    className={classname(styles.passwordInput)}
+                                    placeholder="Confirm new password"
+                                    name="password"
+                                    type='password'
+
+                                    ref={register({
+                                        required: "Required",
+                                        pattern: {
+                                            value: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/,
+                                            message: "bukan password",
+                                        },
+                                        validate: (value) =>
+                                            value !== "admin" || "Nice try!",
+                                    })}
+                                />
+                            </div>
                             <button
                                 className={classname(styles.loginSubmit)}
                                 type="submit"
@@ -186,7 +160,7 @@ const Login = () => {
                                 src={corpName}
                             />
                             <p className={classname(styles.desc)}>
-                                Please login with your seller account
+                                Reset password for seller
 						</p>
 
                             {/* {errMsgSllr === null ? null : (<p className={classname(styles.errMsg)}>{errMsgSllr}</p>)} */}
@@ -224,19 +198,20 @@ const Login = () => {
                             <form className={classname(styles.formContainer)}>
                                 <p style={{ fontSize: 16, color: 'red' }}>
 
-                                    {errors.email && errors.email.message}
+                                    {errors.password && errors.password.message}
                                 </p>
                                 <div>
                                     <input
-                                        className={classname(styles.emailInput)}
-                                        placeholder="Email"
-                                        name="email"
+                                        className={classname(styles.passwordInput)}
+                                        placeholder="Password"
+                                        name="password"
                                         ref={register({
                                             required: "Required",
                                             pattern: {
-                                                value: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
-                                                message: "Bukan email",
+                                                value: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/,
+                                                message: "bukan password",
                                             },
+                                            // validate: value => value !== "admin" || "Nice try!"
                                         })}
                                     />
                                 </div>
@@ -248,30 +223,18 @@ const Login = () => {
                                 <div>
                                     <input
                                         className={classname(styles.passwordInput)}
-                                        placeholder="Password"
+                                        placeholder="Confirm new password"
                                         name="password"
-                                        type='password'
-
                                         ref={register({
                                             required: "Required",
                                             pattern: {
                                                 value: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/,
-                                                message: "Bukan password",
+                                                message: "bukan password",
                                             },
                                             // validate: value => value !== "admin" || "Nice try!"
                                         })}
                                     />
                                 </div>
-                                <p className={classname(styles.forgot)}>
-                                    <span onClick={() => { }}>
-                                        <Link
-                                            className={classname(styles.bla)}
-                                            to="/ResetPassword"
-                                        >
-                                            Forgot password?
-								</Link>
-                                    </span>
-                                </p>
                                 <button
                                     className={classname(styles.loginSubmit)}
                                     type="submit"
@@ -299,4 +262,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default ResetPassword;

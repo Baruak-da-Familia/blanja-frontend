@@ -87,7 +87,8 @@ const Login = () => {
 							</button>
 						</div>
 						<form className={classname(styles.formContainer)}>
-							<p className={classname(styles.errMsg)}>
+						<p style={{ fontSize: 16, color: 'red' }}>
+
 								{errors.name && errors.name.message}
 							</p>
 							<div>
@@ -101,7 +102,8 @@ const Login = () => {
 								/>
 							</div>
 
-							<p className={classname(styles.errMsg)}>
+							<p style={{ fontSize: 16, color: 'red' }}>
+
 								{errors.email && errors.email.message}
 							</p>
 							<div>
@@ -113,13 +115,14 @@ const Login = () => {
 										required: "Required",
 										pattern: {
 											value: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
-											message: "email",
+											message: "Bukan email",
 										},
 									})}
 								/>
 							</div>
 
-							<p className={classname(styles.errMsg)}>
+							<p style={{ fontSize: 16, color: 'red' }}>
+
 								{errors.password && errors.password.message}
 							</p>
 							<div>
@@ -127,11 +130,12 @@ const Login = () => {
 									className={classname(styles.passwordInput)}
 									placeholder="Password"
 									name="password"
+									type='password'
 									ref={register({
 										required: "Required",
 										pattern: {
 											value: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/,
-											message: "Password",
+											message: "Bukan password",
 										},
 									})}
 								/>
@@ -201,7 +205,8 @@ const Login = () => {
 							)}
 						</div>
 						<form className={classname(styles.formContainer)}>
-							<p className={classname(styles.errMsg)}>
+						<p style={{ fontSize: 16, color: 'red' }}>
+
 								{errors.name && errors.name.message}
 							</p>
 							<div>
@@ -215,7 +220,8 @@ const Login = () => {
 								/>
 							</div>
 
-							<p className={classname(styles.errMsg)}>
+							<p style={{ fontSize: 16, color: 'red' }}>
+
 								{errors.email && errors.email.message}
 							</p>
 							<div>
@@ -223,17 +229,19 @@ const Login = () => {
 									className={classname(styles.emailInput)}
 									placeholder="Email"
 									name="email"
+								
 									ref={register({
 										required: "Required",
 										pattern: {
 											value: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
-											message: "email",
+											message: "Bukan email",
 										},
 									})}
 								/>
 							</div>
 
-							<p className={classname(styles.errMsg)}>
+							<p style={{ fontSize: 16, color: 'red' }}>
+
 								{errors.phone_number &&
 									errors.phone_number.message}
 							</p>
@@ -246,13 +254,14 @@ const Login = () => {
 										required: "Required",
 										pattern: {
 											value: /^\s*[+-]?(\d+|\.\d+|\d+\.\d+|\d+\.)(e[+-]?\d+)?\s*$/,
-											message: "Number",
+											message: "Bukan number",
 										},
 									})}
 								/>
 							</div>
 
-							<p className={classname(styles.errMsg)}>
+							<p style={{ fontSize: 16, color: 'red' }}>
+
 								{errors.storeName && errors.storeName.message}
 							</p>
 							<div>
@@ -265,7 +274,8 @@ const Login = () => {
 									})}
 								/>
 							</div>
-							<p className={classname(styles.errMsg)}>
+							<p style={{ fontSize: 16, color: 'red' }}>
+
 								{errors.password && errors.password.message}
 							</p>
 							<div>
@@ -273,11 +283,12 @@ const Login = () => {
 									className={classname(styles.passwordInput)}
 									placeholder="Password"
 									name="password"
+									type='password'
 									ref={register({
 										required: "Required",
 										pattern: {
 											value: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/,
-											message: "Password",
+											message: "Bukan password",
 										},
 									})}
 								/>
