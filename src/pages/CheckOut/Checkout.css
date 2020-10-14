@@ -7,6 +7,12 @@
  .headline {
    font-weight: 700;
  }
+
+ .text-empty-cart {
+  font-weight: 700;
+  font-style: italic;
+  text-align: center;
+}
  
  .container-title {
    margin-bottom: 3rem;
