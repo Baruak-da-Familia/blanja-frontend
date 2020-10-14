@@ -8,6 +8,8 @@ import Register from "./pages/Auth/Register";
 import Chat from "./pages/Chat/Chat";
 import Profile from "./pages/Profile";
 import ProfileSeller from "./pages/ProfileSeller";
+import MyBag from "./pages/MyBag/MyBag";
+import CheckOut from "./pages/CheckOut/CheckOut";
 
 function RouteWithNavbar({ component: Component, ...rest }) {
 	return (
@@ -46,6 +48,16 @@ function App() {
 						exact
 						path="/profileseller"
 						component={ProfileSeller}
+					/>
+					<RouteWithNavbar
+						exact
+						path="/mybag"
+						component={MyBag}
+					/>
+					<RouteWithNavbar
+						exact
+						path="/checkout"
+						component={CheckOut}
 					/>
 				</Switch>
 			</Router>

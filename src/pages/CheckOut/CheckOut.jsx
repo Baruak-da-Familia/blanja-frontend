@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import colors from '../../assets/colors.module.css';
 import text from '../../assets/text.module.css';
 import classname from '../../helpers/classJoiner';
@@ -6,18 +6,18 @@ import ModalChooseAddress from "../../components/CheckOut/ModalChooseAddress";
 import ModalAddAddress from "../../components/Profile/ModalAddAddress";
 import ModalSelectPayment from "../../components/CheckOut/ModalSelectPayment";
 import { useDispatch, useSelector } from "react-redux";
-import { transaction } from "../../redux/actions/transaction";
+import { transaction, fetchAllProduct } from "../../redux/actions/product";
 import './Checkout.css';
 
 const CheckOut = (props) => {
    const [user] = useState({
-      id: 2,
+      id: 1,
       address: "Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c 16] Sokaraja, Kab. Banyumas, 53181",
 
    });
    const [cart] = useState([
       {
-         id: 2,
+         id: 22,
          name: "Men's formal suit - Black",
          seller: "Zalora Cloth",
          qty: 1,
@@ -26,7 +26,7 @@ const CheckOut = (props) => {
          img: "https://s3-alpha-sig.figma.com/img/464a/22c1/4934cf1d9102bfc8ca226895c16fe510?Expires=1603065600&Signature=L2Go8ufnFXRu499YQ0SVJEFU8cW1i62rws4oM3PBc-WW3sCqbVw0AWsTnmqAMhltn5TMjdbR3EQjYS1QtRoZLSkt2Mh-AEfzKwMThJEAMb7oAI5dw1nCy1PVoEp9LQeco~tzGD5SJ9h8OzJgkoVGQ0YY1soJMVaC472GJxxHVZDfVctr2MEsi6EaHG-SqeNBVNHCcKM8EVDVhlTRT36AqDLeOSD10qWLtwInozO-8QW1w6hsZ2TmGRRXq4WjOaDU~8gLUUnxINBWB4m-FOwMs2DGjhpkQZQHe3B1fu0gIbL84W50DSX9X-w4PvTsTNFSgxsImCcSNvUX6Hsx5AavAg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
       },
       {
-         id: 4,
+         id: 23,
          name: "Men's Jacket jeans",
          seller: "Zalora Cloth",
          qty: 1,
@@ -37,6 +37,7 @@ const CheckOut = (props) => {
    ]);
 
    const stateAuth = useSelector(state => state.auth.user);
+   const stateProduct = useSelector(state => state.product.product);
    const dispatch = useDispatch();
 
    let invoice = Math.floor(Math.random() * 100001) + 1;
@@ -57,7 +58,12 @@ const CheckOut = (props) => {
       }
    );
 
-   const { data } = props.location;
+   // const { data } = props.location;
+   useEffect(() => {
+      dispatch(fetchAllProduct())
+   }, [dispatch]);
+
+   console.log(stateProduct);
 
    const [showChooseAddress, setShowChooseAddress] = useState(false);
    const [showAddAddress, setShowAddAddress] = useState(false);

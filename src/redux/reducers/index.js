@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import authReducer from './auth';
-import transactionReducer from './transaction';
+import productReducer from './product';
 
 const indexReducer = combineReducers({
     auth: authReducer,
-    transaction: transactionReducer,
+    product: productReducer,
 })
 
 export default indexReducer;
