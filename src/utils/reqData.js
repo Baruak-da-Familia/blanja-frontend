@@ -11,6 +11,11 @@ export const authLoginSeller = (data) => {
 export const authRegisterCustomer = (data) => {
     return Axios.post(`http://localhost:8000/auth/register/customer`, data);
 }
+
 export const authRegisterSeller = (data) => {
     return Axios.post(`http://localhost:8000/auth/register/seller`, data);
+}
+
+export const doTransaction = (data) => {
+    return Axios.post(`http://localhost:8000/order`, data);
 }
