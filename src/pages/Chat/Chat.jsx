@@ -117,7 +117,9 @@ const Chat = (props) => {
 		});
 		setSocket(newSocket);
 		console.log(myId);
-		return () => socket.close();
+		return () => {
+			if (socket) socket.close();
+		};
 	}, [myId]);
 
 	React.useEffect(() => {
@@ -251,11 +253,11 @@ const Chat = (props) => {
 	return (
 		<>
 			<div className={classname(styles.chat)}>
-				<input
+				{/* <input
 					ref={testRef}
 					placeholder="masukin id"
 					onKeyPress={handleTest}
-				/>
+				/> */}
 				<div className={classname(styles.chatlistContainer)}>
 					<div className={classname(styles.chatlistHeader)}>
 						<h1 className={classname(text.headline2)}>Chats</h1>
