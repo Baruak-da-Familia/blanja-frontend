@@ -1,74 +1,74 @@
 @font-face {
-  font-family: "Metropolis";
-  src: url("../../assets/fonts/Metropolis-Regular.otf");
+	font-family: "Metropolis";
+	src: url("../../assets/fonts/Metropolis-Regular.otf");
 }
 .container {
-  flex: 1;
-  background-color: #ffffff;
-  z-index: 1;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  margin-top: 20px;
+	flex: 1;
+	background-color: #ffffff;
+	z-index: 1;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	padding-top: 150px;
 }
 .infoitem {
-  position: flex;
-  /* z-index: 2; */
-  width: 100%;
-  margin-left: 20%;
+	position: flex;
+	/* z-index: 2; */
+	width: 100%;
+	margin-left: 20%;
 }
 .profile {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 40px;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 40px;
 }
 .info {
-  display: flex;
-  flex-direction: row;
-  /* margin-top: 10px; */
-  align-items: center;
-  cursor: pointer;
-  /* vertical-align: middle; */
+	display: flex;
+	flex-direction: row;
+	/* margin-top: 10px; */
+	align-items: center;
+	cursor: pointer;
+	/* vertical-align: middle; */
 }
 .image {
-  height: 60.55px;
-  height: 60.55px;
-  border-radius: 30px;
+	height: 60.55px;
+	height: 60.55px;
+	border-radius: 30px;
 }
 .name {
-  color: #222222;
-  font-family: "Metropolis";
-  font-weight: 600;
-  font-size: 16px;
-  padding-left: 10px;
-  margin-top: 15px;
+	color: #222222;
+	font-family: "Metropolis";
+	font-weight: 600;
+	font-size: 16px;
+	padding-left: 10px;
+	margin-top: 15px;
 }
 .nameinfo {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
 }
 .edit {
-  color: #9b9b9b;
-  padding-left: 10px;
-  margin-top: 0px;
+	color: #9b9b9b;
+	padding-left: 10px;
+	margin-top: 0px;
 }
 .active {
-  color: #222222;
-  font-family: "Metropolis";
-  font-weight: 500;
-  font-size: 14px;
-  padding-left: 10px;
-  margin-top: 15px;
+	color: #222222;
+	font-family: "Metropolis";
+	font-weight: 500;
+	font-size: 14px;
+	padding-left: 10px;
+	margin-top: 15px;
 }
 .inactive {
-  color: #9b9b9b;
-  font-family: "Metropolis";
-  font-weight: 500;
-  font-size: 14px;
-  padding-left: 10px;
-  margin-top: 15px;
+	color: #9b9b9b;
+	font-family: "Metropolis";
+	font-weight: 500;
+	font-size: 14px;
+	padding-left: 10px;
+	margin-top: 15px;
 }
