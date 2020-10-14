@@ -28,3 +28,12 @@ export const getProductBySellerId = (id) => {
       payload: api.getProductBySellerId(id),
    };
 };
+
+export const addToCart = (id, name, brand, qty, price, images) => {
+   return {
+      type: actions.ADD_TO_CART,
+      payload: {
+         id, name, brand, qty, price, images
+      },
+   };
+};
