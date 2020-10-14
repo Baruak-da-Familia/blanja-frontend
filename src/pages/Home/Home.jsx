@@ -8,11 +8,15 @@ import text from "../../assets/text.module.css";
 import { previewData, categoryData, newData } from "../../utils/dummydata";
 
 const Home = (props) => {
+	const onClickHandler = (id) => {
+		props.history.push(`/detail/${id}`);
+	};
+
 	return (
 		<main className={styles.home}>
 			<div style={{ marginBottom: "50px" }}>
 				<Carousel
-					key="previewItem"
+					key="1"
 					carouselType="previewItem"
 					data={previewData}
 				/>
@@ -28,9 +32,10 @@ const Home = (props) => {
 					What are you currently looking for
 				</p>
 				<Carousel
-					key="categoryItem"
+					key="2"
 					carouselType="categoryItem"
 					data={categoryData}
+					history={props.history}
 				/>
 			</div>
 			<h1 className={text.headline}>New</h1>
@@ -46,7 +51,13 @@ const Home = (props) => {
 					)}
 				>
 					{newData.map((item) => {
-						return <Card key={item.id} {...item} />;
+						return (
+							<Card
+								key={item.id}
+								{...item}
+								onClickProp={onClickHandler}
+							/>
+						);
 					})}
 				</div>
 			</div>
@@ -63,7 +74,13 @@ const Home = (props) => {
 					)}
 				>
 					{newData.map((item) => {
-						return <Card key={item.id} {...item} />;
+						return (
+							<Card
+								key={item.id}
+								{...item}
+								onClickProp={onClickHandler}
+							/>
+						);
 					})}
 				</div>
 			</div>
