@@ -8,6 +8,10 @@ import text from "../../assets/text.module.css";
 import { previewData, categoryData, newData } from "../../utils/dummydata";
 
 const Home = (props) => {
+	const onClickHandler = (id) => {
+		props.history.push(`/detail/${id}`);
+	};
+
 	return (
 		<main className={styles.home}>
 			<div style={{ marginBottom: "50px" }}>
@@ -47,7 +51,13 @@ const Home = (props) => {
 					)}
 				>
 					{newData.map((item) => {
-						return <Card key={item.id} {...item} />;
+						return (
+							<Card
+								key={item.id}
+								{...item}
+								onClickProp={onClickHandler}
+							/>
+						);
 					})}
 				</div>
 			</div>
@@ -64,7 +74,13 @@ const Home = (props) => {
 					)}
 				>
 					{newData.map((item) => {
-						return <Card key={item.id} {...item} />;
+						return (
+							<Card
+								key={item.id}
+								{...item}
+								onClickProp={onClickHandler}
+							/>
+						);
 					})}
 				</div>
 			</div>

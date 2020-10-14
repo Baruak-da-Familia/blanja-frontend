@@ -40,7 +40,14 @@ const Card = (props) => {
 				styles.mr37
 			)}
 		>
-			<div className={styles.cardContainer}>
+			<div
+				className={styles.cardContainer}
+				onClick={() => {
+					if (props.onClickProp) {
+						props.onClickProp(props.id);
+					}
+				}}
+			>
 				<Img
 					source={props.img}
 					containerStyle={styles.cardImgContainer}
@@ -70,6 +77,7 @@ Card.propTypes = {
 	price: PropTypes.string,
 	category: PropTypes.string,
 	rate: PropTypes.number,
+	onClickProp: PropTypes.func,
 };
 
 export default Card;

@@ -12,7 +12,7 @@ import classname from "../../helpers/classJoiner";
 import styles from "./styles.module.css";
 import { useDispatch, useSelector } from "react-redux";
 
-const Login = () => {
+const Login = (props) => {
 	const dispatch = useDispatch();
 	const [userType, setUserType] = useState(false);
 
@@ -22,15 +22,21 @@ const Login = () => {
 
 	useEffect(() => {
 		if (registerUser.msg === "Register Success") {
-			return console.log("customer dah register");
+			props.history.push("/");
 		}
 	}, [registerUser.msg]);
 
-	useEffect(() => {
-		if (registerUser.msg === "Register Success") {
-			return console.log("seller dah register");
-		}
-	}, [registerUser.msg]);
+	// useEffect(() => {
+	// 	if (registerUser.msg === "Register Success") {
+	// 		return console.log("customer dah register");
+	// 	}
+	// }, [registerUser.msg]);
+
+	// useEffect(() => {
+	// 	if (registerUser.msg === "Register Success") {
+	// 		return console.log("seller dah register");
+	// 	}
+	// }, [registerUser.msg]);
 
 	const onSubmitCustomer = (data) => {
 		// console.log('kambing')
@@ -87,8 +93,7 @@ const Login = () => {
 							</button>
 						</div>
 						<form className={classname(styles.formContainer)}>
-						<p style={{ fontSize: 16, color: 'red' }}>
-
+							<p style={{ fontSize: 16, color: "red" }}>
 								{errors.name && errors.name.message}
 							</p>
 							<div>
@@ -102,8 +107,7 @@ const Login = () => {
 								/>
 							</div>
 
-							<p style={{ fontSize: 16, color: 'red' }}>
-
+							<p style={{ fontSize: 16, color: "red" }}>
 								{errors.email && errors.email.message}
 							</p>
 							<div>
@@ -121,8 +125,7 @@ const Login = () => {
 								/>
 							</div>
 
-							<p style={{ fontSize: 16, color: 'red' }}>
-
+							<p style={{ fontSize: 16, color: "red" }}>
 								{errors.password && errors.password.message}
 							</p>
 							<div>
@@ -130,7 +133,7 @@ const Login = () => {
 									className={classname(styles.passwordInput)}
 									placeholder="Password"
 									name="password"
-									type='password'
+									type="password"
 									ref={register({
 										required: "Required",
 										pattern: {
@@ -205,8 +208,7 @@ const Login = () => {
 							)}
 						</div>
 						<form className={classname(styles.formContainer)}>
-						<p style={{ fontSize: 16, color: 'red' }}>
-
+							<p style={{ fontSize: 16, color: "red" }}>
 								{errors.name && errors.name.message}
 							</p>
 							<div>
@@ -220,8 +222,7 @@ const Login = () => {
 								/>
 							</div>
 
-							<p style={{ fontSize: 16, color: 'red' }}>
-
+							<p style={{ fontSize: 16, color: "red" }}>
 								{errors.email && errors.email.message}
 							</p>
 							<div>
@@ -229,7 +230,6 @@ const Login = () => {
 									className={classname(styles.emailInput)}
 									placeholder="Email"
 									name="email"
-								
 									ref={register({
 										required: "Required",
 										pattern: {
@@ -240,8 +240,7 @@ const Login = () => {
 								/>
 							</div>
 
-							<p style={{ fontSize: 16, color: 'red' }}>
-
+							<p style={{ fontSize: 16, color: "red" }}>
 								{errors.phone_number &&
 									errors.phone_number.message}
 							</p>
@@ -260,8 +259,7 @@ const Login = () => {
 								/>
 							</div>
 
-							<p style={{ fontSize: 16, color: 'red' }}>
-
+							<p style={{ fontSize: 16, color: "red" }}>
 								{errors.storeName && errors.storeName.message}
 							</p>
 							<div>
@@ -274,8 +272,7 @@ const Login = () => {
 									})}
 								/>
 							</div>
-							<p style={{ fontSize: 16, color: 'red' }}>
-
+							<p style={{ fontSize: 16, color: "red" }}>
 								{errors.password && errors.password.message}
 							</p>
 							<div>
@@ -283,7 +280,7 @@ const Login = () => {
 									className={classname(styles.passwordInput)}
 									placeholder="Password"
 									name="password"
-									type='password'
+									type="password"
 									ref={register({
 										required: "Required",
 										pattern: {
@@ -305,7 +302,10 @@ const Login = () => {
 						<p>
 							Already have a Tokopedia account?{" "}
 							<span onClick={() => {}}>
-								<Link className={classname(styles.bla)} to="/">
+								<Link
+									className={classname(styles.bla)}
+									to="/login"
+								>
 									Login
 								</Link>
 							</span>

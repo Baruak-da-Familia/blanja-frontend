@@ -11,7 +11,7 @@ import classname from "../../helpers/classJoiner";
 import styles from "./styles.module.css";
 import { useDispatch, useSelector } from "react-redux";
 
-const Login = () => {
+const Login = (props) => {
 	const dispatch = useDispatch();
 	const [userType, setUserType] = useState(false);
 	const [errMsg, setErrMsg] = useState(null);
@@ -23,6 +23,11 @@ const Login = () => {
 
 	const { handleSubmit, register, errors } = useForm();
 
+	useEffect(() => {
+		if (statusLogin === 200) {
+			props.history.push("/");
+		}
+	}, [statusLogin]);
 
 	useEffect(() => {
 		// console.log(statusLogin, login.user_type, errMsgUser)
@@ -65,10 +70,12 @@ const Login = () => {
 							Please login with your account
 						</p>
 
-
-                        <div className={classname(styles.userType)}>
-                            {errMsg === null ? null : (<p className={classname(styles.errMsg)}>{errMsg}</p>)}
-
+						<div className={classname(styles.userType)}>
+							{errMsg === null ? null : (
+								<p className={classname(styles.errMsg)}>
+									{errMsg}
+								</p>
+							)}
 
 							{userType === false ? (
 								<button
@@ -98,63 +105,60 @@ const Login = () => {
 							</button>
 						</div>
 
-                        <form className={classname(styles.formContainer)}>
-                            <p style={{ fontSize: 16, color: 'red' }}>
+						<form className={classname(styles.formContainer)}>
+							<p style={{ fontSize: 16, color: "red" }}>
+								{errors.email && errors.email.message}
+							</p>
+							<div>
+								<input
+									className={classname(styles.emailInput)}
+									placeholder="Email"
+									name="email"
+									ref={register({
+										required: "Required",
+										pattern: {
+											value: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
+											message: "Bukan email",
+										},
+									})}
+								/>
+							</div>
 
-                                {errors.email && errors.email.message}
-                            </p>
-                            <div>
-                                <input
-                                    className={classname(styles.emailInput)}
-                                    placeholder="Email"
-                                    name="email"
-                                    ref={register({
-                                        required: "Required",
-                                        pattern: {
-                                            value: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
-                                            message: "Bukan email",
-                                        },
-                                    })}
-                                />
-                            </div>
-
-                            <p style={{ fontSize: 16, color: 'red' }}>
-
-                                {errors.password && errors.password.message}
-                            </p>
-                            <div>
-                                <input
-                                    className={classname(styles.passwordInput)}
-                                    placeholder="Password"
-                                    name="password"
-                                    type='password'
-
-                                    ref={register({
-                                        required: "Required",
-                                        pattern: {
-                                            value: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/,
-                                            message: "Bukan password",
-                                        },
-                                        validate: (value) =>
-                                            value !== "admin" || "Nice try!",
-                                    })}
-                                />
-                            </div>
-                            <p className={classname(styles.forgot)}>
-                                <span onClick={() => { }}>
-                                    <Link
-                                        className={classname(styles.bla)}
-                                        to="/EmailInput"
-                                    >
-                                        Forgot password?
-								</Link>
-                                </span>
-                            </p>
-                            <button
-                                className={classname(styles.loginSubmit)}
-                                type="submit"
-                            >
-                                Submit
+							<p style={{ fontSize: 16, color: "red" }}>
+								{errors.password && errors.password.message}
+							</p>
+							<div>
+								<input
+									className={classname(styles.passwordInput)}
+									placeholder="Password"
+									name="password"
+									type="password"
+									ref={register({
+										required: "Required",
+										pattern: {
+											value: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/,
+											message: "Bukan password",
+										},
+										validate: (value) =>
+											value !== "admin" || "Nice try!",
+									})}
+								/>
+							</div>
+							<p className={classname(styles.forgot)}>
+								<span onClick={() => {}}>
+									<Link
+										className={classname(styles.bla)}
+										to="/EmailInput"
+									>
+										Forgot password?
+									</Link>
+								</span>
+							</p>
+							<button
+								className={classname(styles.loginSubmit)}
+								type="submit"
+							>
+								Submit
 							</button>
 						</form>
 					</form>
@@ -220,64 +224,59 @@ const Login = () => {
 							)}
 						</div>
 
+						<form className={classname(styles.formContainer)}>
+							<p style={{ fontSize: 16, color: "red" }}>
+								{errors.email && errors.email.message}
+							</p>
+							<div>
+								<input
+									className={classname(styles.emailInput)}
+									placeholder="Email"
+									name="email"
+									ref={register({
+										required: "Required",
+										pattern: {
+											value: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
+											message: "Bukan email",
+										},
+									})}
+								/>
+							</div>
 
-                            <form className={classname(styles.formContainer)}>
-                                <p style={{ fontSize: 16, color: 'red' }}>
-
-                                    {errors.email && errors.email.message}
-                                </p>
-                                <div>
-                                    <input
-                                        className={classname(styles.emailInput)}
-                                        placeholder="Email"
-                                        name="email"
-                                        ref={register({
-                                            required: "Required",
-                                            pattern: {
-                                                value: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
-                                                message: "Bukan email",
-                                            },
-                                        })}
-                                    />
-                                </div>
-
-                                <p style={{ fontSize: 16, color: 'red' }}>
-
-                                    {errors.password && errors.password.message}
-                                </p>
-                                <div>
-                                    <input
-                                        className={classname(styles.passwordInput)}
-                                        placeholder="Password"
-                                        name="password"
-                                        type='password'
-
-                                        ref={register({
-                                            required: "Required",
-                                            pattern: {
-                                                value: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/,
-                                                message: "Bukan password",
-                                            },
-                                            // validate: value => value !== "admin" || "Nice try!"
-                                        })}
-                                    />
-                                </div>
-                                <p className={classname(styles.forgot)}>
-                                    <span onClick={() => { }}>
-                                        <Link
-                                            className={classname(styles.bla)}
-                                            to="/ResetPassword"
-                                        >
-                                            Forgot password?
-								</Link>
-                                    </span>
-                                </p>
-                                <button
-                                    className={classname(styles.loginSubmit)}
-                                    type="submit"
-                                >
-                                    Submit
-
+							<p style={{ fontSize: 16, color: "red" }}>
+								{errors.password && errors.password.message}
+							</p>
+							<div>
+								<input
+									className={classname(styles.passwordInput)}
+									placeholder="Password"
+									name="password"
+									type="password"
+									ref={register({
+										required: "Required",
+										pattern: {
+											value: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/,
+											message: "Bukan password",
+										},
+										// validate: value => value !== "admin" || "Nice try!"
+									})}
+								/>
+							</div>
+							<p className={classname(styles.forgot)}>
+								<span onClick={() => {}}>
+									<Link
+										className={classname(styles.bla)}
+										to="/ResetPassword"
+									>
+										Forgot password?
+									</Link>
+								</span>
+							</p>
+							<button
+								className={classname(styles.loginSubmit)}
+								type="submit"
+							>
+								Submit
 							</button>
 						</form>
 					</form>
