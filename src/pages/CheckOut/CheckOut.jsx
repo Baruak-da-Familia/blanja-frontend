@@ -1,39 +1,77 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import colors from '../../assets/colors.module.css';
 import text from '../../assets/text.module.css';
 import classname from '../../helpers/classJoiner';
 import ModalChooseAddress from "../../components/CheckOut/ModalChooseAddress";
 import ModalAddAddress from "../../components/Profile/ModalAddAddress";
 import ModalSelectPayment from "../../components/CheckOut/ModalSelectPayment";
+import { useDispatch, useSelector } from "react-redux";
+import { transaction, fetchAllProduct } from "../../redux/actions/product";
 import './Checkout.css';
 
 const CheckOut = (props) => {
-   const [cart, setCart] = useState([
+   const [user] = useState({
+      id: 1,
+      address: "Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c 16] Sokaraja, Kab. Banyumas, 53181",
+
+   });
+   const [cart] = useState([
       {
-         id: 1,
+         id: 22,
          name: "Men's formal suit - Black",
          seller: "Zalora Cloth",
-         quantity: 1,
+         qty: 1,
          price: 20.0,
          selected: true,
          img: "https://s3-alpha-sig.figma.com/img/464a/22c1/4934cf1d9102bfc8ca226895c16fe510?Expires=1603065600&Signature=L2Go8ufnFXRu499YQ0SVJEFU8cW1i62rws4oM3PBc-WW3sCqbVw0AWsTnmqAMhltn5TMjdbR3EQjYS1QtRoZLSkt2Mh-AEfzKwMThJEAMb7oAI5dw1nCy1PVoEp9LQeco~tzGD5SJ9h8OzJgkoVGQ0YY1soJMVaC472GJxxHVZDfVctr2MEsi6EaHG-SqeNBVNHCcKM8EVDVhlTRT36AqDLeOSD10qWLtwInozO-8QW1w6hsZ2TmGRRXq4WjOaDU~8gLUUnxINBWB4m-FOwMs2DGjhpkQZQHe3B1fu0gIbL84W50DSX9X-w4PvTsTNFSgxsImCcSNvUX6Hsx5AavAg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
       },
       {
-         id: 2,
+         id: 23,
          name: "Men's Jacket jeans",
          seller: "Zalora Cloth",
-         quantity: 1,
+         qty: 1,
          price: 20.0,
          selected: true,
          img: "https://s3-alpha-sig.figma.com/img/d373/227e/1b077d067cc7eed45f8733fd75f5e570?Expires=1603065600&Signature=d40ckFqK4v2u2r8FCajf9MOpyiz7NQhmacmlyXyfsLXRPWu-5MQ8RndW9wtuCOVRc~kbqsGaqwrfcjB4AgWVrtxYHETotH8XBuP5~rKUpUYxq1jUSWz5fo2WcHZvYKWFaF05tyYRfWOQWF7JB-q~69HXXeWfK6S~KA4wHmlMEVwMY66Q6nSvHxAqrXejnpENTskeO1Bp5zeypr~kd7N8c5oWsC8UQUV0M6ff1hcyhjT2YbgIDcAp6Y3fOXdKH4Iefow8ChLuq~jnAAfvE8Y8JWAXwZ713jAVTUpYVV2gpP-f-IZWypkWsoVUSB~GSmuYZjQX6xZ8c98qewV0Qj38Ow__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
       },
    ]);
 
-   const { data } = props.location;
+   const stateAuth = useSelector(state => state.auth.user);
+   const stateProduct = useSelector(state => state.product.product);
+   const dispatch = useDispatch();
+
+   let invoice = Math.floor(Math.random() * 100001) + 1;
+   const [dataTransaction, setDataTransaction] = useState(
+      {
+         "id": invoice,
+         "customer_id": user.id,
+         "seller_id": 1,
+         "amount": cart.reduce((total, item) => { return total + (item.price * item.qty) }, 5),
+         "payment_method": "visa",
+         "address": user.address,
+         "products": cart.map(item => {
+            return {
+               id: item.id,
+               qty: item.qty
+            }
+         }),
+      }
+   );
+
+   // const { data } = props.location;
+   useEffect(() => {
+      dispatch(fetchAllProduct())
+   }, [dispatch]);
+
+   console.log(stateProduct);
 
    const [showChooseAddress, setShowChooseAddress] = useState(false);
    const [showAddAddress, setShowAddAddress] = useState(false);
    const [showPayment, setShowPayment] = useState(false);
+
+   const handleSubmit = () => {
+      dispatch(transaction(dataTransaction));
+   };
 
    return (
       <div className="container-main">
@@ -65,7 +103,7 @@ const CheckOut = (props) => {
                         </div>
                         <div className="col-2">
                            <p href="#" className={classname(text.text, colors.blackText, "text-title text-right")}>
-                              {`$ ${item.price * item.quantity}`}
+                              {`$ ${item.price * item.qty}`}
                            </p>
                         </div>
                      </div>
@@ -83,7 +121,7 @@ const CheckOut = (props) => {
                         <p className={classname(text.text, colors.grayText, "text-title")}>Delivery</p>
                      </div>
                      <div className="col">
-                        <p className={classname(text.headline3, "text-title text-right")}>{`$ ${cart.reduce((total, item) => { return total + (item.price * item.quantity) }, 0).toFixed(1)}`}</p>
+                        <p className={classname(text.headline3, "text-title text-right")}>{`$ ${cart.reduce((total, item) => { return total + (item.price * item.qty) }, 0).toFixed(1)}`}</p>
                         <p className={classname(text.headline3, "text-title text-right")}>$ 5.0</p>
                      </div>
                   </div>
@@ -92,7 +130,7 @@ const CheckOut = (props) => {
                         <p className={classname(text.text, "text-title mb-5")}>Shopping summary</p>
                      </div>
                      <div className="col">
-                        <p className={classname(text.headline3, colors.primaryText, "text-title text-right")}>{`$ ${cart.reduce((total, item) => { return total + (item.price * item.quantity) }, 5).toFixed(1)}`}</p>
+                        <p className={classname(text.headline3, colors.primaryText, "text-title text-right")}>{`$ ${cart.reduce((total, item) => { return total + (item.price * item.qty) }, 5).toFixed(1)}`}</p>
                      </div>
                   </div>
                   <button className={classname("btn btn-danger btn-buy", colors.primary)} onClick={() => setShowPayment(true)}>Select payment</button>
@@ -109,6 +147,7 @@ const CheckOut = (props) => {
             onHide={() => setShowPayment(false)}
             showAddAddress={() => setShowAddAddress(true)}
             cart={cart}
+            onSubmit={() => handleSubmit()}
          />
          <ModalAddAddress
             show={showAddAddress}
