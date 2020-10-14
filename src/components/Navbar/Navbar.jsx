@@ -14,7 +14,7 @@ import message from "../../assets/img/message.png";
 import userDefault from "../../assets/img/default.png";
 
 const Navbar = (props) => {
-	const isLoggedIn = false;
+	const isLoggedIn = true;
 	const token = "test";
 	return (
 		<header className={classname(styles.navbar, colors.white)}>
