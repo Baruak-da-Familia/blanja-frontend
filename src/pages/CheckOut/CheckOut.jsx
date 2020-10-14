@@ -15,7 +15,7 @@ const CheckOut = (props) => {
       address: "Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c 16] Sokaraja, Kab. Banyumas, 53181",
 
    });
-   const [cart] = useState([
+   const [cart, setCart] = useState([
       {
          id: 22,
          name: "Men's formal suit - Black",
@@ -37,7 +37,6 @@ const CheckOut = (props) => {
    ]);
 
    const stateAuth = useSelector(state => state.auth.user);
-   const stateProduct = useSelector(state => state.product.product);
    const dispatch = useDispatch();
 
    let invoice = Math.floor(Math.random() * 100001) + 1;
@@ -47,7 +46,7 @@ const CheckOut = (props) => {
          "customer_id": user.id,
          "seller_id": 1,
          "amount": cart.reduce((total, item) => { return total + (item.price * item.qty) }, 5),
-         "payment_method": "visa",
+         "payment_method": "",
          "address": user.address,
          "products": cart.map(item => {
             return {
@@ -59,18 +58,24 @@ const CheckOut = (props) => {
    );
 
    // const { data } = props.location;
-   useEffect(() => {
-      dispatch(fetchAllProduct())
-   }, [dispatch]);
-
-   console.log(stateProduct);
-
    const [showChooseAddress, setShowChooseAddress] = useState(false);
    const [showAddAddress, setShowAddAddress] = useState(false);
    const [showPayment, setShowPayment] = useState(false);
 
    const handleSubmit = () => {
-      dispatch(transaction(dataTransaction));
+      if (dataTransaction.payment_method === "") {
+         alert("Please select a payment method..!")
+      } else {
+         dispatch(transaction(dataTransaction));
+         alert("Transaction success")
+         setCart([])
+         setShowPayment(false)
+         // console.log(dataTransaction)
+      }
+   };
+
+   const handleSelectPayment = (evt) => {
+      setDataTransaction({ ...dataTransaction, payment_method: evt.currentTarget.value })
    };
 
    return (
@@ -78,65 +83,70 @@ const CheckOut = (props) => {
          <div className="container-title">
             <h1 className={classname(text.headline, "headline")}>Checkout</h1>
          </div>
-         <div className="row">
-            {/* left item */}
-            <div className="col-lg-7">
-               <h4 className={classname(text.text, "text-title")}>Shipping Adress</h4>
-               <div className="row no-gutters shadow align-content-center container-select-all">
-                  <div className="col">
-                     <p className={classname(text.text, "text-title")}>Andreas Jane</p>
-                     <p className="text-addres mb-4">Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c 16] Sokaraja, Kab. Banyumas, 53181</p>
-                     <button type="button" className={classname(colors.grayText, "btn btn-outline-secondary btn-choose-address")} onClick={() => setShowChooseAddress(true)}>Choose another address</button>
+         {cart.length ? (
+            <div className="row">
+               {/* left item */}
+               <div className="col-lg-7">
+                  <h4 className={classname(text.text, "text-title")}>Shipping Adress</h4>
+                  <div className="row no-gutters shadow align-content-center container-select-all">
+                     <div className="col">
+                        <p className={classname(text.text, "text-title")}>Andreas Jane</p>
+                        <p className="text-addres mb-4">Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c 16] Sokaraja, Kab. Banyumas, 53181</p>
+                        <button type="button" className={classname(colors.grayText, "btn btn-outline-secondary btn-choose-address")} onClick={() => setShowChooseAddress(true)}>Choose another address</button>
+                     </div>
                   </div>
-               </div>
 
-               {/* list item */}
-               {cart.map(item => {
-                  return (
-                     <div className="row no-gutters shadow align-items-center container-items" key={item.id}>
-                        <div className="col-2">
-                           <img src={item.img} alt="" />
+                  {/* list item */}
+                  {cart.map(item => {
+                     return (
+                        <div className="row no-gutters shadow align-items-center container-items" key={item.id}>
+                           <div className="col-2">
+                              <img src={item.img} alt="" />
+                           </div>
+                           <div className="col">
+                              <p className={classname(text.text, "text-title")}>{item.name}</p>
+                              <p className={classname(colors.grayText, "text-seller")}>{item.seller}</p>
+                           </div>
+                           <div className="col-2">
+                              <p href="#" className={classname(text.text, colors.blackText, "text-title text-right")}>
+                                 {`$ ${item.price * item.qty}`}
+                              </p>
+                           </div>
+                        </div>
+                     )
+                  })}
+
+               </div>
+               {/* right item */}
+               <div className="col-lg-4 shadow container-summary ml-lg-auto">
+                  <div>
+                     <p className={classname(text.text, "text-title mb-5")}>Shopping summary</p>
+                     <div className="row no-gutters mb-4 align-items-center order-deliv">
+                        <div className="col">
+                           <p className={classname(text.text, colors.grayText, "text-title")}>Order</p>
+                           <p className={classname(text.text, colors.grayText, "text-title")}>Delivery</p>
                         </div>
                         <div className="col">
-                           <p className={classname(text.text, "text-title")}>{item.name}</p>
-                           <p className={classname(colors.grayText, "text-seller")}>{item.seller}</p>
-                        </div>
-                        <div className="col-2">
-                           <p href="#" className={classname(text.text, colors.blackText, "text-title text-right")}>
-                              {`$ ${item.price * item.qty}`}
-                           </p>
+                           <p className={classname(text.headline3, "text-title text-right")}>{`$ ${cart.reduce((total, item) => { return total + (item.price * item.qty) }, 0).toFixed(1)}`}</p>
+                           <p className={classname(text.headline3, "text-title text-right")}>$ 5.0</p>
                         </div>
                      </div>
-                  )
-               })}
-
-            </div>
-            {/* right item */}
-            <div className="col-lg-4 shadow container-summary ml-lg-auto">
-               <div>
-                  <p className={classname(text.text, "text-title mb-5")}>Shopping summary</p>
-                  <div className="row no-gutters mb-4 align-items-center order-deliv">
-                     <div className="col">
-                        <p className={classname(text.text, colors.grayText, "text-title")}>Order</p>
-                        <p className={classname(text.text, colors.grayText, "text-title")}>Delivery</p>
+                     <div className="row">
+                        <div className="col">
+                           <p className={classname(text.text, "text-title mb-5")}>Shopping summary</p>
+                        </div>
+                        <div className="col">
+                           <p className={classname(text.headline3, colors.primaryText, "text-title text-right")}>{`$ ${cart.reduce((total, item) => { return total + (item.price * item.qty) }, 5).toFixed(1)}`}</p>
+                        </div>
                      </div>
-                     <div className="col">
-                        <p className={classname(text.headline3, "text-title text-right")}>{`$ ${cart.reduce((total, item) => { return total + (item.price * item.qty) }, 0).toFixed(1)}`}</p>
-                        <p className={classname(text.headline3, "text-title text-right")}>$ 5.0</p>
-                     </div>
+                     <button className={classname("btn btn-danger btn-buy", colors.primary)} onClick={() => setShowPayment(true)}>Select payment</button>
                   </div>
-                  <div className="row">
-                     <div className="col">
-                        <p className={classname(text.text, "text-title mb-5")}>Shopping summary</p>
-                     </div>
-                     <div className="col">
-                        <p className={classname(text.headline3, colors.primaryText, "text-title text-right")}>{`$ ${cart.reduce((total, item) => { return total + (item.price * item.qty) }, 5).toFixed(1)}`}</p>
-                     </div>
-                  </div>
-                  <button className={classname("btn btn-danger btn-buy", colors.primary)} onClick={() => setShowPayment(true)}>Select payment</button>
                </div>
             </div>
-         </div>
+         ) : (
+               <h1 className={classname(text.headline, colors.grayText, "text-empty-cart")}>(Checkout item is empty)</h1>
+            )}
+
          <ModalChooseAddress
             show={showChooseAddress}
             onHide={() => setShowChooseAddress(false)}
@@ -148,6 +158,7 @@ const CheckOut = (props) => {
             showAddAddress={() => setShowAddAddress(true)}
             cart={cart}
             onSubmit={() => handleSubmit()}
+            handleSelectPayment={(evt) => handleSelectPayment(evt)}
          />
          <ModalAddAddress
             show={showAddAddress}

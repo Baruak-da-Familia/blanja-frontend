@@ -32,17 +32,17 @@ const ModalSelectPayment = (props) => {
                <div className="row align-items-center container-item-payment">
                   <img src={gopay} alt="" />
                   <h4 className="text-item-payment">Gopay</h4>
-                  <input type="checkbox" className="ml-auto" />
+                  <input type="radio" name="payment" id="gopay" value="gopay" onChange={props.handleSelectPayment} className="ml-auto" />
                </div>
                <div className="row align-items-center container-item-payment">
                   <img src={pos} alt="" />
                   <h4 className="text-item-payment">Pos Indonesia</h4>
-                  <input type="checkbox" className="ml-auto" />
+                  <input type="radio" name="payment" id="pos" value="pos" onChange={props.handleSelectPayment} className="ml-auto" />
                </div>
                <div className="row align-items-center container-item-payment">
                   <img src={mastercard} alt="" />
                   <h4 className="text-item-payment">Mastercard</h4>
-                  <input type="checkbox" className="ml-auto" />
+                  <input type="radio" name="payment" id="mastercard" onChange={props.handleSelectPayment} value="mastercard" className="ml-auto" />
                </div>
             </div>
          </Modal.Body>
