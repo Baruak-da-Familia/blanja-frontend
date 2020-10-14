@@ -76,9 +76,14 @@ const PreviewItem = (props) => {
 };
 
 const CategoryItem = (props) => {
-	const color = colors[Math.round(Math.random() * 15)];
+	const color = colors[props.id - 1];
 	return (
-		<div className={styles.categoryItem}>
+		<div
+			className={styles.categoryItem}
+			onClick={() => {
+				props.onClickHandler(props.id);
+			}}
+		>
 			<Img
 				key={props.id}
 				containerStyle={classname(styles.categoryItem, color)}
@@ -86,7 +91,7 @@ const CategoryItem = (props) => {
 				source={props.image}
 			/>
 			<p className={classname(text.headline, styles.legendText)}>
-				{props.desc}
+				{props.name}
 			</p>
 		</div>
 	);
@@ -139,7 +144,7 @@ const settingsCategory = (width) => {
 		centerMode: true,
 		centerPadding: `${centerPadding}px`,
 		slidesToShow: 2,
-		slidesToScroll: 2,
+		swipeToSlide: true,
 		nextArrow: <CustomRightArrow />,
 		prevArrow: <CustomLeftArrow />,
 		arrows: true,
@@ -148,6 +153,9 @@ const settingsCategory = (width) => {
 
 const Carousel = (props) => {
 	const { width } = useWindowDimensions();
+	const onClickHandler = (id) => {
+		props.history.push(`/category/${id}`);
+	};
 	const settings =
 		props.carouselType === "previewItem"
 			? getSettingsPreview(width)
@@ -159,7 +167,13 @@ const Carousel = (props) => {
 						return <PreviewItem key={index} {...item} />;
 				  })
 				: props.data.map((item, index) => {
-						return <CategoryItem key={index} {...item} />;
+						return (
+							<CategoryItem
+								onClickHandler={onClickHandler}
+								key={index}
+								{...item}
+							/>
+						);
 				  })}
 		</Slider>
 	);
@@ -168,6 +182,7 @@ const Carousel = (props) => {
 Carousel.propTypes = {
 	data: PropTypes.array,
 	carouselType: PropTypes.string,
+	history: PropTypes.object,
 };
 
 export default Carousel;
