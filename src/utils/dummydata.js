@@ -26,22 +26,22 @@ export const previewData = [
 ];
 
 export const categoryData = [
-	{ id: 2, image: shorts, desc: "Shorts" },
-	{ id: 1, image: tshirt, desc: "T-Shirts" },
-	{ id: 3, image: jacket, desc: "Jacket" },
-	{ id: 4, image: pants, desc: "Pants" },
-	{ id: 5, image: shoes, desc: "Shoes" },
-	{ id: 6, image: cap, desc: "Cap" },
-	{ id: 7, image: watch, desc: "Wristwatch" },
-	{ id: 15, image: accessories, desc: "Accessories" },
-	{ id: 14, image: formalsuit, desc: "Formal Suit" },
-	{ id: 9, image: backbag, desc: "Backbag" },
-	{ id: 12, image: tie, desc: "Tie" },
-	{ id: 11, image: glasses, desc: "Glasses" },
-	{ id: 10, image: socks, desc: "Socks" },
-	{ id: 13, image: dress, desc: "Dress" },
-	{ id: 16, image: highheels, desc: "High Heels" },
-	{ id: 8, image: handbag, desc: "Handbag" },
+	{ id: 2, image: shorts, name: "Shorts" },
+	{ id: 1, image: tshirt, name: "T-Shirts" },
+	{ id: 3, image: jacket, name: "Jacket" },
+	{ id: 4, image: pants, name: "Pants" },
+	{ id: 5, image: shoes, name: "Shoes" },
+	{ id: 6, image: cap, name: "Cap" },
+	{ id: 7, image: watch, name: "Wristwatch" },
+	{ id: 15, image: accessories, name: "Accessories" },
+	{ id: 14, image: formalsuit, name: "Formal Suit" },
+	{ id: 9, image: backbag, name: "Backbag" },
+	{ id: 12, image: tie, name: "Tie" },
+	{ id: 11, image: glasses, name: "Glasses" },
+	{ id: 10, image: socks, name: "Socks" },
+	{ id: 13, image: dress, name: "Dress" },
+	{ id: 16, image: highheels, name: "High Heels" },
+	{ id: 8, image: handbag, name: "Handbag" },
 ];
 
 export const newData = [

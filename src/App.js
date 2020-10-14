@@ -8,6 +8,9 @@ import Register from "./pages/Auth/Register";
 import Chat from "./pages/Chat/Chat";
 import Profile from "./pages/Profile";
 import ProfileSeller from "./pages/ProfileSeller";
+import Category from "./pages/Category/Category";
+import MyBag from "./pages/MyBag/MyBag";
+import Checkout from "./pages/CheckOut/CheckOut";
 
 function RouteWithNavbar({ component: Component, ...rest }) {
 	return (
@@ -18,7 +21,7 @@ function RouteWithNavbar({ component: Component, ...rest }) {
 				render={(props) => {
 					return (
 						<>
-							<Navbar />
+							<Navbar {...props} />
 							<Component {...props} />
 						</>
 					);
@@ -46,6 +49,17 @@ function App() {
 						exact
 						path="/profileseller"
 						component={ProfileSeller}
+					/>
+					<RouteWithNavbar
+						exact
+						path="/category/:id"
+						component={Category}
+					/>
+					<RouteWithNavbar exact path="/mybag" component={MyBag} />
+					<RouteWithNavbar
+						exact
+						path="/checkout"
+						component={Checkout}
 					/>
 				</Switch>
 			</Router>

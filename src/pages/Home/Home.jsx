@@ -12,7 +12,7 @@ const Home = (props) => {
 		<main className={styles.home}>
 			<div style={{ marginBottom: "50px" }}>
 				<Carousel
-					key="previewItem"
+					key="1"
 					carouselType="previewItem"
 					data={previewData}
 				/>
@@ -28,9 +28,10 @@ const Home = (props) => {
 					What are you currently looking for
 				</p>
 				<Carousel
-					key="categoryItem"
+					key="2"
 					carouselType="categoryItem"
 					data={categoryData}
+					history={props.history}
 				/>
 			</div>
 			<h1 className={text.headline}>New</h1>

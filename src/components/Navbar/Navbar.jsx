@@ -24,6 +24,9 @@ const Navbar = (props) => {
 					containerStyle={styles.logo}
 					imgStyle={styles.logoImg}
 					source={logo}
+					onClickProp={() => {
+						props.history.push("/");
+					}}
 				/>
 				<SearchBar />
 				<Img
@@ -39,6 +42,9 @@ const Navbar = (props) => {
 					source={cart}
 					containerStyle={styles.cart}
 					imgStyle={styles.cartImg}
+					onClickProp={() => {
+						props.history.push("/mybag");
+					}}
 				/>
 				{isLoggedIn && token ? (
 					<nav className={styles.navList}>
@@ -53,12 +59,18 @@ const Navbar = (props) => {
 							source={message}
 							containerStyle={styles.navIcon}
 							imgStyle={styles.navIconImg}
+							onClickProp={() => {
+								props.history.push("/chat");
+							}}
 						/>
 						<Img
 							key="profile"
 							source={userDefault}
 							containerStyle={styles.profile}
 							imgStyle={styles.profileImg}
+							onClickProp={() => {
+								props.history.push("/profile");
+							}}
 						/>
 					</nav>
 				) : (

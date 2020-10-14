@@ -5,7 +5,7 @@ const Img = (props) => {
 	return (
 		<div
 			className={props.containerStyle}
-			onClick={props.onClick}
+			onClick={props.onClickProp}
 			style={props.style}
 		>
 			<img src={props.source} className={props.imgStyle} alt="" />
@@ -18,7 +18,7 @@ Img.propTypes = {
 	source: PropTypes.string,
 	containerStyle: PropTypes.string,
 	imgStyle: PropTypes.string,
-	onClick: PropTypes.func,
+	onClickProp: PropTypes.func,
 	children: PropTypes.element,
 	style: PropTypes.object,
 };
