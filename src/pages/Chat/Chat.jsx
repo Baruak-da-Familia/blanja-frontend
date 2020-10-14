@@ -56,6 +56,8 @@ import { v4 as uuidv4 } from "uuid";
 // 	},
 // ];
 
+const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
+
 const renderChat = ({ messages }, id) => {
 	return (
 		<>
@@ -154,12 +156,12 @@ const Chat = (props) => {
 				];
 				setMessage(newMessages);
 			}
-			if (messageRef) {
-				message.current.scrollIntoView({ behavior: "smooth" });
+			if (messageRef.current !== undefined) {
+				scrollToRef(messageRef);
 			}
 		});
 		return () => socket.off("message");
-	}, [socket, messages, messageRef.current]);
+	}, [socket, messages, messageRef]);
 
 	const inputHandler = (e) => {
 		if (e.key === "Enter") {
@@ -209,10 +211,12 @@ const Chat = (props) => {
 				time,
 			});
 			inputRef.current.value = "";
-			messageRef.current.scrollIntoView({ behavior: "smooth" });
+			if (messageRef.current !== undefined) {
+				scrollToRef(messageRef);
+			}
 		}
 	};
-	//for testing purpose
+	//for testing purpose ================================
 	const handleTest = (event) => {
 		if (event.key === "Enter") {
 			const _idx = messages.findIndex((item) => {
@@ -234,6 +238,8 @@ const Chat = (props) => {
 		}
 	};
 
+	//=====================================================
+
 	const onClickHandler = (id) => {
 		setIdx(
 			messages.findIndex((message) => {
@@ -241,7 +247,6 @@ const Chat = (props) => {
 			})
 		);
 	};
-	console.log(messageRef);
 
 	return (
 		<>
