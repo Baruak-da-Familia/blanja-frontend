@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import styles from "./styles.module.css";
 import Img from "../ImgWithContainer/ImgWithContainer";
 import SearchBar from "../SearchBar/SearchBar";
@@ -14,8 +15,7 @@ import message from "../../assets/img/message.png";
 import userDefault from "../../assets/img/default.png";
 
 const Navbar = (props) => {
-	const isLoggedIn = true;
-	const token = "test";
+	const { status, user } = useSelector((state) => state.auth);
 	return (
 		<header className={classname(styles.navbar, colors.white)}>
 			<div className="d-flex flex-row justify-content-around">
@@ -46,7 +46,7 @@ const Navbar = (props) => {
 						props.history.push("/mybag");
 					}}
 				/>
-				{isLoggedIn && token ? (
+				{status === 200 && user.token ? (
 					<nav className={styles.navList}>
 						<Img
 							key="notification"
@@ -81,6 +81,9 @@ const Navbar = (props) => {
 								text.descriptionText,
 								colors.error
 							)}
+							onClick={() => {
+								props.history.push("/login");
+							}}
 						>
 							Login
 						</button>
@@ -90,6 +93,9 @@ const Navbar = (props) => {
 								text.descriptionText,
 								colors.white
 							)}
+							onClick={() => {
+								props.history.push("/register");
+							}}
 						>
 							Signup
 						</button>
