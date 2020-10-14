@@ -78,7 +78,9 @@ export default function ModalAddAddress(props) {
             <div className={styles.contentinput}></div>
             <div className={styles.space}></div>
             <div className={styles.contentbtn}>
-              <button className={styles.btncancel}>Cancel</button>
+              <button onClick={props.onHide} className={styles.btncancel}>
+                Cancel
+              </button>
               <button className={styles.btnsave}>Save</button>
             </div>
           </div>

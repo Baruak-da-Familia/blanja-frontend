@@ -124,6 +124,7 @@
 .content_description {
   width: 100%;
   height: 150px;
+  padding-bottom: 0;
 }
 .btnsell {
   background: #db3022;

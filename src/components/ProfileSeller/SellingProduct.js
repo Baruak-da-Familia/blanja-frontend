@@ -48,7 +48,30 @@ export default function SellingProduct() {
             <input className={styles.input} />
           </div>
           <div className={styles.form}>
-            <label className={styles.label}>Stock</label>
+            <label className={styles.label}>Category Product</label>
+            <select className={styles.input} name='level_id'>
+              <optgroup label='Category...'>
+                <option value='1'>T-Shirts</option>
+                <option value='2'>Shorts</option>
+                <option value='3'>Jacket</option>
+                <option value='4'>Pants</option>
+                <option value='5'>Shoes</option>
+                <option value='6'>Cap</option>
+                <option value='7'>Wristwatch</option>
+                <option value='8'>Handbag</option>
+                <option value='9'>Backbag</option>
+                <option value='10'>Socks</option>
+                <option value='11'>Glasses</option>
+                <option value='12'>Tie</option>
+                <option value='13'>Dress</option>
+                <option value='14'>Formal Suit</option>
+                <option value='15'>Accessories</option>
+                <option value='16'>High Heels</option>
+              </optgroup>
+            </select>
+          </div>
+          <div className={styles.form}>
+            <label className={styles.label}>Condition</label>
             <div className={styles.radioselect}>
               <input
                 type='radio'

@@ -11,7 +11,7 @@ export default function Profile() {
   const [modalShow, setModalShow] = React.useState(false);
   return (
     <>
-      <HeaderProfile />
+      {/* <HeaderProfile /> */}
       <div className={styles.container}>
         <LeftBar
           nav={nav}

@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import Profile from "./pages/Profile";
+import Profile from "./pages/ProfileSeller";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Profile />
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );

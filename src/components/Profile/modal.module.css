@@ -66,13 +66,12 @@
 }
 .input {
   flex: 1;
-  /* width: 80%; */
   height: 48px;
   border: 1px solid #9b9b9b;
   color: black;
   box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.05);
   border-radius: 4px;
-  padding: 4px;
+  padding: 1px 7px 1px 7px;
 }
 .label {
   font-family: "Metropolis";

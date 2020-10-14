@@ -4,6 +4,7 @@ import MyProfile from "./MyProfile";
 import MyOrder from "./MyOrder";
 import MyProduct from "./MyProduct";
 import SellingProduct from "./SellingProduct";
+import OrderCancel from "./OrderCancel";
 export default function Main(props) {
   const { nav } = props;
   return (
@@ -12,6 +13,7 @@ export default function Main(props) {
       {nav === "myproduct" ? <MyProduct /> : null}
       {nav === "selingproduct" ? <SellingProduct /> : null}
       {nav === "myorder" ? <MyOrder /> : null}
+      {nav === "ordercancel" ? <OrderCancel /> : null}
     </div>
   );
 }
