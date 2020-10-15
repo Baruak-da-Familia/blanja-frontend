@@ -58,33 +58,6 @@ const MyBag = () => {
       }
    };
 
-   const handleIncrease = (id) => {
-      const newCart = [...cart];
-      const index = cart.findIndex(item => {
-         return id === item.id
-      })
-      newCart[index] = {
-         ...newCart[index],
-         quantity: cart[index].quantity + 1,
-      }
-      return setCart(newCart)
-   };
-
-   const handleDecrease = (id) => {
-      const newCart = [...cart];
-      const index = cart.findIndex(item => {
-         return id === item.id
-      })
-      if (newCart[index].quantity === 1) {
-         return
-      } else {
-         newCart[index] = {
-            ...newCart[index],
-            quantity: cart[index].quantity - 1,
-         }
-         return setCart(newCart)
-      }
-   };
 
    const dispatch = useDispatch();
    const stateCarts = useSelector(state => state.product.carts);
@@ -112,8 +85,6 @@ const MyBag = () => {
       };
       dispatch(addToCheckout({ sendData }))
    }
-
-   // console.log(stateCarts);
 
    return (
       <div className="container-main">

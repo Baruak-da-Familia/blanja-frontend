@@ -22,8 +22,6 @@ const ModalSelectPayment = (props) => {
                Payment
             </Modal.Title>
          </Modal.Header>
-         {/* <Modal.Header closeButton className="no-border" /> */}
-         {/* <Modal.Header><h4 className="text-top">Payment</h4></Modal.Header> */}
          <Modal.Body className="no-border modal-body-container">
             <div className="container-modal">
                <div className="row container-item-payment">
