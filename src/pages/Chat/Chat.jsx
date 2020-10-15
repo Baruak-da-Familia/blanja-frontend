@@ -121,7 +121,7 @@ const Chat = (props) => {
 		let seller_name = null;
 		let link = null;
 		if (query[0]) {
-			seller_id = query[0].split("=")[1];
+			seller_id = Number(query[0].split("=")[1]);
 		}
 		if (query[1]) {
 			seller_name = query[1].split("=")[1];
@@ -371,6 +371,9 @@ const Chat = (props) => {
 									placeholder="type message"
 									className={classname(styles.inputmessage)}
 									onKeyPress={inputHandler}
+									onChange={(e) => {
+										setInputValue(e.target.value);
+									}}
 									value={inputValue}
 								/>
 							</div>

@@ -193,7 +193,7 @@ const PageProduct = (props) => {
 							className={classname(styles.chatAddBtn)}
 							onClick={() => {
 								props.history.push(
-									`/chat?with=${props.match.params.id}&name=BestStore&link=http://192.168.18.36:3000${props.location.pathname}`
+									`/chat?with=${stateProductDetail.seller_id}&name=BestStore&link=http://192.168.18.36:3000${props.location.pathname}`
 								);
 							}}
 						>
