@@ -66,7 +66,7 @@ export default function MyProfile(props) {
     formData.append("gender", gender);
     formData.append("dob", `${date} ${month} ${year}`);
     formData.append("avatar", image);
-    dispatch(updateProfileCustomerCreator(1, formData));
+    dispatch(updateProfileCustomerCreator(Number(user.id), formData));
   };
 
   const inputRef = React.useRef();

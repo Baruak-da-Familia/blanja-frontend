@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import UserCard from "./UserCard";
 import useLocalStorage from "../../utils/localStorageHooks";
 import Socket from "socket.io-client";
+import { useSelector } from "react-redux";
 import styles from "./styles.module.css";
 import text from "../../assets/text.module.css";
 import classname from "../../helpers/classJoiner";
@@ -10,6 +11,7 @@ import { isEmpty } from "underscore";
 import { DateTime } from "luxon";
 import { update } from "ramda";
 import { v4 as uuidv4 } from "uuid";
+import { set } from "lodash";
 
 // const myId = 14;
 
@@ -99,10 +101,12 @@ const appendMessage = (message, { messages }) => {
 };
 
 const Chat = (props) => {
-	const [myId, setId] = React.useState(uuidv4());
+	// const [myId, setId] = React.useState(uuidv4());
+	const { user } = useSelector((state) => state.auth);
 	const [idx, setIdx] = React.useState(-1);
 	const [socket, setSocket] = React.useState(null);
-	const [messages, setMessage] = useLocalStorage(myId, []);
+	const [messages, setMessage] = useLocalStorage(user.id, []);
+	const [inputValue, setInputValue] = React.useState("");
 
 	const inputRef = React.useRef();
 
@@ -111,14 +115,55 @@ const Chat = (props) => {
 	const testRef = React.useRef();
 
 	React.useEffect(() => {
+		const query = props.location.search.split("&");
+		console.log(query);
+		let seller_id = null;
+		let seller_name = null;
+		let link = null;
+		if (query[0]) {
+			seller_id = query[0].split("=")[1];
+		}
+		if (query[1]) {
+			seller_name = query[1].split("=")[1];
+		}
+		if (query[2]) {
+			link = query[2].split("=")[1];
+		}
+		if (seller_id) {
+			const _idx = messages.findIndex((item) => {
+				return item.id === seller_id;
+			});
+			if (_idx < 0) {
+				const newMessages = [
+					...messages,
+					{
+						id: seller_id,
+						name: seller_name,
+						avatar: null,
+						messages: [],
+					},
+				];
+				setMessage(newMessages);
+				setIdx(messages.length);
+				setInputValue("apa ini masih ada? " + link);
+			} else {
+				setInputValue("apa ini masih ada? " + link);
+				setIdx(idx);
+			}
+		}
+	}, []);
+
+	React.useEffect(() => {
 		if (socket !== null) return;
 		const newSocket = Socket("http://192.168.18.36:3300", {
-			query: { id: myId },
+			query: { id: user.id },
 		});
 		setSocket(newSocket);
-		console.log(myId);
-		return () => socket.close();
-	}, [myId]);
+		console.log(user.id);
+		return () => {
+			if (socket) socket.close();
+		};
+	}, [user.id]);
 
 	React.useEffect(() => {
 		if (socket === null) return;
@@ -174,7 +219,7 @@ const Chat = (props) => {
 							...messages[idx],
 							messages: appendMessage(
 								{
-									id: myId,
+									id: user.id,
 									message: inputRef.current.value,
 									time,
 								},
@@ -192,7 +237,7 @@ const Chat = (props) => {
 							...messages[idx],
 							messages: [
 								{
-									id: myId,
+									id: user.id,
 									message: inputRef.current.value,
 									time,
 								},
@@ -203,14 +248,14 @@ const Chat = (props) => {
 				);
 			}
 			socket.emit("message", {
-				senderId: myId,
+				senderId: user.id,
 				receiverId: messages[idx].id,
-				name: myId,
-				avatar: null,
+				name: user.name,
+				avatar: user.avatar,
 				message: inputRef.current.value,
 				time,
 			});
-			inputRef.current.value = "";
+			setInputValue("");
 			if (messageRef.current !== undefined) {
 				scrollToRef(messageRef);
 			}
@@ -251,11 +296,11 @@ const Chat = (props) => {
 	return (
 		<>
 			<div className={classname(styles.chat)}>
-				<input
+				{/* <input
 					ref={testRef}
 					placeholder="masukin id"
 					onKeyPress={handleTest}
-				/>
+				/> */}
 				<div className={classname(styles.chatlistContainer)}>
 					<div className={classname(styles.chatlistHeader)}>
 						<h1 className={classname(text.headline2)}>Chats</h1>
@@ -326,6 +371,7 @@ const Chat = (props) => {
 									placeholder="type message"
 									className={classname(styles.inputmessage)}
 									onKeyPress={inputHandler}
+									value={inputValue}
 								/>
 							</div>
 						</>

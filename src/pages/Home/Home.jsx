@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Carousel from "../../components/Carousel/Carousel";
 import Card from "../../components/Card/Card";
@@ -6,13 +6,27 @@ import styles from "./styles.module.css";
 import classname from "../../helpers/classJoiner";
 import text from "../../assets/text.module.css";
 import { previewData, categoryData, newData } from "../../utils/dummydata";
+import { fetchAllProduct } from "../../redux/actions/product";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const Home = (props) => {
+	const dispatch = useDispatch();
+	const stateProduct = useSelector(state => state.product.product);
+
+	const onClickHandler = (id) => {
+		props.history.push(`/detail/${id}`);
+	};
+
+	useEffect(() => {
+		dispatch(fetchAllProduct())
+	 }, [dispatch]);
+
 	return (
 		<main className={styles.home}>
 			<div style={{ marginBottom: "50px" }}>
 				<Carousel
-					key="previewItem"
+					key="1"
 					carouselType="previewItem"
 					data={previewData}
 				/>
@@ -28,9 +42,10 @@ const Home = (props) => {
 					What are you currently looking for
 				</p>
 				<Carousel
-					key="categoryItem"
+					key="2"
 					carouselType="categoryItem"
 					data={categoryData}
+					history={props.history}
 				/>
 			</div>
 			<h1 className={text.headline}>New</h1>
@@ -45,8 +60,14 @@ const Home = (props) => {
 						"no-gutters"
 					)}
 				>
-					{newData.map((item) => {
-						return <Card key={item.id} {...item} />;
+					{stateProduct.map((item) => {
+						return (
+							<Card
+								key={item.id}
+								{...item}
+								onClickProp={onClickHandler}
+							/>
+						);
 					})}
 				</div>
 			</div>
@@ -62,8 +83,14 @@ const Home = (props) => {
 						"d-flex flex-row"
 					)}
 				>
-					{newData.map((item) => {
-						return <Card key={item.id} {...item} />;
+					{stateProduct.map((item) => {
+						return (
+							<Card
+								key={item.id}
+								{...item}
+								onClickProp={onClickHandler}
+							/>
+						);
 					})}
 				</div>
 			</div>

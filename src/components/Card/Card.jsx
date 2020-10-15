@@ -5,6 +5,9 @@ import classname from "../../helpers/classJoiner";
 import star from "../../assets/img/Star.png";
 import styles from "./styles.module.css";
 import text from "../../assets/text.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductById } from "../../redux/actions/product";
+
 
 const Rating = (props) => {
 	const _rate = [...Array(props.rate).keys()];
@@ -33,6 +36,10 @@ Rating.propTypes = {
 };
 
 const Card = (props) => {
+	const dispatch = useDispatch();
+
+	// const stateProduct = useSelector(state => state.product.product);
+
 	return (
 		<div
 			className={classname(
@@ -40,9 +47,17 @@ const Card = (props) => {
 				styles.mr37
 			)}
 		>
-			<div className={styles.cardContainer}>
+			<div
+				className={styles.cardContainer}
+				onClick={() => {
+					if (props.onClickProp) {
+						props.onClickProp(props.id);
+						dispatch(getProductById(props.id))
+					}
+				}}
+			>
 				<Img
-					source={props.img}
+					source={`http://localhost:8000${props.images[0]}`}
 					containerStyle={styles.cardImgContainer}
 					imgStyle={styles.cardImg}
 				/>
@@ -70,6 +85,7 @@ Card.propTypes = {
 	price: PropTypes.string,
 	category: PropTypes.string,
 	rate: PropTypes.number,
+	onClickProp: PropTypes.func,
 };
 
 export default Card;

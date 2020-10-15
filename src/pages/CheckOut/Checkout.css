@@ -1,5 +1,5 @@
 .container-main {
-   margin-top: 5rem;
+  padding-top: 15rem;
    padding-left: calc(0.1 * 100vw);
    padding-right: calc(0.1 * 100vw);
  }
@@ -7,6 +7,12 @@
  .headline {
    font-weight: 700;
  }
+
+ .text-empty-cart {
+  font-weight: 700;
+  font-style: italic;
+  text-align: center;
+}
  
  .container-title {
    margin-bottom: 3rem;
