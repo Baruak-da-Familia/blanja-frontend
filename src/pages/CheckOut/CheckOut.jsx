@@ -6,7 +6,7 @@ import ModalChooseAddress from "../../components/CheckOut/ModalChooseAddress";
 import ModalAddAddress from "../../components/Profile/ModalAddAddress";
 import ModalSelectPayment from "../../components/CheckOut/ModalSelectPayment";
 import { useDispatch, useSelector } from "react-redux";
-import { transaction, fetchAllProduct, } from "../../redux/actions/product";
+import { transaction, addPaymentMethod, clearCart } from "../../redux/actions/product";
 import './Checkout.css';
 
 const CheckOut = (props) => {
@@ -38,25 +38,26 @@ const CheckOut = (props) => {
 
    const stateAuth = useSelector(state => state.auth.user);
    const stateCarts = useSelector(state => state.product.carts);
+   const dataTransaction = useSelector(state => state.product.checkout);
    const dispatch = useDispatch();
 
-   let invoice = Math.floor(Math.random() * 100001) + 1;
-   const [dataTransaction, setDataTransaction] = useState(
-      {
-         "id": invoice,
-         "customer_id": user.id,
-         "seller_id": 1,
-         "amount": cart.reduce((total, item) => { return total + (item.price * item.qty) }, 5),
-         "payment_method": "",
-         "address": user.address,
-         "products": cart.map(item => {
-            return {
-               id: item.id,
-               qty: item.qty
-            }
-         }),
-      }
-   );
+   // let invoice = Math.floor(Math.random() * 100001) + 1;
+   // const [dataTransaction, setDataTransaction] = useState(
+   //    {
+   //       "id": invoice,
+   //       "customer_id": user.id,
+   //       "seller_id": 1,
+   //       "amount": cart.reduce((total, item) => { return total + (item.price * item.qty) }, 5),
+   //       "payment_method": "",
+   //       "address": user.address,
+   //       "products": cart.map(item => {
+   //          return {
+   //             id: item.id,
+   //             qty: item.qty
+   //          }
+   //       }),
+   //    }
+   // );
 
    // const { data } = props.location;
    const [showChooseAddress, setShowChooseAddress] = useState(false);
@@ -69,14 +70,14 @@ const CheckOut = (props) => {
       } else {
          dispatch(transaction(dataTransaction));
          alert("Transaction success")
-         setCart([])
+         dispatch(clearCart())
          setShowPayment(false)
-         // console.log(dataTransaction)
       }
    };
 
    const handleSelectPayment = (evt) => {
-      setDataTransaction({ ...dataTransaction, payment_method: evt.currentTarget.value })
+      // setDataTransaction({ ...dataTransaction, payment_method: evt.currentTarget.value })
+      dispatch(addPaymentMethod(evt.currentTarget.value))
    };
 
    return (

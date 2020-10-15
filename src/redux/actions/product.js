@@ -87,7 +87,7 @@ export const clearCart = () => {
 
 export const clearCheckout = () => {
    return {
-      type: actions.CLEAR_QUANTITY,
+      type: actions.CLEAR_CHECKOUT,
    }
 };
 

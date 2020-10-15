@@ -15,21 +15,6 @@ const PageProduct = (props) => {
     const stateProduct = useSelector(state => state.product.product);
     const dispatch = useDispatch();
 
-    // console.log('kuda', stateProductDetail.images)
-
-    const sendData = {
-        brand: stateProductDetail.brand,
-        id: stateProductDetail.id,
-        images: stateProductDetail.images,
-        name: stateProductDetail.name,
-        price: Number(stateProductDetail.price),
-        qty: 1,
-        seller_id: stateProductDetail.seller_id,
-        seller_name: stateProductDetail.seller_name,
-    }
-
-    // console.log(sendData);
-
     return (
         <div className={classname(styles.body)}>
             <div className={classname(styles.topContainer)}>

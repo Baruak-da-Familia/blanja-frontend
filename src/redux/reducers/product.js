@@ -84,13 +84,18 @@ const productReducer = (state = initialState, { type, payload }) => {
             ...state,
             checkout: {
                ...state.checkout,
-               "payment_method": payload.data.data,
+               "payment_method": payload.data,
             }
          }
       case actions.ADD_TO_CART:
          return {
             ...state,
             carts: [...state.carts, payload],
+         };
+      case actions.CLEAR_CART:
+         return {
+            ...state,
+            carts: [],
          };
       case actions.ADD_TO_CHECKOUT:
          return {
@@ -104,6 +109,19 @@ const productReducer = (state = initialState, { type, payload }) => {
                "payment_method": "",
                "address": payload.address,
                "products": payload.products,
+            },
+         };
+      case actions.CLEAR_CHECKOUT:
+         return {
+            ...state,
+            checkout: {
+               "id": invoice,
+               "customer_id": "",
+               "seller_id": "",
+               "amount": "",
+               "payment_method": "",
+               "address": "",
+               "products": [],
             },
          };
       case actions.QUANTITY_INCREASED:
