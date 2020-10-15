@@ -148,7 +148,7 @@ const Chat = (props) => {
 				setInputValue("apa ini masih ada? " + link);
 			} else {
 				setInputValue("apa ini masih ada? " + link);
-				setIdx(idx);
+				setIdx(_idx);
 			}
 		}
 	}, []);
@@ -176,14 +176,14 @@ const Chat = (props) => {
 					update(
 						_idx,
 						{
-							...messages[idx],
+							...messages[_idx],
 							messages: appendMessage(
 								{
 									id: senderId,
 									message,
 									time,
 								},
-								messages[idx]
+								messages[_idx]
 							),
 						},
 						messages
