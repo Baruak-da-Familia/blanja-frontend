@@ -6,7 +6,7 @@ import ModalChooseAddress from "../../components/CheckOut/ModalChooseAddress";
 import ModalAddAddress from "../../components/Profile/ModalAddAddress";
 import ModalSelectPayment from "../../components/CheckOut/ModalSelectPayment";
 import { useDispatch, useSelector } from "react-redux";
-import { transaction, fetchAllProduct } from "../../redux/actions/product";
+import { transaction, fetchAllProduct, } from "../../redux/actions/product";
 import './Checkout.css';
 
 const CheckOut = (props) => {
@@ -37,6 +37,7 @@ const CheckOut = (props) => {
    ]);
 
    const stateAuth = useSelector(state => state.auth.user);
+   const stateCarts = useSelector(state => state.product.carts);
    const dispatch = useDispatch();
 
    let invoice = Math.floor(Math.random() * 100001) + 1;
@@ -83,7 +84,7 @@ const CheckOut = (props) => {
          <div className="container-title">
             <h1 className={classname(text.headline, "headline")}>Checkout</h1>
          </div>
-         {cart.length ? (
+         {stateCarts.filter(item => item.selected === true).length ? (
             <div className="row">
                {/* left item */}
                <div className="col-lg-7">
@@ -97,19 +98,19 @@ const CheckOut = (props) => {
                   </div>
 
                   {/* list item */}
-                  {cart.map(item => {
+                  {stateCarts.filter(item => item.selected === true).map(item => {
                      return (
                         <div className="row no-gutters shadow align-items-center container-items" key={item.id}>
                            <div className="col-2">
-                              <img src={item.img} alt="" />
+                              <img src={`http://localhost:8000${item.images}`} alt="" />
                            </div>
                            <div className="col">
                               <p className={classname(text.text, "text-title")}>{item.name}</p>
-                              <p className={classname(colors.grayText, "text-seller")}>{item.seller}</p>
+                              <p className={classname(colors.grayText, "text-seller")}>{item.brand}</p>
                            </div>
                            <div className="col-2">
                               <p href="#" className={classname(text.text, colors.blackText, "text-title text-right")}>
-                                 {`$ ${item.price * item.qty}`}
+                                 {`Rp${(item.price * item.qty).toLocaleString('id-ID')}`}
                               </p>
                            </div>
                         </div>
@@ -127,8 +128,8 @@ const CheckOut = (props) => {
                            <p className={classname(text.text, colors.grayText, "text-title")}>Delivery</p>
                         </div>
                         <div className="col">
-                           <p className={classname(text.headline3, "text-title text-right")}>{`$ ${cart.reduce((total, item) => { return total + (item.price * item.qty) }, 0).toFixed(1)}`}</p>
-                           <p className={classname(text.headline3, "text-title text-right")}>$ 5.0</p>
+                           <p className={classname(text.headline3, "text-title text-right")}>{`Rp${stateCarts.filter(item => item.selected === true).reduce((total, item) => { return total + (item.price * item.qty) }, 0).toLocaleString('id-ID')}`}</p>
+                           <p className={classname(text.headline3, "text-title text-right")}>Rp5.000</p>
                         </div>
                      </div>
                      <div className="row">
@@ -136,7 +137,7 @@ const CheckOut = (props) => {
                            <p className={classname(text.text, "text-title mb-5")}>Shopping summary</p>
                         </div>
                         <div className="col">
-                           <p className={classname(text.headline3, colors.primaryText, "text-title text-right")}>{`$ ${cart.reduce((total, item) => { return total + (item.price * item.qty) }, 5).toFixed(1)}`}</p>
+                           <p className={classname(text.headline3, colors.primaryText, "text-title text-right")}>{`Rp${stateCarts.filter(item => item.selected === true).reduce((total, item) => { return total + (item.price * item.qty) }, 5000).toLocaleString('id-ID')}`}</p>
                         </div>
                      </div>
                      <button className={classname("btn btn-danger btn-buy", colors.primary)} onClick={() => setShowPayment(true)}>Select payment</button>
@@ -156,7 +157,7 @@ const CheckOut = (props) => {
             show={showPayment}
             onHide={() => setShowPayment(false)}
             showAddAddress={() => setShowAddAddress(true)}
-            cart={cart}
+            cart={stateCarts.filter(item => item.selected === true)}
             onSubmit={() => handleSubmit()}
             handleSelectPayment={(evt) => handleSelectPayment(evt)}
          />
