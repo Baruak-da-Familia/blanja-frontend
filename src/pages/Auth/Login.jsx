@@ -17,11 +17,15 @@ const Login = (props) => {
 	const [errMsg, setErrMsg] = useState(null);
 	// const [errMsgSllr, setErrMsgSllr] = useState(null)
 
-	const login = useSelector((state) => state.auth.user);
+    const login = useSelector((state) => state.auth.user);
+	const userAddress = useSelector((state) => state.auth.userAddress);
+    
 	const statusLogin = useSelector((state) => state.auth.status);
 	const errMsgUser = useSelector((state) => state.auth.errMsg);
 
 	const { handleSubmit, register, errors } = useForm();
+
+    // console.log(userAddress)
 
 	useEffect(() => {
 		if (statusLogin === 200) {

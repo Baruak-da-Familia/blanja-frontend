@@ -6,26 +6,28 @@ import corpName from "../../assets/img/logo.png";
 import classname from "../../helpers/classJoiner";
 import styles from "./styles.module.css";
 import { useDispatch, useSelector } from "react-redux";
+import { authResetPasswordCustomer } from "../../redux/actions/auth";
 
 const EmailInput = () => {
-
+    const dispatch = useDispatch()
     const [userType, setUserType] = useState(false);
     const [errMsg, setErrMsg] = useState(null)
+    const email = useSelector((state) => state.auth.isFulfilled)
     // const [errMsgSllr, setErrMsgSllr] = useState(null)
 
 
     const { handleSubmit, register, errors } = useForm();
 
     useEffect(() => {
-
-
-    }, []);
-
-
+        if (email === true) {
+            setErrMsg('email sent')
+        } 
+    }, [email]);
 
     const onSubmitCustomer = (data) => {
-        // console.log('customer')
+        dispatch(authResetPasswordCustomer(data))
     };
+
     const onSubmitSeller = (data) => {
         // console.log('seller')
     };

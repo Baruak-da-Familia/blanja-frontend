@@ -8,70 +8,62 @@ import Register from "./pages/Auth/Register";
 import Chat from "./pages/Chat/Chat";
 import Profile from "./pages/Profile";
 import ProfileSeller from "./pages/ProfileSeller";
-import ProductDetail from "./pages/PageProduct/PageProduct";
 import Category from "./pages/Category/Category";
 import MyBag from "./pages/MyBag/MyBag";
 import Checkout from "./pages/CheckOut/CheckOut";
-import PrivateRoute from "./components/Route/PrivateRoute";
-import PublicRoute from "./components/Route/PublicRoute";
+import ResetPassword from "./pages/Auth/ResetPassword";
+import EmailInput from "./pages/Auth/EmailInput";
+
+function RouteWithNavbar({ component: Component, ...rest }) {
+	return (
+		<>
+			<Route
+				{...rest}
+				path={rest.path}
+				render={(props) => {
+					return (
+						<>
+							<Navbar {...props} />
+							<Component {...props} />
+						</>
+					);
+				}}
+			/>
+		</>
+	);
+}
 
 function App() {
 	return (
 		<>
 			<Router>
 				<Switch>
-					<PublicRoute path="/login" exact component={Login} />
-					<PublicRoute path="/Register" exact component={Register} />
-					<PublicRoute
+					<Route path="/login" exact component={Login} />
+					<Route path="/Register" exact component={Register} />
+					<Route path="/EmailInput" exact component={EmailInput} />
+					<Route path="/ResetPassword" exact component={ResetPassword} />
+					<RouteWithNavbar exact path="/" component={Home} />
+					<RouteWithNavbar exact path="/chat" component={Chat} />
+					<RouteWithNavbar
 						exact
-						path="/"
-						enableNavbar={true}
-						component={Home}
-					/>
-					<PrivateRoute
-						enableNavbar={true}
-						path="/chat"
-						redirectPath="/login"
-						component={Chat}
-					/>
-					<PrivateRoute
-						exact
-						enableNavbar={true}
-						redirectPath="/login"
 						path="/profile"
 						component={Profile}
 					/>
-					<PrivateRoute
+					<RouteWithNavbar
 						exact
-						enableNavbar={true}
-						redirectPath="/login"
 						path="/profileseller"
 						component={ProfileSeller}
 					/>
-					<PublicRoute
+					<RouteWithNavbar
 						exact
-						enableNavbar={true}
 						path="/category/:id"
 						component={Category}
 					/>
-					<PublicRoute
+					<RouteWithNavbar exact path="/mybag" component={MyBag} />
+					<RouteWithNavbar
 						exact
-						enableNavbar={true}
-						path="/mybag"
-						component={MyBag}
-					/>
-					<PrivateRoute
-						exact
-						enableNavbar={true}
-						redirectPath="/login"
 						path="/checkout"
 						component={Checkout}
-					/>
-					<PublicRoute
-						exact
-						enableNavbar
-						path="/detail/:id"
-						component={ProductDetail}
 					/>
 				</Switch>
 			</Router>
