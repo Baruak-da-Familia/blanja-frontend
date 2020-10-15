@@ -98,17 +98,12 @@ const productReducer = (state = initialState, { type, payload }) => {
             checkout: {
                ...state.checkout,
                "id": invoice,
-               "customer_id": payload.data.customer_id,
-               "seller_id": payload.data.seller_id,
-               "amount": payload.data.cart.reduce((total, item) => { return total + (item.price * item.qty) }, 5),
+               "customer_id": payload.customer_id,
+               "seller_id": payload.seller_id,
+               "amount": payload.amount,
                "payment_method": "",
-               "address": payload.data.address,
-               "products": payload.data.cart.map(item => {
-                  return {
-                     id: item.id,
-                     qty: item.qty
-                  }
-               }),
+               "address": payload.address,
+               "products": payload.products,
             },
          };
       case actions.QUANTITY_INCREASED:

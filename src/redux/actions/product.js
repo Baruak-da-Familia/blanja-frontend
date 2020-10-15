@@ -57,7 +57,7 @@ export const addToCart = (data) => {
 export const addToCheckout = (data) => {
    return {
       type: actions.ADD_TO_CHECKOUT,
-      payload: data,
+      payload: data.sendData,
    };
 };
 

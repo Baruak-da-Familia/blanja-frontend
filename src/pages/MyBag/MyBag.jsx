@@ -86,15 +86,34 @@ const MyBag = () => {
       }
    };
 
-   const kirim = () => {
-      // console.log(cart.filter(item => item.selected === true));
-      cart.filter(item => item.selected === true)
-   }
-
    const dispatch = useDispatch();
    const stateCarts = useSelector(state => state.product.carts);
+   const stateAuth = useSelector(state => state.auth.user);
 
-   console.log(stateCarts);
+   const kirim = () => {
+      // console.log(cart.filter(item => item.selected === true));
+      // stateCarts.filter(item => item.selected === true)
+      let invoice = Math.floor(Math.random() * 100001) + 1;
+      const sendData = {
+         "id": invoice,
+         // "customer_id": stateAuth.id,
+         "customer_id": 1,
+         "seller_id": stateCarts.filter(item => item.selected === true)[0].seller_id,
+         "amount": stateCarts.filter(item => item.selected === true).reduce((total, item) => { return total + (item.price * item.qty) }, 5000),
+         "payment_method": "",
+         // "address": stateCarts.address,
+         "address": "Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c 16] Sokaraja, Kab. Banyumas, 53181",
+         "products": stateCarts.filter(item => item.selected === true).map(item => {
+            return {
+               id: item.id,
+               qty: item.qty
+            }
+         }),
+      };
+      dispatch(addToCheckout({ sendData }))
+   }
+
+   // console.log(stateCarts);
 
    return (
       <div className="container-main">
