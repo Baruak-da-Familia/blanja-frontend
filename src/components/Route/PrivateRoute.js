@@ -9,7 +9,7 @@ const PrivateRoute = ({
 	redirectPath,
 	...rest
 }) => {
-	const { status, user } = useSelector((state) => state.auth);
+	const { isLogin, user } = useSelector((state) => state.auth);
 	return (
 		<>
 			<Route
@@ -18,7 +18,7 @@ const PrivateRoute = ({
 				render={(props) => {
 					return (
 						<>
-							{status === 200 && user.token ? (
+							{isLogin && user.token ? (
 								<>
 									{enableNavbar ? (
 										<Navbar {...props} />
