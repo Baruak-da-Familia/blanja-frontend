@@ -1,9 +1,20 @@
 import * as actions from "../actions/actionTypes";
 
+let invoice = Math.floor(Math.random() * 100001) + 1;
 const initialState = {
    msg: '',
    status: '',
    product: [],
+   carts: [],
+   checkout: {
+      "id": invoice,
+      "customer_id": "",
+      "seller_id": "",
+      "amount": "",
+      "payment_method": "",
+      "address": "",
+      "products": [],
+   },
    productDetail: {},
    isPending: false,
    isFulfilled: false,
@@ -11,6 +22,7 @@ const initialState = {
 };
 
 const productReducer = (state = initialState, { type, payload }) => {
+   let newCart = [...state.carts];
    switch (type) {
       case actions.GET_PRODUCT_BY_ID + actions.PENDING:
          return {
@@ -34,10 +46,7 @@ const productReducer = (state = initialState, { type, payload }) => {
             isRejected: true,
             isFulfilled: true,
             // status: payload.data.data.msg,
-
          }
-      // ------------------------------------------------------------------------------------
-
       case actions.FETCH_ALL_PRODUCT + actions.PENDING:
          return {
             ...state,
@@ -70,7 +79,84 @@ const productReducer = (state = initialState, { type, payload }) => {
                // status: payload.data.data.msg,
             }
          }
-      // ------------------------------------------------------------------------------------
+      case actions.ADD_PAYMENT_METHOD:
+         return {
+            ...state,
+            checkout: {
+               ...state.checkout,
+               "payment_method": payload.data,
+            }
+         }
+      case actions.ADD_TO_CART:
+         return {
+            ...state,
+            carts: [...state.carts, payload],
+         };
+      case actions.CLEAR_CART:
+         return {
+            ...state,
+            carts: [],
+         };
+      case actions.ADD_TO_CHECKOUT:
+         return {
+            ...state,
+            checkout: {
+               ...state.checkout,
+               "id": invoice,
+               "customer_id": payload.customer_id,
+               "seller_id": payload.seller_id,
+               "amount": payload.amount,
+               "payment_method": "",
+               "address": payload.address,
+               "products": payload.products,
+            },
+         };
+      case actions.CLEAR_CHECKOUT:
+         return {
+            ...state,
+            checkout: {
+               "id": invoice,
+               "customer_id": "",
+               "seller_id": "",
+               "amount": "",
+               "payment_method": "",
+               "address": "",
+               "products": [],
+            },
+         };
+      case actions.QUANTITY_INCREASED:
+         const indexQtyInc = state.carts.findIndex((item) => {
+            return payload.id === item.id;
+         });
+         newCart[indexQtyInc] = {
+            ...newCart[indexQtyInc],
+            qty: state.carts[indexQtyInc].qty + 1
+         }
+         return {
+            ...state,
+            carts: newCart,
+         };
+      case actions.QUANTITY_DECREASED:
+         const indexQtyDec = state.carts.findIndex((item) => {
+            return payload.id === item.id;
+         });
+         newCart[indexQtyDec] = {
+            ...newCart[indexQtyDec],
+            qty: state.carts[indexQtyDec].qty - 1
+         }
+         if (newCart[indexQtyDec].qty === 0) {
+            state.carts.splice(indexQtyDec, 1);//hapus data pada array
+            return {
+               ...state,
+               carts: state.carts
+            }
+         } else {
+            return {
+               ...state,
+               carts: newCart,
+            };
+         };
+
       case actions.INSERT_TRANSACTION + actions.PENDING:
          return {
             ...state,
