@@ -9,7 +9,7 @@ import {
 import './MyBag.css';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { increaseQuantity, decreaseQuantity, addToCheckout } from "../../redux/actions/product";
+import { increaseQuantity, decreaseQuantity, addToCheckout, clearCart } from "../../redux/actions/product";
 
 const MyBag = () => {
    const [cart, setCart] = useState([
@@ -108,7 +108,7 @@ const MyBag = () => {
                         <p className={classname(text.text, "text-title")}>{`Select all item (${cart.length} items selected)`}</p>
                      </div>
                      <div className="col-1">
-                        <a href="#" className={classname(text.text, colors.errorText, "text-title")}>Delete</a>
+                        <a href="#" className={classname(text.text, colors.errorText, "text-title")} onClick={() => dispatch(clearCart())}>Delete</a>
                      </div>
                   </div>
 
