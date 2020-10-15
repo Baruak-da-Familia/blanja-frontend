@@ -15,7 +15,14 @@ import message from "../../assets/img/message.png";
 import userDefault from "../../assets/img/default.png";
 
 const Navbar = (props) => {
-	const { status, user } = useSelector((state) => state.auth);
+	const { status, user, isLogin } = useSelector((state) => state.auth);
+	const inputRef = React.useRef();
+	const onKeyPressHandler = (event) => {
+		if (event.key === "Enter") {
+			props.history.push(`/search?name=${inputRef.current.value}`);
+		}
+	};
+
 	return (
 		<header className={classname(styles.navbar, colors.white)}>
 			<div className="d-flex flex-row justify-content-around">
@@ -28,7 +35,7 @@ const Navbar = (props) => {
 						props.history.push("/");
 					}}
 				/>
-				<SearchBar />
+				<SearchBar refProp={inputRef} onKeyPress={onKeyPressHandler} />
 				<Img
 					key="filter"
 					containerStyle={styles.filter}
@@ -46,7 +53,7 @@ const Navbar = (props) => {
 						props.history.push("/mybag");
 					}}
 				/>
-				{status === 200 && user.token ? (
+				{isLogin && user.token ? (
 					<nav className={styles.navList}>
 						<Img
 							key="notification"
@@ -65,7 +72,9 @@ const Navbar = (props) => {
 						/>
 						<Img
 							key="profile"
-							source={userDefault}
+							source={
+								user.avatar ? require(user.avatar) : userDefault
+							}
 							containerStyle={styles.profile}
 							imgStyle={styles.profileImg}
 							onClickProp={() => {

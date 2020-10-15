@@ -8,7 +8,6 @@ import text from "../../assets/text.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../redux/actions/product";
 
-
 const Rating = (props) => {
 	const _rate = [...Array(props.rate).keys()];
 	return (
@@ -52,7 +51,7 @@ const Card = (props) => {
 				onClick={() => {
 					if (props.onClickProp) {
 						props.onClickProp(props.id);
-						dispatch(getProductById(props.id))
+						dispatch(getProductById(props.id));
 					}
 				}}
 			>
@@ -69,7 +68,7 @@ const Card = (props) => {
 						Rp{Number(props.price).toLocaleString("id-ID")}
 					</p>
 					<p className={classname(text.helperText, styles.category)}>
-						{props.category}
+						{props.seller_name}
 					</p>
 					<Rating rate={props.rate} />
 				</div>
@@ -83,7 +82,7 @@ Card.propTypes = {
 	img: PropTypes.string,
 	name: PropTypes.string,
 	price: PropTypes.string,
-	category: PropTypes.string,
+	seller_name: PropTypes.string,
 	rate: PropTypes.number,
 	onClickProp: PropTypes.func,
 };

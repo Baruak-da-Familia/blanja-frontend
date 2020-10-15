@@ -69,13 +69,22 @@ const authReducer = (state = initialState, { type, payload }) => {
         isPending: false,
       };
     case actions.AUTH_REGISTER_USER + actions.FULFILLED:
+      if (payload.data.success === false) {
+        return {
+          ...state,
+          status: payload.data.status,
+          errMsg: payload.data.error.msg,
+        };
+      }
       return {
         ...state,
         isFulfilled: true,
         isPending: false,
         user: payload.data.data,
+        errMsg: "",
+        status: payload.data.status,
         isRejected: false,
-        // isLogin: true,
+        isLogin: true,
       };
     case actions.AUTH_LOGOUT_USER:
       return {
