@@ -7,14 +7,13 @@ import starMedium from "../../assets/img/Star.png";
 import { newData } from "../../utils/dummydata";
 import Card from "../../components/Card/Card";
 import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../redux/actions/product";
 
 
 const PageProduct = (props) => {
     const stateProductDetail = useSelector(state => state.product.productDetail);
     const stateProduct = useSelector(state => state.product.product);
-
-    console.log('kuda', stateProductDetail.images)
-
+    const dispatch = useDispatch();
 
     return (
         <div className={classname(styles.body)}>
@@ -188,7 +187,17 @@ const PageProduct = (props) => {
                             chat
 						</button>
 
-                        <button className={classname(styles.chatAddBtn)}>
+                        <button className={classname(styles.chatAddBtn)} onClick={() => dispatch(addToCart({
+                            brand: stateProductDetail.brand,
+                            id: stateProductDetail.id,
+                            images: stateProductDetail.images[0],
+                            name: stateProductDetail.name,
+                            price: Number(stateProductDetail.price),
+                            qty: 1,
+                            seller_id: stateProductDetail.seller_id,
+                            seller_name: stateProductDetail.seller_name,
+                            selected: false,
+                        }))}>
                             add bag
 						</button>
 
