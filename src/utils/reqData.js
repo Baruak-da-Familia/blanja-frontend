@@ -73,5 +73,14 @@ export const getProductById = (id) => {
 };
 
 export const getProductBySellerId = (id) => {
-	return Axios.get(`http://localhost:8000/product/seller/${id}`);
+  return Axios.get(`http://localhost:8000/product/seller/${id}`);
 };
+
+export const sendEmailCustomer = (data) => {
+    return Axios.post(`http://localhost:8000/auth/sendemailcustomer`, data);
+}
+
+export const resetPasswordCustomer = (data) => {
+    return Axios.post(`http://localhost:8000/auth/resetpasscustomer`, data);
+}
+

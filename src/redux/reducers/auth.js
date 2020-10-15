@@ -6,12 +6,15 @@ import {
 
 const initialState = {
   user: {},
-  errMsg: "",
-  status: {},
-  isLogin: false,
-  isPending: false,
-  isFulfilled: false,
-  isRejected: false,
+    errMsg: '',
+    status: {},
+    userAddress: {},
+    reset: {},
+    resetPass: {},
+    isLogin: false,
+    isPending: false,
+    isFulfilled: false,
+    isRejected: false,
 
   errorUpdateCustomer: undefined,
   isUpdateCustomerPending: false,
@@ -89,10 +92,14 @@ const authReducer = (state = initialState, { type, payload }) => {
     case actions.AUTH_LOGOUT_USER:
       return {
         user: {},
-        isLogin: false,
-        isPending: false,
-        isFulfilled: false,
-        isRejected: false,
+                errMsg: '',
+                status: {},
+                userAddress: {},
+                resetPass: {},
+                isLogin: false,
+                isPending: false,
+                isFulfilled: false,
+                isRejected: false,
       };
 
     case String(updateProfileCustomerCreator.pending):
@@ -140,9 +147,52 @@ const authReducer = (state = initialState, { type, payload }) => {
         isAddAddressPending: false,
         isAddAddressFulFilled: false,
       };
+      case actions.AUTH_RESET_PASSWORD + actions.PENDING:
+            return {
+                ...state,
+                isPending: true,
+            };
+        case actions.AUTH_RESET_PASSWORD + actions.REJECTED:
+            return {
+                ...state,
+                isRejected: true,
+                user: payload,
+                isPending: false,
+            };
+        case actions.AUTH_RESET_PASSWORD + actions.FULFILLED:
+            return {
+                ...state,
+                isFulfilled: true,
+                isPending: false,
+                reset: payload.data.data,
+                isRejected: false,
+                // isLogin: true,
+            };
+        case actions.AUTH_RESET_FULLFILED + actions.PENDING:
+            return {
+                ...state,
+                isPending: true,
+            };
+        case actions.AUTH_RESET_FULLFILED + actions.REJECTED:
+            return {
+                ...state,
+                isRejected: true,
+                user: payload,
+                isPending: false,
+            };
+        case actions.AUTH_RESET_FULLFILED + actions.FULFILLED:
+            return {
+                ...state,
+                isFulfilled: true,
+                isPending: false,
+                resetPass: payload.data.data,
+                isRejected: false,
+                // isLogin: true,
+            };
     default:
       return state;
   }
+
 };
 
 export default authReducer;
