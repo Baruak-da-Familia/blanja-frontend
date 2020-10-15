@@ -117,17 +117,33 @@ const productReducer = (state = initialState, { type, payload }) => {
          });
          newCart[indexQtyInc] = {
             ...newCart[indexQtyInc],
-            quantity: state.carts[indexQtyInc].quantity + 1
+            qty: state.carts[indexQtyInc].qty + 1
          }
          return {
             ...state,
             carts: newCart,
          };
       case actions.QUANTITY_DECREASED:
-         return {
-            ...state,
-            checkout: payload.data.data,
+         const indexQtyDec = state.carts.findIndex((item) => {
+            return payload.id === item.id;
+         });
+         newCart[indexQtyDec] = {
+            ...newCart[indexQtyDec],
+            qty: state.carts[indexQtyDec].qty - 1
+         }
+         if (newCart[indexQtyDec].qty === 0) {
+            state.carts.splice(indexQtyDec, 1);//hapus data pada array
+            return {
+               ...state,
+               carts: state.carts
+            }
+         } else {
+            return {
+               ...state,
+               carts: newCart,
+            };
          };
+
       case actions.INSERT_TRANSACTION + actions.PENDING:
          return {
             ...state,

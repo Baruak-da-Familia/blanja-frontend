@@ -9,6 +9,7 @@ import {
 import './MyBag.css';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { increaseQuantity, decreaseQuantity, addToCheckout } from "../../redux/actions/product";
 
 const MyBag = () => {
    const [cart, setCart] = useState([
@@ -93,7 +94,7 @@ const MyBag = () => {
    const dispatch = useDispatch();
    const stateCarts = useSelector(state => state.product.carts);
 
-   // console.log(stateCarts);
+   console.log(stateCarts);
 
    return (
       <div className="container-main">
@@ -142,11 +143,17 @@ const MyBag = () => {
                         </div>
                         <div className="col-2">
                            <div className="row container-counter align-items-center justify-content-between">
-                              <button
-                                 className={classname(colors.lightGray, "btn btn-secondary btn-quantity")}
-                                 onClick={() => handleDecrease(item.id)}>-</button>
+                              {item.qty === 1 ? (
+                                 <button
+                                    className={classname(colors.lightGray, "btn btn-secondary btn-quantity")}
+                                 >-</button>
+                              ) : (
+                                    <button
+                                       className={classname(colors.lightGray, "btn btn-secondary btn-quantity")}
+                                       onClick={() => dispatch(decreaseQuantity(item.id))}>-</button>
+                                 )}
                               <p>{item.qty}</p>
-                              <button className={classname(colors.white, "btn btn-light btn-quantity")} onClick={() => handleIncrease(item.id)} >+</button>
+                              <button className={classname(colors.white, "btn btn-light btn-quantity")} onClick={() => dispatch(increaseQuantity(item.id))} >+</button>
                            </div>
                         </div>
                         <div className="col-2">
