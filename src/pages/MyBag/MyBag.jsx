@@ -8,6 +8,7 @@ import {
 } from 'react-bootstrap';
 import './MyBag.css';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 const MyBag = () => {
    const [cart, setCart] = useState([
@@ -35,22 +36,22 @@ const MyBag = () => {
 
    const handleSelectAll = (evt) => {
       if (evt.target.checked) {
-         cart.map(item => item.selected = true);
+         stateCarts.map(item => item.selected = true);
          setCart([...cart])
       }
       else {
-         cart.map(item => item.selected = false);
+         stateCarts.map(item => item.selected = false);
          setCart([...cart])
       }
    };
 
    const handleSelectItem = (evt) => {
       if (evt.target.checked) {
-         let penampung = cart.filter(item => item.id === Number(evt.target.id));
+         let penampung = stateCarts.filter(item => item.id === Number(evt.target.id));
          penampung[0].selected = true;
          setCart([...cart])
       } else {
-         let penampung = cart.filter(item => item.id === Number(evt.target.id));
+         let penampung = stateCarts.filter(item => item.id === Number(evt.target.id));
          penampung[0].selected = false;
          setCart([...cart])
       }
@@ -85,9 +86,14 @@ const MyBag = () => {
    };
 
    const kirim = () => {
-      console.log(cart.filter(item => item.selected === true));
+      // console.log(cart.filter(item => item.selected === true));
       cart.filter(item => item.selected === true)
    }
+
+   const dispatch = useDispatch();
+   const stateCarts = useSelector(state => state.product.carts);
+
+   // console.log(stateCarts);
 
    return (
       <div className="container-main">
@@ -115,7 +121,7 @@ const MyBag = () => {
                </div>
 
                {/* list item */}
-               {cart.map(item => {
+               {stateCarts.map(item => {
                   return (
                      <div className="row no-gutters shadow align-items-center container-items" key={item.id}>
                         <div className="col-1 align-self-center">
@@ -128,24 +134,24 @@ const MyBag = () => {
                            />
                         </div>
                         <div className="col-2">
-                           <img src={item.img} alt="" />
+                           <img src={`http://localhost:8000${item.images}`} alt="" />
                         </div>
                         <div className="col">
                            <p className={classname(text.text, "text-title")}>{item.name}</p>
-                           <p className={classname(colors.grayText, "text-seller")}>{item.seller}</p>
+                           <p className={classname(colors.grayText, "text-seller")}>{item.brand}</p>
                         </div>
                         <div className="col-2">
                            <div className="row container-counter align-items-center justify-content-between">
                               <button
                                  className={classname(colors.lightGray, "btn btn-secondary btn-quantity")}
                                  onClick={() => handleDecrease(item.id)}>-</button>
-                              <p>{item.quantity}</p>
+                              <p>{item.qty}</p>
                               <button className={classname(colors.white, "btn btn-light btn-quantity")} onClick={() => handleIncrease(item.id)} >+</button>
                            </div>
                         </div>
                         <div className="col-2">
                            <p href="#" className={classname(text.text, colors.blackText, "text-title text-right")}>
-                              {`$ ${(item.price * item.quantity).toFixed(1)}`}
+                              {`Rp${(item.price * item.qty).toLocaleString('id-ID')}`}
                            </p>
                         </div>
                      </div>
@@ -162,12 +168,12 @@ const MyBag = () => {
                         <p className={classname(text.text, colors.grayText, "text-title")}>Total Price</p>
                      </div>
                      <div className="col">
-                        <p className={classname(text.headline3, "text-title text-right")}>$ {cart.filter(item => item.selected === true).reduce((total, item) => {
-                           return total + (item.price * item.quantity);
-                        }, 0).toFixed(1)}</p>
+                        <p className={classname(text.headline3, "text-title text-right")}>Rp{stateCarts.filter(item => item.selected === true).reduce((total, item) => {
+                           return total + (item.price * item.qty)
+                        }, 0).toLocaleString('id-ID')}</p>
                      </div>
                   </div>
-                  {cart.filter(item => item.selected === true).length ? (
+                  {stateCarts.filter(item => item.selected === true).length ? (
                      <Link to={{
                         pathname: "/checkout",
                         data: cart.filter(item => item.selected === true),
