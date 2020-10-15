@@ -121,7 +121,7 @@ const Chat = (props) => {
 		let seller_name = null;
 		let link = null;
 		if (query[0]) {
-			seller_id = query[0].split("=")[1];
+			seller_id = Number(query[0].split("=")[1]);
 		}
 		if (query[1]) {
 			seller_name = query[1].split("=")[1];
@@ -148,7 +148,7 @@ const Chat = (props) => {
 				setInputValue("apa ini masih ada? " + link);
 			} else {
 				setInputValue("apa ini masih ada? " + link);
-				setIdx(idx);
+				setIdx(_idx);
 			}
 		}
 	}, []);
@@ -176,14 +176,14 @@ const Chat = (props) => {
 					update(
 						_idx,
 						{
-							...messages[idx],
+							...messages[_idx],
 							messages: appendMessage(
 								{
 									id: senderId,
 									message,
 									time,
 								},
-								messages[idx]
+								messages[_idx]
 							),
 						},
 						messages
@@ -371,6 +371,9 @@ const Chat = (props) => {
 									placeholder="type message"
 									className={classname(styles.inputmessage)}
 									onKeyPress={inputHandler}
+									onChange={(e) => {
+										setInputValue(e.target.value);
+									}}
 									value={inputValue}
 								/>
 							</div>

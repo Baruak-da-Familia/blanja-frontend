@@ -1,7 +1,11 @@
 import * as actions from "../actions/actionTypes";
+import {
+  updateProfileCustomerCreator,
+  addAddressCustomerCreator,
+} from "../actions/auth";
 
 const initialState = {
-    user: {},
+  user: {},
     errMsg: '',
     status: {},
     userAddress: {},
@@ -11,71 +15,139 @@ const initialState = {
     isPending: false,
     isFulfilled: false,
     isRejected: false,
+
+  errorUpdateCustomer: undefined,
+  isUpdateCustomerPending: false,
+  isUpdateCustomerFulFilled: false,
+  isUpdateCustomerRejected: false,
+
+  errorAddAddress: undefined,
+  isAddAddressPending: false,
+  isAddAddressFulFilled: false,
+  isAddAddressRejected: false,
 };
 
 const authReducer = (state = initialState, { type, payload }) => {
-    switch (type) {
-        case actions.AUTH_LOGIN_USER + actions.PENDING:
-            return {
-                ...state,
-                isPending: true,
-            };
-        case actions.AUTH_LOGIN_USER + actions.REJECTED:
-            return {
-                ...state,
-                isRejected: true,
-                user: payload,
-                isPending: false,
-            };
-        case actions.AUTH_LOGIN_USER + actions.FULFILLED:
-            if (payload.data.success === false) {
-                return {
-                    ...state,
-                    status: payload.data.status,
-                    errMsg: payload.data.error.msg,
-                }
-            }
-            let address1 = payload.data.data.recipient_name
-            let address2 = payload.data.data.address
-            let newAdd = address1.concat(' ', address2, ' ')
-            let address3 = payload.data.data.city_of_subdistrict
-            let newAdd1 = newAdd.concat(address3, ' ')
-            let address4 = payload.data.data.postal_code
-            let newAdd2 = newAdd1.concat(address4)
-
-            return {
-                ...state,
-                isFulfilled: true,
-                isPending: false,
-                user: payload.data.data,
-                userAddress: newAdd2,
+  switch (type) {
+    case actions.AUTH_LOGIN_USER + actions.PENDING:
+      return {
+        ...state,
+        isPending: true,
+      };
+    case actions.AUTH_LOGIN_USER + actions.REJECTED:
+      return {
+        ...state,
+        isRejected: true,
+        user: payload,
+        isPending: false,
+      };
+    case actions.AUTH_LOGIN_USER + actions.FULFILLED:
+      if (payload.data.success === false) {
+        return {
+          ...state,
+          status: payload.data.status,
+          errMsg: payload.data.error.msg,
+        };
+      }
+      return {
+        ...state,
+        isFulfilled: true,
+        isPending: false,
+        user: payload.data.data,
+        errMsg: "",
+        status: payload.data.status,
+        isRejected: false,
+        isLogin: true,
+      };
+    case actions.AUTH_REGISTER_USER + actions.PENDING:
+      return {
+        ...state,
+        isPending: true,
+      };
+    case actions.AUTH_REGISTER_USER + actions.REJECTED:
+      return {
+        ...state,
+        isRejected: true,
+        user: payload,
+        isPending: false,
+      };
+    case actions.AUTH_REGISTER_USER + actions.FULFILLED:
+      if (payload.data.success === false) {
+        return {
+          ...state,
+          status: payload.data.status,
+          errMsg: payload.data.error.msg,
+        };
+      }
+      return {
+        ...state,
+        isFulfilled: true,
+        isPending: false,
+        user: payload.data.data,
+        errMsg: "",
+        status: payload.data.status,
+        isRejected: false,
+        isLogin: true,
+      };
+    case actions.AUTH_LOGOUT_USER:
+      return {
+        user: {},
                 errMsg: '',
-                status: payload.data.status,
-                isRejected: false,
-                isLogin: true,
-            };
-        case actions.AUTH_REGISTER_USER + actions.PENDING:
-            return {
-                ...state,
-                isPending: true,
-            };
-        case actions.AUTH_REGISTER_USER + actions.REJECTED:
-            return {
-                ...state,
-                isRejected: true,
-                user: payload,
+                status: {},
+                userAddress: {},
+                resetPass: {},
+                isLogin: false,
                 isPending: false,
-            };
-        case actions.AUTH_REGISTER_USER + actions.FULFILLED:
-            return {
-                ...state,
-                isFulfilled: true,
-                isPending: false,
-                user: payload.data.data,
+                isFulfilled: false,
                 isRejected: false,
-                // isLogin: true,
-            };
-        case actions.AUTH_RESET_PASSWORD + actions.PENDING:
+      };
+
+    case String(updateProfileCustomerCreator.pending):
+      return {
+        ...state,
+        isUpdateCustomerPending: true,
+      };
+    case String(updateProfileCustomerCreator.fulfilled):
+      return {
+        ...state,
+        user: { ...state.user, ...payload.data },
+        errorUpdateCustomer: undefined,
+        isUpdateCustomerPending: false,
+        isUpdateCustomerFulFilled: true,
+        isUpdateCustomerRejected: false,
+      };
+    case String(updateProfileCustomerCreator.rejected):
+      return {
+        ...state,
+        errorUpdateCustomer: payload,
+        isUpdateCustomerRejected: true,
+        isUpdateCustomerPending: false,
+        isUpdateCustomerFulFilled: false,
+      };
+
+    case String(addAddressCustomerCreator.pending):
+      return {
+        ...state,
+        isAddAddressPending: true,
+      };
+    case String(addAddressCustomerCreator.fulfilled):
+      return {
+        ...state,
+        user: { ...state.user, ...payload.data },
+        errorAddAddress: undefined,
+        isAddAddressPending: false,
+        isAddAddressFulFilled: true,
+        isAddAddressRejected: false,
+      };
+    case String(addAddressCustomerCreator.rejected):
+      return {
+        ...state,
+        errorAddAddress: payload,
+        isAddAddressRejected: true,
+        isAddAddressPending: false,
+        isAddAddressFulFilled: false,
+      };
+      case actions.AUTH_RESET_PASSWORD + actions.PENDING:
             return {
                 ...state,
                 isPending: true,
@@ -117,21 +189,10 @@ const authReducer = (state = initialState, { type, payload }) => {
                 isRejected: false,
                 // isLogin: true,
             };
-        case actions.AUTH_LOGOUT_USER:
-            return {
-                user: {},
-                errMsg: '',
-                status: {},
-                userAddress: {},
-                resetPass: {},
-                isLogin: false,
-                isPending: false,
-                isFulfilled: false,
-                isRejected: false,
-            }
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
+
 };
 
 export default authReducer;

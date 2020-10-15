@@ -9,6 +9,7 @@ import Chat from "./pages/Chat/Chat";
 import Profile from "./pages/Profile";
 import ProfileSeller from "./pages/ProfileSeller";
 import Category from "./pages/Category/Category";
+import Search from "./pages/Search/Search";
 import MyBag from "./pages/MyBag/MyBag";
 import Checkout from "./pages/CheckOut/CheckOut";
 import ResetPassword from "./pages/Auth/ResetPassword";
@@ -59,8 +60,21 @@ function App() {
 						path="/category/:id"
 						component={Category}
 					/>
-					<RouteWithNavbar exact path="/mybag" component={MyBag} />
-					<RouteWithNavbar
+
+					<PublicRoute
+						exact
+						enableNavbar={true}
+						path="/search"
+						component={Search}
+					/>
+					<PublicRoute
+						exact
+						enableNavbar={true}
+						path="/mybag"
+						component={MyBag}
+					/>
+					<PrivateRoute
+
 						exact
 						path="/checkout"
 						component={Checkout}

@@ -5,13 +5,13 @@ import Img from "../ImgWithContainer/ImgWithContainer";
 import search from "../../assets/img/search.png";
 
 const SearchBar = (props) => {
-	const inputRef = React.useRef();
 	return (
 		<div className={styles.searchContainer}>
 			<input
 				placeholder="Search"
 				className={styles.searchInput}
-				ref={inputRef}
+				ref={props.refProp}
+				onKeyPress={props.onKeyPress}
 			/>
 			<Img
 				source={search}
@@ -30,6 +30,7 @@ SearchBar.propTypes = {
 		// Or the instance of a DOM native element (see the note about SSR)
 		PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
 	]),
+	onKeyPress: PropTypes.func,
 };
 
 export default SearchBar;

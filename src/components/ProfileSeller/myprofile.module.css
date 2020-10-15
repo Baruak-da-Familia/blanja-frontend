@@ -7,8 +7,9 @@
   display: flex;
   border: 1px solid #9b9b9b;
   border-radius: 4px;
-  width: 100%;
+  width: calc((850 / 1440) * 100vw);
   padding: 3%;
+  height: calc((850 / 1440) * 1440);
   flex-direction: column;
 }
 .header {
@@ -86,6 +87,8 @@
   box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.05);
   border-radius: 4px;
   padding: 4px;
+  font-size: 16px;
+  padding-left: 7px;
 }
 .select {
   width: 20%;
@@ -138,6 +141,7 @@
   background-color: transparent;
   cursor: pointer;
   color: #9b9b9b;
+  font-size: 13px;
 }
 .btnsave {
   background: #db3022;
@@ -147,4 +151,8 @@
   border: none;
   cursor: pointer;
   color: #ffffff;
+  font-size: 13px;
+}
+.hiddeninput {
+  visibility: hidden;
 }

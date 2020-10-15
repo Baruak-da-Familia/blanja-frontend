@@ -18,7 +18,7 @@ const Login = (props) => {
 
 	const { handleSubmit, register, errors } = useForm();
 
-	const registerUser = useSelector((state) => state.auth.user);
+	const { user: registerUser } = useSelector((state) => state.auth);
 
 	useEffect(() => {
 		if (registerUser.msg === "Register Success") {

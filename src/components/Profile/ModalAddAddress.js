@@ -1,8 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
 import styles from "./modal.module.css";
+import { addAddressCustomerCreator } from "../../redux/actions/auth";
 
 export default function ModalAddAddress(props) {
+  const [myaddress, setAddress] = useState({
+    address_as: "",
+    name: "",
+    phone: "",
+    address: "",
+    post: "",
+    city: "",
+    primary: "",
+  });
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { address_as, name, phone, address, post, city } = myaddress;
+    let body = {
+      save_address: address_as,
+      recipient_name: name,
+      address: address,
+      city_of_subdistrict: city,
+      recipient_telp_number: phone,
+      postal_code: post,
+    };
+    let formData = new FormData();
+    formData.append("save_address", address_as);
+    formData.append("recipient_name", name);
+    formData.append("address", address);
+    formData.append("city_of_subdistrict", city);
+    formData.append("recipient_telp_number", phone);
+    formData.append("postal_code", post);
+    dispatch(addAddressCustomerCreator(1, body));
+    props.onHide();
+  };
   return (
     <Modal
       {...props}
@@ -20,7 +54,13 @@ export default function ModalAddAddress(props) {
               <label className={styles.label} for='address'>
                 Save address as (ex : home address, office address)
               </label>
-              <input id='address' className={styles.input} />
+              <input
+                id='address'
+                className={styles.input}
+                onChange={(e) => {
+                  setAddress({ ...myaddress, address_as: e.target.value });
+                }}
+              />
             </div>
           </div>
 
@@ -29,14 +69,26 @@ export default function ModalAddAddress(props) {
               <label className={styles.label} for='recipients'>
                 Recipient’s name
               </label>
-              <input id='recipients' className={styles.input} />
+              <input
+                id='recipients'
+                className={styles.input}
+                onChange={(e) => {
+                  setAddress({ ...myaddress, name: e.target.value });
+                }}
+              />
             </div>
             <div className={styles.space}></div>
             <div className={styles.contentinput}>
               <label className={styles.label} for='tlp'>
                 Recipient's telephone number
               </label>
-              <input id='tlp' className={styles.input} />
+              <input
+                id='tlp'
+                className={styles.input}
+                onChange={(e) => {
+                  setAddress({ ...myaddress, phone: e.target.value });
+                }}
+              />
             </div>
           </div>
 
@@ -45,14 +97,26 @@ export default function ModalAddAddress(props) {
               <label className={styles.label} for='address'>
                 Address
               </label>
-              <input id='address' className={styles.input} />
+              <input
+                id='address'
+                className={styles.input}
+                onChange={(e) => {
+                  setAddress({ ...myaddress, address: e.target.value });
+                }}
+              />
             </div>
             <div className={styles.space}></div>
             <div className={styles.contentinput}>
               <label className={styles.label} for='postal'>
                 Postal code
               </label>
-              <input id='postal' className={styles.input} />
+              <input
+                id='postal'
+                className={styles.input}
+                onChange={(e) => {
+                  setAddress({ ...myaddress, post: e.target.value });
+                }}
+              />
             </div>
           </div>
 
@@ -61,19 +125,32 @@ export default function ModalAddAddress(props) {
               <label className={styles.label} for='city'>
                 City or subdistrict
               </label>
-              <input id='city' className={styles.input} />
+              <input
+                id='city'
+                className={styles.input}
+                onChange={(e) => {
+                  setAddress({ ...myaddress, city: e.target.value });
+                }}
+              />
             </div>
             <div className={styles.space}></div>
             <div className={styles.contentinput}></div>
           </div>
 
           <div className={styles.iteminput}>
-            <input className={styles.itemcheckbox} type='checkbox' id='city' />
-            <label className={styles.label} for='city'>
-              City or subdistrict
+            <input
+              className={styles.itemcheckbox}
+              type='checkbox'
+              id='primary'
+              value='1'
+              onChange={(e) => {
+                setAddress({ ...myaddress, primary: e.target.value });
+              }}
+            />
+            <label className={styles.label} for='primary'>
+              Make it primary addres
             </label>
           </div>
-
           <div className={styles.iteminput}>
             <div className={styles.contentinput}></div>
             <div className={styles.space}></div>
@@ -81,7 +158,11 @@ export default function ModalAddAddress(props) {
               <button onClick={props.onHide} className={styles.btncancel}>
                 Cancel
               </button>
-              <button className={styles.btnsave}>Save</button>
+              <button
+                onClick={(e) => handleSubmit(e)}
+                className={styles.btnsave}>
+                Save
+              </button>
             </div>
           </div>
         </div>
@@ -89,47 +170,3 @@ export default function ModalAddAddress(props) {
     </Modal>
   );
 }
-
-// function MyVerticallyCenteredModal(props) {
-//   return (
-//     <Modal
-//       {...props}
-//       size='lg'
-//       aria-labelledby='contained-modal-title-vcenter'
-//       centered>
-//       <Modal.Header closeButton>
-//         <Modal.Title id='contained-modal-title-vcenter'>
-//           Modal heading
-//         </Modal.Title>
-//       </Modal.Header>
-//       <Modal.Body>
-//         <h4>Centered Modal</h4>
-//         <p>
-//           Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-//           dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-//           consectetur ac, vestibulum at eros.
-//         </p>
-//       </Modal.Body>
-//       <Modal.Footer>
-//         <Button onClick={props.onHide}>Close</Button>
-//       </Modal.Footer>
-//     </Modal>
-//   );
-// }
-
-// function App() {
-//   const [modalShow, setModalShow] = React.useState(false);
-
-//   return (
-//     <>
-//       <Button variant='primary' onClick={() => setModalShow(true)}>
-//         Launch vertically centered modal
-//       </Button>
-
-//       <MyVerticallyCenteredModal
-//         show={modalShow}
-//         onHide={() => setModalShow(false)}
-//       />
-//     </>
-//   );
-// }

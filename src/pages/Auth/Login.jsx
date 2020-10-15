@@ -17,11 +17,13 @@ const Login = (props) => {
 	const [errMsg, setErrMsg] = useState(null);
 	// const [errMsgSllr, setErrMsgSllr] = useState(null)
 
-    const login = useSelector((state) => state.auth.user);
-	const userAddress = useSelector((state) => state.auth.userAddress);
-    
-	const statusLogin = useSelector((state) => state.auth.status);
-	const errMsgUser = useSelector((state) => state.auth.errMsg);
+
+	const {
+		user: login,
+		status: statusLogin,
+		errMsg: errMsgUser,
+	} = useSelector((state) => state.auth);
+
 
 	const { handleSubmit, register, errors } = useForm();
 
