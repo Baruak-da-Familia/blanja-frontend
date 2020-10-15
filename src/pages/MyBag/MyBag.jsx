@@ -84,7 +84,15 @@ const MyBag = () => {
          }),
       };
       dispatch(addToCheckout({ sendData }))
-   }
+   };
+
+   const handleDeleteCart = () => {
+      if (window.confirm("Are you sure to delete the bag?")) {
+         dispatch(clearCart());
+      } else {
+         return;
+      }
+   };
 
    return (
       <div className="container-main">
@@ -108,7 +116,7 @@ const MyBag = () => {
                         <p className={classname(text.text, "text-title")}>{`Select all item (${cart.length} items selected)`}</p>
                      </div>
                      <div className="col-1">
-                        <a href="#" className={classname(text.text, colors.errorText, "text-title")} onClick={() => dispatch(clearCart())}>Delete</a>
+                        <a href="#" className={classname(text.text, colors.errorText, "text-title")} onClick={handleDeleteCart}>Delete</a>
                      </div>
                   </div>
 
