@@ -11,7 +11,7 @@ import { isEmpty } from "underscore";
 import { DateTime } from "luxon";
 import { update } from "ramda";
 import { v4 as uuidv4 } from "uuid";
-import { set } from "lodash";
+import { syncFromServer, syncWithLocal } from "../../utils/reqData";
 
 // const myId = 14;
 
@@ -64,7 +64,7 @@ const renderChat = ({ messages }, id) => {
 	return (
 		<>
 			{messages.map((item, index) => {
-				if (item.id === id) {
+				if (item.id !== id) {
 					return (
 						<>
 							<div
@@ -106,6 +106,36 @@ const Chat = (props) => {
 	const [idx, setIdx] = React.useState(-1);
 	const [socket, setSocket] = React.useState(null);
 	const [messages, setMessage] = useLocalStorage(user.id, []);
+
+	async function fetchChatData() {
+		try {
+			const response = await syncFromServer(user.id);
+			setMessage(response.data.data);
+		} catch (err) {
+			return [];
+		}
+	}
+
+	const syncToServer = async (data) => {
+		try {
+			const res = await syncWithLocal(data);
+		} catch (err) {
+			//do nothing
+		}
+	};
+
+	// fetch chat data from server
+	React.useEffect(() => {
+		fetchChatData(user.id);
+	}, []);
+
+	//sync chat data to server
+	React.useEffect(() => {
+		if (idx >= 0 && !isEmpty(messages[idx])) {
+			syncToServer({ messages: messages[idx] });
+		}
+	}, [messages]);
+
 	const [inputValue, setInputValue] = React.useState("");
 
 	const inputRef = React.useRef();
@@ -116,7 +146,6 @@ const Chat = (props) => {
 
 	React.useEffect(() => {
 		const query = props.location.search.split("&");
-		console.log(query);
 		let seller_id = null;
 		let seller_name = null;
 		let link = null;
@@ -131,15 +160,24 @@ const Chat = (props) => {
 		}
 		if (seller_id) {
 			const _idx = messages.findIndex((item) => {
-				return item.id === seller_id;
+				return (
+					item.user1.id === seller_id || item.user2.id === seller_id
+				);
 			});
 			if (_idx < 0) {
 				const newMessages = [
 					...messages,
 					{
-						id: seller_id,
-						name: seller_name,
-						avatar: null,
+						user1: {
+							id: seller_id,
+							name: seller_name,
+							avatar: null,
+						},
+						user2: {
+							id: user.id,
+							name: user.name,
+							avatar: user.avatar,
+						},
 						messages: [],
 					},
 				];
@@ -153,23 +191,24 @@ const Chat = (props) => {
 		}
 	}, []);
 
+	//intialize socket
 	React.useEffect(() => {
 		if (socket !== null) return;
-		const newSocket = Socket("http://192.168.18.36:3300", {
+		const newSocket = Socket("http://localhost:3300", {
 			query: { id: user.id },
 		});
 		setSocket(newSocket);
-		console.log(user.id);
 		return () => {
 			if (socket) socket.close();
 		};
 	}, [user.id]);
 
+	//subscribe to socket event
 	React.useEffect(() => {
 		if (socket === null) return;
 		socket.on("message", ({ senderId, name, avatar, message, time }) => {
 			const _idx = messages.findIndex((item) => {
-				return item.id === senderId;
+				return item.user1.id === senderId || item.user2.id === senderId;
 			});
 			if (_idx >= 0) {
 				setMessage(
@@ -193,9 +232,16 @@ const Chat = (props) => {
 				const newMessages = [
 					...messages,
 					{
-						id: senderId,
-						name,
-						avatar,
+						user1: {
+							id: user.id,
+							name: user.name,
+							avatar: user.avatar,
+						},
+						user2: {
+							id: Number(senderId),
+							name: name,
+							avatar: avatar,
+						},
 						messages: [{ id: senderId, message, time }],
 					},
 				];
@@ -249,7 +295,10 @@ const Chat = (props) => {
 			}
 			socket.emit("message", {
 				senderId: user.id,
-				receiverId: messages[idx].id,
+				receiverId:
+					messages[idx].user1.id !== user.id
+						? messages[idx].user1.id
+						: messages[idx].user2.id,
 				name: user.name,
 				avatar: user.avatar,
 				message: inputRef.current.value,
@@ -288,7 +337,7 @@ const Chat = (props) => {
 	const onClickHandler = (id) => {
 		setIdx(
 			messages.findIndex((message) => {
-				return message.id === id;
+				return message.user1.id === id || message.user2.id === id;
 			})
 		);
 	};
@@ -318,9 +367,21 @@ const Chat = (props) => {
 												  ].message
 												: ""
 										}
-										name={item.name}
-										avatar={item.avatar}
-										id={item.id}
+										name={
+											item.user1.id !== user.id
+												? item.user1.name
+												: item.user2.name
+										}
+										avatar={
+											item.user1.id !== user.id
+												? item.user1.avatar
+												: item.user2.avatar
+										}
+										id={
+											item.user1.id !== user.id
+												? item.user1.id
+												: item.user2.id
+										}
 										onClick={onClickHandler}
 									/>
 								);
@@ -339,9 +400,21 @@ const Chat = (props) => {
 						<>
 							<div className={classname(styles.chatroomHeader)}>
 								<UserCard
-									key={String(messages[idx].id)}
-									name={messages[idx].name}
-									avatar={messages[idx].avatar}
+									key={
+										messages[idx].user1.id !== user.id
+											? String(messages[idx].user1.id)
+											: String(messages[idx].user2.id)
+									}
+									name={
+										messages[idx].user1.id !== user.id
+											? messages[idx].user1.name
+											: messages[idx].user2.name
+									}
+									avatar={
+										messages[idx].user1.id !== user.id
+											? messages[idx].user1.avatar
+											: messages[idx].user2.avatar
+									}
 								/>
 							</div>
 							<div
@@ -349,7 +422,7 @@ const Chat = (props) => {
 								className={classname(styles.chatroom)}
 							>
 								{!isEmpty(messages[idx].messages) ? (
-									renderChat(messages[idx], messages[idx].id)
+									renderChat(messages[idx], user.id)
 								) : (
 									<h1
 										className={classname(
