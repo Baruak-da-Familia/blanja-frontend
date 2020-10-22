@@ -6,18 +6,43 @@ import secImg from "../../assets/img/card.png";
 import starMedium from "../../assets/img/Star.png";
 import { newData } from "../../utils/dummydata";
 import Card from "../../components/Card/Card";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../redux/actions/product";
 
 const PageProduct = (props) => {
+
+	const stateProductDetail = useSelector(
+		(state) => state.product.productDetail
+	);
+	const stateProduct = useSelector((state) => state.product.product);
+	const divRef = React.useRef();
+
+	React.useEffect(() => {
+		if (divRef.current) {
+			divRef.current.scrollIntoView();
+		}
+	}, [props.match.params.id]);
+
+  const dispatch = useDispatch();
+
+	const onClickHandler = (id) => {
+		props.history.push(`/detail/${id}`);
+	};
+
+	console.log("kuda", stateProductDetail.images);
+
 	return (
-		<div className={classname(styles.body)}>
+		<div className={classname(styles.body)} ref={divRef}>
 			<div className={classname(styles.topContainer)}>
 				<div className={classname(styles.imgProductContainer)}>
 					<div className={classname(styles.mainProductImgContainer)}>
-						<img
-							alt="product_img"
-							className={classname(styles.productMainImg)}
-							src={mainImg}
-						/>
+						{stateProductDetail.images !== undefined ? (
+							<img
+								alt="product_img"
+								className={classname(styles.productMainImg)}
+								src={`http://localhost:8000${stateProductDetail.images[0]}`}
+							/>
+						) : null}
 					</div>
 					<div
 						className={classname(
@@ -25,40 +50,50 @@ const PageProduct = (props) => {
 						)}
 					>
 						<div className={classname(styles.secondaryProductImg)}>
-							<img
-								alt="product_img"
-								className={classname(styles.exampleImg)}
-								src={mainImg}
-							/>
-							<img
-								alt="product_img"
-								className={classname(styles.exampleImg)}
-								src={mainImg}
-							/>
-							<img
-								alt="product_img"
-								className={classname(styles.exampleImg)}
-								src={mainImg}
-							/>
-							<img
-								alt="product_img"
-								className={classname(styles.exampleImg)}
-								src={mainImg}
-							/>
-							<img
-								alt="product_img"
-								className={classname(styles.exampleImg)}
-								src={mainImg}
-							/>
+							{stateProductDetail.images !== undefined ? (
+								<img
+									alt="[images]"
+									className={classname(styles.exampleImg)}
+									src={`http://localhost:8000${stateProductDetail.images[1]}`}
+								/>
+							) : null}
+							{stateProductDetail.images !== undefined ? (
+								<img
+									alt="[images]"
+									className={classname(styles.exampleImg)}
+									src={`http://localhost:8000${stateProductDetail.images[2]}`}
+								/>
+							) : null}
+							{stateProductDetail.images !== undefined ? (
+								<img
+									alt="[images]"
+									className={classname(styles.exampleImg)}
+									src={`http://localhost:8000${stateProductDetail.images[3]}`}
+								/>
+							) : null}
+							{stateProductDetail.images !== undefined ? (
+								<img
+									alt="[images]"
+									className={classname(styles.exampleImg)}
+									src={`http://localhost:8000${stateProductDetail.images[4]}`}
+								/>
+							) : null}
+							{stateProductDetail.images !== undefined ? (
+								<img
+									alt="[images]"
+									className={classname(styles.exampleImg)}
+									src={`http://localhost:8000${stateProductDetail.images[5]}`}
+								/>
+							) : null}
 						</div>
 					</div>
 				</div>
 				<div style={{ marginLeft: 28 }}>
 					<p style={{ fontWeight: 600, fontSize: 28 }}>
-						Baju muslim pria
+						{stateProductDetail.name}
 					</p>
 					<p style={{ fontWeight: 500, fontSize: 16, marginTop: 10 }}>
-						zalora
+						{stateProductDetail.brand}
 					</p>
 					<p style={{ marginTop: 15.29 }}>[rating]</p>
 					<p
@@ -68,7 +103,7 @@ const PageProduct = (props) => {
 							marginTop: 31.29,
 						}}
 					>
-						price
+						Price
 					</p>
 					<p
 						style={{
@@ -77,7 +112,10 @@ const PageProduct = (props) => {
 							marginTop: 10,
 						}}
 					>
-						$ 20
+						Rp
+						{Number(stateProductDetail.price).toLocaleString(
+							"id-ID"
+						)}
 					</p>
 					<p style={{ fontWeight: 600, fontSize: 16, marginTop: 10 }}>
 						color
@@ -159,15 +197,24 @@ const PageProduct = (props) => {
 							className={classname(styles.chatAddBtn)}
 							onClick={() => {
 								props.history.push(
-									`/chat?with=${props.match.params.id}&name=BestStore&link=http://192.168.18.36:8000${props.location.pathname}`
+									`/chat?with=${stateProductDetail.seller_id}&name=BestStore&link=http://192.168.18.36:3000${props.location.pathname}`
 								);
 							}}
 						>
 							chat
 						</button>
-
-						<button className={classname(styles.chatAddBtn)}>
-							add bag
+                        <button className={classname(styles.chatAddBtn)} onClick={() => dispatch(addToCart({
+                            brand: stateProductDetail.brand,
+                            id: stateProductDetail.id,
+                            images: stateProductDetail.images[0],
+                            name: stateProductDetail.name,
+                            price: Number(stateProductDetail.price),
+                            qty: 1,
+                            seller_id: stateProductDetail.seller_id,
+                            seller_name: stateProductDetail.seller_name,
+                            selected: false,
+                        }))}>
+                            add bag
 						</button>
 
 						<button className={classname(styles.buyBtn)}>
@@ -191,26 +238,13 @@ const PageProduct = (props) => {
 						fontWeight: 500,
 					}}
 				>
-					New
+					{stateProductDetail.status}
 				</p>
 				<p style={{ marginTop: 40, fontSize: 20, fontWeight: 600 }}>
 					Description
 				</p>
 				<p style={{ marginTop: 10, fontSize: 14 }}>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					Donec non magna rutrum, pellentesque augue eu, sagittis
-					velit. Phasellus quis laoreet dolor. Fusce nec pharetra
-					quam. Interdum et malesuada fames ac ante ipsum primis in
-					faucibus. Praesent sed enim vel turpis blandit imperdiet ac
-					ac felis. Etiam tincidunt tristique placerat. Pellentesque a
-					consequat mauris, vel suscipit ipsum. Donec ac mauris vitae
-					diam commodo vehicula. Donec quam elit, sollicitudin eu nisl
-					at, ornare suscipit magna. Donec non magna rutrum,
-					pellentesque augue eu, sagittis velit. Phasellus quis
-					laoreet dolor. Fusce nec pharetra quam. Interdum et
-					malesuada fames ac ante ipsum primis in faucibus. Praesent
-					sed enim vel turpis blandit imperdiet ac ac felis. In
-					ultricies rutrum tempus. Mauris vel molestie orci.
+					{stateProductDetail.description}
 				</p>
 				<p style={{ fontSize: 28, fontWeight: 600, marginTop: 50 }}>
 					Product review
@@ -341,8 +375,14 @@ const PageProduct = (props) => {
 				</p>
 				<p style={{ fontSize: 12 }}>You've never seen it before</p>
 				<div className={classname("row", "no-gutters", styles.mt25)}>
-					{newData.map((item) => {
-						return <Card key={item.id} {...item} />;
+					{stateProduct.map((item) => {
+						return (
+							<Card
+								key={item.id}
+								{...item}
+								onClickProp={onClickHandler}
+							/>
+						);
 					})}
 				</div>
 			</div>

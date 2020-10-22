@@ -22,8 +22,6 @@ const ModalSelectPayment = (props) => {
                Payment
             </Modal.Title>
          </Modal.Header>
-         {/* <Modal.Header closeButton className="no-border" /> */}
-         {/* <Modal.Header><h4 className="text-top">Payment</h4></Modal.Header> */}
          <Modal.Body className="no-border modal-body-container">
             <div className="container-modal">
                <div className="row container-item-payment">
@@ -32,17 +30,17 @@ const ModalSelectPayment = (props) => {
                <div className="row align-items-center container-item-payment">
                   <img src={gopay} alt="" />
                   <h4 className="text-item-payment">Gopay</h4>
-                  <input type="checkbox" className="ml-auto" />
+                  <input type="radio" name="payment" id="gopay" value="gopay" onChange={props.handleSelectPayment} className="ml-auto" />
                </div>
                <div className="row align-items-center container-item-payment">
                   <img src={pos} alt="" />
                   <h4 className="text-item-payment">Pos Indonesia</h4>
-                  <input type="checkbox" className="ml-auto" />
+                  <input type="radio" name="payment" id="pos" value="pos" onChange={props.handleSelectPayment} className="ml-auto" />
                </div>
                <div className="row align-items-center container-item-payment">
                   <img src={mastercard} alt="" />
                   <h4 className="text-item-payment">Mastercard</h4>
-                  <input type="checkbox" className="ml-auto" />
+                  <input type="radio" name="payment" id="mastercard" onChange={props.handleSelectPayment} value="mastercard" className="ml-auto" />
                </div>
             </div>
          </Modal.Body>
@@ -53,11 +51,11 @@ const ModalSelectPayment = (props) => {
                </div>
                <div className="row align-items-center container-item-summary">
                   <h4 className={classname(colors.grayText, text.text)}>Order</h4>
-                  <h3 className="ml-auto text-price">{`$ ${props.cart.reduce((total, item) => { return total + (item.price * item.qty) }, 0).toFixed(1)}`}</h3>
+                  <h3 className="ml-auto text-price">{`Rp${props.cart.reduce((total, item) => { return total + (item.price * item.qty) }, 0).toLocaleString('id-ID')}`}</h3>
                </div>
                <div className="row align-items-center container-item-summary">
                   <h4 className={classname(colors.grayText, text.text)}>Delivery</h4>
-                  <h3 className="ml-auto text-price">$ 5.0</h3>
+                  <h3 className="ml-auto text-price">Rp5.000</h3>
                </div>
             </div>
          </Modal.Body>
@@ -66,7 +64,7 @@ const ModalSelectPayment = (props) => {
                <div className="row">
                   <div className="col">
                      <h4 className={classname(colors.blackText, "text-title-head")}>Shopping summary</h4>
-                     <h3 className={classname(colors.primaryText, "text-price")}>{`$ ${props.cart.reduce((total, item) => { return total + (item.price * item.qty) }, 5).toFixed(1)}`}</h3>
+                     <h3 className={classname(colors.primaryText, "text-price")}>{`Rp${props.cart.reduce((total, item) => { return total + (item.price * item.qty) }, 5000).toLocaleString('id-ID')}`}</h3>
                   </div>
                   <div className="col-5 align-self-center">
                      <button className={classname("btn btn-danger btn-buy", colors.primary)} onClick={props.onSubmit}>Buy</button>

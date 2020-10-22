@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import ProfileSeller from "./pages/ProfileSeller";
 import ProductDetail from "./pages/PageProduct/PageProduct";
 import Category from "./pages/Category/Category";
+import Search from "./pages/Search/Search";
 import MyBag from "./pages/MyBag/MyBag";
 import Checkout from "./pages/CheckOut/CheckOut";
 import PrivateRoute from "./components/Route/PrivateRoute";
@@ -53,6 +54,12 @@ function App() {
 						enableNavbar={true}
 						path="/category/:id"
 						component={Category}
+					/>
+					<PublicRoute
+						exact
+						enableNavbar={true}
+						path="/search"
+						component={Search}
 					/>
 					<PublicRoute
 						exact

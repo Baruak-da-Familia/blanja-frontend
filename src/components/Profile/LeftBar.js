@@ -45,7 +45,7 @@ export default function LeftBar(props) {
             className={
               nav === "shippingaddress" ? styles.active : styles.inactive
             }>
-            Snipping address
+            Shipping address
           </p>
         </div>
 

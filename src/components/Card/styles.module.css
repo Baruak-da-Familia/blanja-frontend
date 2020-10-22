@@ -58,6 +58,14 @@
 .name {
 	font-weight: 550;
 	line-height: 2.4rem;
+	max-height: 48px;
+	max-width: 184px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	/* white-space: nowrap; */
 }
 
 .price {
