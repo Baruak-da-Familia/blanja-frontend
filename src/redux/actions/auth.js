@@ -1,12 +1,16 @@
 import * as actions from "./actionTypes";
 import { createAsyncAction } from "redux-promise-middleware-actions";
 import {
+
   authLoginCustomer,
   authLoginSeller,
   authRegisterCustomer,
   authRegisterSeller,
   updateProfileCustomer,
   addAddressCustomer,
+  resetPasswordCustomer,
+	sendEmailCustomer,
+
 } from "../../utils/reqData";
 
 export const authLoginCustomerCreator = (data) => {
@@ -33,6 +37,21 @@ export const authRegisterSellerCreator = (data) => {
     payload: authRegisterSeller(data),
   };
 };
+
+export const authResetPasswordCustomer = (data) => {
+	return {
+		type: actions.AUTH_RESET_PASSWORD,
+		payload: sendEmailCustomer(data),
+	};
+};
+export const authResetPasswordCustomerFullf = (data) => {
+	return {
+		type: actions.AUTH_RESET_FULLFILED,
+		payload: resetPasswordCustomer(data),
+	};
+};
+
+
 export const updateProfileCustomerCreator = createAsyncAction(
   "UPDATECUSTOMER",
   async (id, body) => {
@@ -47,3 +66,4 @@ export const addAddressCustomerCreator = createAsyncAction(
     return res.data;
   }
 );
+
