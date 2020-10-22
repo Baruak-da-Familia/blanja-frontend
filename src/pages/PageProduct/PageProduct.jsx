@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import classname from "../../helpers/classJoiner";
 import styles from "./styles.module.css";
 import mainImg from "../../assets/img/page_product.png";
@@ -7,14 +7,19 @@ import starMedium from "../../assets/img/Star.png";
 import { newData } from "../../utils/dummydata";
 import Card from "../../components/Card/Card";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../redux/actions/product";
+import { addToCart, addToCheckout } from "../../redux/actions/product";
 
 const PageProduct = (props) => {
 
+	const [qty, setQty] = useState(1)
 	const stateProductDetail = useSelector(
 		(state) => state.product.productDetail
 	);
 	const stateProduct = useSelector((state) => state.product.product);
+	const stateCart = useSelector((state) => state.product.carts);
+	const stateAuth = useSelector(state => state.auth.user);
+
+
 	const divRef = React.useRef();
 
 	React.useEffect(() => {
@@ -23,13 +28,53 @@ const PageProduct = (props) => {
 		}
 	}, [props.match.params.id]);
 
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
 	const onClickHandler = (id) => {
 		props.history.push(`/detail/${id}`);
 	};
 
-	console.log("kuda", stateProductDetail.images);
+
+	const index = stateCart.findIndex((item) => {
+		return item.id === stateProductDetail.id
+
+	})
+
+	const kirim = () => {
+		// console.log(cart.filter(item => item.selected === true));
+		// stateCarts.filter(item => item.selected === true)
+		// brand: stateProductDetail.brand,
+		// 	id: stateProductDetail.id,
+		// 		images: stateProductDetail.images[0],
+		// 			name: stateProductDetail.name,
+		// 				price: Number(stateProductDetail.price),
+		// 					qty: qty,
+		// 						seller_id: stateProductDetail.seller_id,
+		// 							seller_name: stateProductDetail.seller_name,
+		// 								selected: false,
+											let invoice = Math.floor(Math.random() * 100001) + 1;
+		const sendData = {
+			"brand": stateProductDetail.brand,
+			"id": invoice,
+			'images': stateProductDetail.images[0],
+			'name': stateProductDetail.name,
+			"customer_id": stateAuth.id,
+			'price': Number(stateProductDetail.price),
+			'qty': qty,
+			"seller_id": stateProductDetail.seller_id,
+			"amount": stateProductDetail.price * qty,
+			"seller_id": stateProductDetail.seller_id,
+			"seller_name": stateProductDetail.seller_name,
+			"payment_method": "",
+			// "address": stateAddres,
+			"address": "Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c 16] Sokaraja, Kab. Banyumas, 53181",
+			"products": [{ id: stateProductDetail.id, qty: qty }],
+			'selected': true,
+		};
+		dispatch(addToCart(sendData))
+		props.history.push("/checkout");
+	};
+	// console.log(index)
 
 	return (
 		<div className={classname(styles.body)} ref={divRef}>
@@ -114,8 +159,8 @@ const PageProduct = (props) => {
 					>
 						Rp
 						{Number(stateProductDetail.price).toLocaleString(
-							"id-ID"
-						)}
+						"id-ID"
+					)}
 					</p>
 					<p style={{ fontWeight: 600, fontSize: 16, marginTop: 10 }}>
 						color
@@ -171,9 +216,16 @@ const PageProduct = (props) => {
 						</button>
 						<button
 							className={classname(styles.sizeQtyBtn)}
-							style={{ marginLeft: 80 }}
+							style={{ marginLeft: 80 }} onClick={() => {
+								if (qty === 1) {
+									return
+								} else {
+									setQty(qty - 1)
+								}
+							}}
 						>
-							<p style={{ fontSize: 50, marginTop: -20.5 }}>-</p>
+							<p style={{ fontSize: 50, marginTop: -20.5 }}
+							>-</p>
 						</button>
 						<p
 							style={{
@@ -182,12 +234,14 @@ const PageProduct = (props) => {
 								marginLeft: 10,
 							}}
 						>
-							28
+							{qty}
 						</p>
 
 						<button
 							className={classname(styles.sizeQtyBtn)}
-							style={{ marginLeft: 10 }}
+							style={{ marginLeft: 10 }} onClick={() => {
+								setQty(qty + 1)
+							}}
 						>
 							<p style={{ fontSize: 30, marginTop: -3.5 }}>+</p>
 						</button>
@@ -203,21 +257,28 @@ const PageProduct = (props) => {
 						>
 							chat
 						</button>
-                        <button className={classname(styles.chatAddBtn)} onClick={() => dispatch(addToCart({
-                            brand: stateProductDetail.brand,
-                            id: stateProductDetail.id,
-                            images: stateProductDetail.images[0],
-                            name: stateProductDetail.name,
-                            price: Number(stateProductDetail.price),
-                            qty: 1,
-                            seller_id: stateProductDetail.seller_id,
-                            seller_name: stateProductDetail.seller_name,
-                            selected: false,
-                        }))}>
-                            add bag
-						</button>
+						{index >= 0 ? (<button style={{ backgroundColor: '#222222', color: 'white' }} className={classname(styles.chatAddBtn)} >
+							item already in bag
+						</button>) : (
+								<button className={classname(styles.chatAddBtn)} onClick={() => dispatch(addToCart({
+									brand: stateProductDetail.brand,
+									id: stateProductDetail.id,
+									images: stateProductDetail.images[0],
+									name: stateProductDetail.name,
+									price: Number(stateProductDetail.price),
+									qty: qty,
+									seller_id: stateProductDetail.seller_id,
+									seller_name: stateProductDetail.seller_name,
+									selected: false,
+								}))}>
+									add bag
+								</button>
+							)
 
-						<button className={classname(styles.buyBtn)}>
+						}
+
+
+						<button className={classname(styles.buyBtn)} onClick={kirim} >
 							buy now
 						</button>
 					</div>
@@ -386,7 +447,7 @@ const PageProduct = (props) => {
 					})}
 				</div>
 			</div>
-		</div>
+		</div >
 	);
 };
 
