@@ -143,8 +143,8 @@ const Login = (props) => {
 					<div className={classname(styles.signUpBtn)}>
 						<p>
 							Already have a Tokopedia account?{" "}
-							<span onClick={() => { }}>
-								<Link className={classname(styles.bla)} to="/">
+							<span onClick={() => {}}>
+								<Link className={classname(styles.bla)} to="/login">
 									Login
 								</Link>
 							</span>
