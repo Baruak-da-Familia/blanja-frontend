@@ -14,10 +14,10 @@ const Search = (props) => {
 	const dispatch = useDispatch();
 	const stateProduct = useSelector((state) => state.product.product);
 	const onClickHandler = (id) => {
-		props.history.push(`/detail/${id}`);
+		props.history.push(`/product/detail/${id}`);
 	};
 	React.useEffect(() => {
-		document.title = "Search for: "+nameQuery[1]+" | Blanja";
+		document.title = `Search for "${nameQuery[1]}" | Blanja`;
 	}, [nameQuery]);
 	
 	React.useEffect(() => {
