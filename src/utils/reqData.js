@@ -1,23 +1,24 @@
 import Axios from "axios";
+import {API_URL} from "./environment";
 
 export const authLoginCustomer = (data) => {
-	return Axios.post(`http://localhost:8000/auth/login/customer`, data);
+	return Axios.post(`${API_URL}/auth/login/customer`, data);
 };
 
 export const authLoginSeller = (data) => {
-	return Axios.post(`http://localhost:8000/auth/login/seller`, data);
+	return Axios.post(`${API_URL}/auth/login/seller`, data);
 };
 
 export const authRegisterCustomer = (data) => {
-	return Axios.post(`http://localhost:8000/auth/register/customer`, data);
+	return Axios.post(`${API_URL}/auth/register/customer`, data);
 };
 
 export const authRegisterSeller = (data) => {
-	return Axios.post(`http://localhost:8000/auth/register/seller`, data);
+	return Axios.post(`${API_URL}/auth/register/seller`, data);
 };
 
 export const updateProfileCustomer = (id, body) => {
-	return Axios.patch(`http://localhost:8000/customer/${id}`, body, {
+	return Axios.patch(`${API_URL}/customer/${id}`, body, {
 		headers: {
 			"content-type": "multipart/form-data",
 			contentType: false,
@@ -29,11 +30,11 @@ export const updateProfileCustomer = (id, body) => {
 };
 
 export const addAddressCustomer = (id, data) => {
-	return Axios.patch(`http://localhost:8000/customer-address/${id}`, data);
+	return Axios.patch(`${API_URL}/customer-address/${id}`, data);
 };
 
 export const addProduct = (body) => {
-	return Axios.post(`http://localhost:8000/product`, body, {
+	return Axios.post(`${API_URL}/product`, body, {
 		headers: {
 			"content-type": "multipart/form-data",
 			contentType: false,
@@ -45,49 +46,49 @@ export const addProduct = (body) => {
 };
 
 export const doTransaction = (data) => {
-	return Axios.post(`http://localhost:8000/order`, data);
+	return Axios.post(`${API_URL}/order`, data);
 };
 
 export const fetchAllProduct = (category, name) => {
 	if (category && name) {
 		return Axios.get(
-			`http://localhost:8000/product?name=${name}&brand=&category=${category}&page=1&limit=60`
+			`${API_URL}/product?name=${name}&brand=&category=${category}&page=1&limit=15`
 		);
 	} else if (category) {
 		return Axios.get(
-			`http://localhost:8000/product?name=&brand=&category=${category}&page=1&limit=60`
+			`${API_URL}/product?name=&brand=&category=${category}&page=1&limit=15`
 		);
 	} else if (name) {
 		return Axios.get(
-			`http://localhost:8000/product?name=${name}&brand=${name}&category=&page=1&limit=60`
+			`${API_URL}/product?name=${name}&brand=${name}&category=&page=1&limit=15`
 		);
 	} else {
 		return Axios.get(
-			`http://localhost:8000/product?name=&brand=&category=&page=1&limit=60`
+			`${API_URL}/product?name=&brand=&category=&page=1&limit=15`
 		);
 	}
 };
 
 export const getProductById = (id) => {
-	return Axios.get(`http://localhost:8000/product/${id}`);
+	return Axios.get(`${API_URL}/product/${id}`);
 };
 
 export const getProductBySellerId = (id) => {
-  return Axios.get(`http://localhost:8000/product/seller/${id}`);
+  return Axios.get(`${API_URL}/product/seller/${id}`);
 };
 
 export const syncFromServer = (id) => {
-	return Axios.get(`http://localhost:8000/chat/${id}`);
+	return Axios.get(`${API_URL}/chat/${id}`);
 };
 
 export const syncWithLocal = (data) => {
-	return Axios.patch("http://localhost:8000/chat/", data);
+	return Axios.patch(`${API_URL}/chat/`, data);
 };
 
 export const sendEmailCustomer = (data) => {
-    return Axios.post(`http://localhost:8000/auth/sendemailcustomer`, data);
+    return Axios.post(`${API_URL}/auth/sendemailcustomer`, data);
 }
 
 export const resetPasswordCustomer = (data) => {
-    return Axios.post(`http://localhost:8000/auth/resetpasscustomer`, data);
+    return Axios.post(`${API_URL}/auth/resetpasscustomer`, data);
 }

@@ -15,6 +15,7 @@ import {
 	addToCheckout,
 	clearCart,
 } from "../../redux/actions/product";
+import {API_URL} from "../../utils/environment";
 
 const MyBag = () => {
 	const [cart, setCart] = useState([
@@ -174,7 +175,7 @@ const MyBag = () => {
 									</div>
 									<div className="col-2">
 										<img
-											src={`http://localhost:8000${item.images}`}
+											src={`${API_URL}${item.images}`}
 											alt=""
 										/>
 									</div>

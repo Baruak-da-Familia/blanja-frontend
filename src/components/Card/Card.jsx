@@ -6,6 +6,7 @@ import star from "../../assets/img/Star.png";
 import styles from "./styles.module.css";
 import text from "../../assets/text.module.css";
 import { useDispatch, useSelector } from "react-redux";
+import {API_URL} from "../../utils/environment";
 
 const Rating = (props) => {
 	const _rate = [...Array(props.rate).keys()];
@@ -54,7 +55,7 @@ const Card = (props) => {
 				}}
 			>
 				<Img
-					source={`http://localhost:8000${
+					source={`${API_URL}${
 						props.image.split(",")[0]
 					}`}
 					containerStyle={styles.cardImgContainer}
