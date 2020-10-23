@@ -13,7 +13,7 @@ const Category = (props) => {
 	const dispatch = useDispatch();
 	const stateProduct = useSelector((state) => state.product.product);
 	const onClickHandler = (id) => {
-		props.history.push(`/detail/${id}`);
+		props.history.push(`/product/detail/${id}`);
 	};
 
 	React.useEffect(() => {
