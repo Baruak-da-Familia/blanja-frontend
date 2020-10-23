@@ -59,6 +59,10 @@ const CheckOut = (props) => {
    //    }
    // );
 
+   useEffect(() => {
+		document.title = "Checkout | Blanja";
+	}, []);
+
    // const { data } = props.location;
    const [showChooseAddress, setShowChooseAddress] = useState(false);
    const [showAddAddress, setShowAddAddress] = useState(false);

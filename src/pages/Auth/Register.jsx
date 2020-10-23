@@ -21,6 +21,10 @@ const Login = (props) => {
 	const { user: registerUser } = useSelector((state) => state.auth);
 
 	useEffect(() => {
+		document.title = "Register | Blanja";
+	}, []);
+
+	useEffect(() => {
 		if (registerUser.msg === "Register Success") {
 			props.history.push("/");
 		}

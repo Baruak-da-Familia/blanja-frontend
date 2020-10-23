@@ -54,7 +54,9 @@ const Card = (props) => {
 				}}
 			>
 				<Img
-					source={`http://localhost:8000${props.images[0]}`}
+					source={`http://localhost:8000${
+						props.image.split(",")[0]
+					}`}
 					containerStyle={styles.cardImgContainer}
 					imgStyle={styles.cardImg}
 				/>
@@ -77,7 +79,7 @@ const Card = (props) => {
 
 Card.propTypes = {
 	id: PropTypes.number,
-	img: PropTypes.string,
+	image: PropTypes.string,
 	name: PropTypes.string,
 	price: PropTypes.string,
 	seller_name: PropTypes.string,

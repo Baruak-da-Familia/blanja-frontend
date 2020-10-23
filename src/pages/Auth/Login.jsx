@@ -25,7 +25,11 @@ const Login = (props) => {
 
 	const { handleSubmit, register, errors } = useForm();
 
-    // console.log(userAddress)
+		// console.log(userAddress)
+		
+	useEffect(() => {
+		document.title = "Login | Blanja";
+	}, []);
 
 	useEffect(() => {
 		if (statusLogin === 200) {

@@ -17,6 +17,10 @@ const Search = (props) => {
 		props.history.push(`/detail/${id}`);
 	};
 	React.useEffect(() => {
+		document.title = "Search for: "+nameQuery[1]+" | Blanja";
+	}, [nameQuery]);
+	
+	React.useEffect(() => {
 		if (nameQuery) dispatch(fetchAllProduct(null, nameQuery[1]));
 	}, [dispatch]);
 

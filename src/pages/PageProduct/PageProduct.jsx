@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ReactImageZoom from "react-image-zoom";
 import classname from "../../helpers/classJoiner";
 import styles from "./styles.module.css";
 import mainImg from "../../assets/img/page_product.png";
@@ -16,6 +17,7 @@ import { isEmpty } from "underscore";
 
 const PageProduct = (props) => {
 	const [qty, setQty] = useState(1);
+	const [imgId, setImgId] = useState(0);
 	const {
 		product: stateProduct,
 		carts: stateCart,
@@ -26,6 +28,18 @@ const PageProduct = (props) => {
 
 	const divRef = React.useRef();
 	const dispatch = useDispatch();
+
+	React.useEffect(() => {
+		dispatch(getProductById(props.match.params.id));
+	}, [props.match.params.id]);
+
+	React.useEffect(() => {
+		if (stateProductDetail.name) {
+			document.title = stateProductDetail.name + " | Blanja";
+		} else {
+			document.title = "Loading... | Blanja";
+		}
+	}, [stateProductDetail.name]);
 
 	React.useEffect(() => {
 		if (divRef.current) {
@@ -40,10 +54,6 @@ const PageProduct = (props) => {
 	const index = stateCart.findIndex((item) => {
 		return item.id === stateProductDetail.id;
 	});
-
-	React.useEffect(() => {
-		dispatch(getProductById(props.match.params.id));
-	}, [props.match.params.id]);
 
 	const kirim = () => {
 		// console.log(cart.filter(item => item.selected === true));
@@ -79,7 +89,7 @@ const PageProduct = (props) => {
 		dispatch(addToCart(sendData));
 		props.history.push("/checkout");
 	};
-	
+
 	if (isPending || isEmpty(stateProductDetail)) {
 		return <h1>Loading product...</h1>;
 	} else {
@@ -93,10 +103,13 @@ const PageProduct = (props) => {
 							)}
 						>
 							{stateProductDetail.images !== undefined ? (
-								<img
-									alt="product_img"
-									className={classname(styles.productMainImg)}
-									src={`http://localhost:8000${stateProductDetail.images[0]}`}
+								<ReactImageZoom
+									// alt="product_img"
+									// className={classname(styles.productMainImg)}
+									width={378}
+									height={378}
+									zoomPosition="original"
+									img={`http://localhost:8000${stateProductDetail.images[imgId]}`}
 								/>
 							) : null}
 						</div>
@@ -110,41 +123,24 @@ const PageProduct = (props) => {
 									styles.secondaryProductImg
 								)}
 							>
-								{stateProductDetail.images !== undefined ? (
-									<img
-										alt="[images]"
-										className={classname(styles.exampleImg)}
-										src={`http://localhost:8000${stateProductDetail.images[1]}`}
-									/>
-								) : null}
-								{stateProductDetail.images !== undefined ? (
-									<img
-										alt="[images]"
-										className={classname(styles.exampleImg)}
-										src={`http://localhost:8000${stateProductDetail.images[2]}`}
-									/>
-								) : null}
-								{stateProductDetail.images !== undefined ? (
-									<img
-										alt="[images]"
-										className={classname(styles.exampleImg)}
-										src={`http://localhost:8000${stateProductDetail.images[3]}`}
-									/>
-								) : null}
-								{stateProductDetail.images !== undefined ? (
-									<img
-										alt="[images]"
-										className={classname(styles.exampleImg)}
-										src={`http://localhost:8000${stateProductDetail.images[4]}`}
-									/>
-								) : null}
-								{stateProductDetail.images !== undefined ? (
-									<img
-										alt="[images]"
-										className={classname(styles.exampleImg)}
-										src={`http://localhost:8000${stateProductDetail.images[5]}`}
-									/>
-								) : null}
+								{stateProductDetail.images !== undefined
+									? stateProductDetail.images.map(
+											(image, index) => {
+												return (
+													<img
+														alt=""
+														className={classname(
+															styles.exampleImg
+														)}
+														src={`http://localhost:8000${image}`}
+														onClick={() => {
+															setImgId(index);
+														}}
+													/>
+												);
+											}
+									  )
+									: null}
 							</div>
 						</div>
 					</div>

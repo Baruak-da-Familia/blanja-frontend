@@ -136,6 +136,10 @@ const Chat = (props) => {
 	const [messages, setMessage] = useLocalStorage(user.id, []);
 	const dispatch = useDispatch();
 
+	React.useEffect(()=>{
+		document.title = "Chat | Blanja";
+	},[])
+
 	async function fetchChatData() {
 		try {
 			dispatch(fetchingChatData());
