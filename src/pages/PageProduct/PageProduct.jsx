@@ -128,6 +128,7 @@ const PageProduct = (props) => {
 											(image, index) => {
 												return (
 													<img
+														id={index}
 														alt=""
 														className={classname(
 															styles.exampleImg
