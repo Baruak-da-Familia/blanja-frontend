@@ -25,6 +25,8 @@ const Login = (props) => {
 
 	const { handleSubmit, register, errors } = useForm();
 
+    // console.log(userAddress)
+
 	useEffect(() => {
 		if (statusLogin === 200) {
 			props.history.push("/");

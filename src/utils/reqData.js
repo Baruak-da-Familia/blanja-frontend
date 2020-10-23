@@ -73,7 +73,7 @@ export const getProductById = (id) => {
 };
 
 export const getProductBySellerId = (id) => {
-	return Axios.get(`http://localhost:8000/product/seller/${id}`);
+  return Axios.get(`http://localhost:8000/product/seller/${id}`);
 };
 
 export const syncFromServer = (id) => {
@@ -83,3 +83,11 @@ export const syncFromServer = (id) => {
 export const syncWithLocal = (data) => {
 	return Axios.patch("http://localhost:8000/chat/", data);
 };
+
+export const sendEmailCustomer = (data) => {
+    return Axios.post(`http://localhost:8000/auth/sendemailcustomer`, data);
+}
+
+export const resetPasswordCustomer = (data) => {
+    return Axios.post(`http://localhost:8000/auth/resetpasscustomer`, data);
+}
