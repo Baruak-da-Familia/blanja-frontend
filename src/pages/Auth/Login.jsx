@@ -170,7 +170,7 @@ const Login = (props) => {
 							<span onClick={() => {}}>
 								<Link
 									className={classname(styles.bla)}
-									to="/Register"
+									to="/register"
 								>
 									Register
 								</Link>
@@ -288,7 +288,7 @@ const Login = (props) => {
 							<span onClick={() => {}}>
 								<Link
 									className={classname(styles.bla)}
-									to="/Register"
+									to="/register"
 								>
 									Register
 								</Link>

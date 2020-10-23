@@ -3,15 +3,20 @@ import PropTypes from "prop-types";
 import UserCard from "./UserCard";
 import useLocalStorage from "../../utils/localStorageHooks";
 import Socket from "socket.io-client";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./styles.module.css";
 import text from "../../assets/text.module.css";
 import classname from "../../helpers/classJoiner";
 import { isEmpty } from "underscore";
 import { DateTime } from "luxon";
 import { update } from "ramda";
-import { v4 as uuidv4 } from "uuid";
 import { syncFromServer, syncWithLocal } from "../../utils/reqData";
+import {
+	fetchingChatData,
+	fetchingChatDataComplete,
+	syncingChatData,
+	syncingChatDataComplete,
+} from "../../redux/actions/chat";
 
 // const myId = 14;
 
@@ -103,14 +108,20 @@ const appendMessage = (message, { messages }) => {
 const Chat = (props) => {
 	// const [myId, setId] = React.useState(uuidv4());
 	const { user } = useSelector((state) => state.auth);
+	const { chatFetched, fetchingChat, syncingChat } = useSelector(
+		(state) => state.chat
+	);
 	const [idx, setIdx] = React.useState(-1);
 	const [socket, setSocket] = React.useState(null);
 	const [messages, setMessage] = useLocalStorage(user.id, []);
+	const dispatch = useDispatch();
 
 	async function fetchChatData() {
 		try {
+			dispatch(fetchingChatData());
 			const response = await syncFromServer(user.id);
 			setMessage(response.data.data);
+			dispatch(fetchingChatDataComplete());
 		} catch (err) {
 			return [];
 		}
@@ -118,33 +129,15 @@ const Chat = (props) => {
 
 	const syncToServer = async (data) => {
 		try {
+			dispatch(syncingChatData());
 			const res = await syncWithLocal(data);
+			dispatch(syncingChatDataComplete());
 		} catch (err) {
 			//do nothing
 		}
 	};
 
-	// fetch chat data from server
-	React.useEffect(() => {
-		fetchChatData(user.id);
-	}, []);
-
-	//sync chat data to server
-	React.useEffect(() => {
-		if (idx >= 0 && !isEmpty(messages[idx])) {
-			syncToServer({ messages: messages[idx] });
-		}
-	}, [messages]);
-
-	const [inputValue, setInputValue] = React.useState("");
-
-	const inputRef = React.useRef();
-
-	const messageRef = React.useRef();
-
-	const testRef = React.useRef();
-
-	React.useEffect(() => {
+	const fetchFromUrl = React.useCallback(() => {
 		const query = props.location.search.split("&");
 		let seller_id = null;
 		let seller_name = null;
@@ -182,14 +175,41 @@ const Chat = (props) => {
 					},
 				];
 				setMessage(newMessages);
-				setIdx(messages.length);
+				setIdx(newMessages.length - 1);
 				setInputValue("apa ini masih ada? " + link);
 			} else {
 				setInputValue("apa ini masih ada? " + link);
 				setIdx(_idx);
 			}
 		}
-	}, []);
+	}, [props.location.search]);
+
+	// fetch chat data from server
+	React.useEffect(() => {
+		if (!chatFetched) {
+			fetchChatData(user.id);
+		}
+		if (chatFetched && !fetchingChat) {
+			fetchFromUrl();
+		}
+	}, [chatFetched, fetchingChat]);
+
+	//sync chat data to server
+	React.useEffect(() => {
+		if (idx >= 0 && !isEmpty(messages[idx])) {
+			if (!syncingChat) {
+				syncToServer({ messages: messages[idx] });
+			}
+		}
+	}, [messages]);
+
+	const [inputValue, setInputValue] = React.useState("");
+
+	const inputRef = React.useRef();
+
+	const messageRef = React.useRef();
+
+	const testRef = React.useRef();
 
 	//intialize socket
 	React.useEffect(() => {
@@ -310,6 +330,7 @@ const Chat = (props) => {
 			}
 		}
 	};
+
 	//for testing purpose ================================
 	const handleTest = (event) => {
 		if (event.key === "Enter") {
@@ -396,7 +417,7 @@ const Chat = (props) => {
 					)}
 				</div>
 				<div className={classname(styles.chatroomContainer)}>
-					{idx >= 0 ? (
+					{idx >= 0 && !isEmpty(messages) ? (
 						<>
 							<div className={classname(styles.chatroomHeader)}>
 								<UserCard

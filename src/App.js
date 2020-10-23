@@ -22,7 +22,7 @@ function App() {
 			<Router>
 				<Switch>
 					<PublicRoute path="/login" exact component={Login} />
-					<PublicRoute path="/Register" exact component={Register} />
+					<PublicRoute path="/register" exact component={Register} />
 					<PublicRoute
 						exact
 						path="/"
