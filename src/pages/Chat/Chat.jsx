@@ -17,6 +17,7 @@ import {
 	syncingChatData,
 	syncingChatDataComplete,
 } from "../../redux/actions/chat";
+import { SOCKET_URL } from "../../utils/environment";
 
 /**
  * message shape
@@ -136,9 +137,9 @@ const Chat = (props) => {
 	const [messages, setMessage] = useLocalStorage(user.id, []);
 	const dispatch = useDispatch();
 
-	React.useEffect(()=>{
+	React.useEffect(() => {
 		document.title = "Chat | Blanja";
-	},[])
+	}, []);
 
 	async function fetchChatData() {
 		try {
@@ -175,6 +176,7 @@ const Chat = (props) => {
 		if (query[2]) {
 			link = query[2].split("=")[1];
 		}
+
 		if (seller_id) {
 			const _idx = messages.findIndex((item) => {
 				return (
@@ -238,7 +240,7 @@ const Chat = (props) => {
 	//intialize socket
 	React.useEffect(() => {
 		if (socket !== null) return;
-		const newSocket = Socket("http://localhost:3300", {
+		const newSocket = Socket(SOCKET_URL, {
 			query: { id: user.id },
 		});
 		setSocket(newSocket);

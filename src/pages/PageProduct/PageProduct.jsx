@@ -14,6 +14,7 @@ import {
 	getProductById,
 } from "../../redux/actions/product";
 import { isEmpty } from "underscore";
+import {API_URL, WEB_URL} from "../../utils/environment";
 
 const PageProduct = (props) => {
 	const [qty, setQty] = useState(1);
@@ -109,7 +110,7 @@ const PageProduct = (props) => {
 									width={378}
 									height={378}
 									zoomPosition="original"
-									img={`http://localhost:8000${stateProductDetail.images[imgId]}`}
+									img={`${API_URL}${stateProductDetail.images[imgId]}`}
 								/>
 							) : null}
 						</div>
@@ -133,7 +134,7 @@ const PageProduct = (props) => {
 														className={classname(
 															styles.exampleImg
 														)}
-														src={`http://localhost:8000${image}`}
+														src={`${API_URL}${image}`}
 														onClick={() => {
 															setImgId(index);
 														}}
@@ -286,7 +287,7 @@ const PageProduct = (props) => {
 								className={classname(styles.chatAddBtn)}
 								onClick={() => {
 									props.history.push(
-										`/chat?with=${stateProductDetail.seller_id}&name=BestStore&link=http://localhost:3300${props.location.pathname}`
+										`/chat?with=${stateProductDetail.seller_id}&name=BestStore&link=${WEB_URL}${props.location.pathname}`
 									);
 								}}
 							>
