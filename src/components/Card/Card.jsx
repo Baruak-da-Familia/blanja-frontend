@@ -6,7 +6,6 @@ import star from "../../assets/img/Star.png";
 import styles from "./styles.module.css";
 import text from "../../assets/text.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductById } from "../../redux/actions/product";
 
 const Rating = (props) => {
 	const _rate = [...Array(props.rate).keys()];
@@ -51,7 +50,6 @@ const Card = (props) => {
 				onClick={() => {
 					if (props.onClickProp) {
 						props.onClickProp(props.id);
-						dispatch(getProductById(props.id));
 					}
 				}}
 			>
