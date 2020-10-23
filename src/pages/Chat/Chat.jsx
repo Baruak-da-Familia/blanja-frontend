@@ -18,6 +18,7 @@ import {
 	syncingChatDataComplete,
 } from "../../redux/actions/chat";
 import { SOCKET_URL } from "../../utils/environment";
+import Loader from "../../components/Loader/Loader";
 
 /**
  * message shape
@@ -202,9 +203,9 @@ const Chat = (props) => {
 				];
 				setMessage(newMessages);
 				setIdx(newMessages.length - 1);
-				setInputValue(link);
+				setInputValue("apakah ini masih ada?\n " + link);
 			} else {
-				setInputValue(link);
+				setInputValue("apakah ini masih ada?\n " + link);
 				setIdx(_idx);
 			}
 		}
@@ -302,6 +303,9 @@ const Chat = (props) => {
 
 	const inputHandler = (e) => {
 		if (e.key === "Enter") {
+			if (inputValue === "") {
+				return;
+			}
 			const time = DateTime.local().toFormat("hh:mm dd-MM-yyyy");
 			if (!isEmpty(messages[idx].messages)) {
 				setMessage(
@@ -469,7 +473,11 @@ const Chat = (props) => {
 								className={classname(styles.chatroom)}
 							>
 								{!isEmpty(messages[idx].messages) ? (
-									renderChat(messages[idx], user.id)
+									fetchingChat ? (
+										<Loader />
+									) : (
+										renderChat(messages[idx], user.id)
+									)
 								) : (
 									<h1
 										className={classname(
@@ -486,7 +494,7 @@ const Chat = (props) => {
 									styles.inputmessageContainer
 								)}
 							>
-								<input
+								<textarea
 									ref={inputRef}
 									placeholder="type message"
 									className={classname(styles.inputmessage)}
