@@ -77,7 +77,7 @@ function App() {
 					<PublicRoute
 						exact
 						enableNavbar
-						path="/detail/:id"
+						path="/product/detail/:id"
 						component={ProductDetail}
 					/>
 				</Switch>

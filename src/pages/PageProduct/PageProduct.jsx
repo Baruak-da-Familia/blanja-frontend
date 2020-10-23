@@ -14,7 +14,8 @@ import {
 	getProductById,
 } from "../../redux/actions/product";
 import { isEmpty } from "underscore";
-import {API_URL, WEB_URL} from "../../utils/environment";
+import { API_URL, WEB_URL } from "../../utils/environment";
+import Loader from "../../components/Loader/Loader";
 
 const PageProduct = (props) => {
 	const [qty, setQty] = useState(1);
@@ -49,7 +50,7 @@ const PageProduct = (props) => {
 	}, [props.match.params.id]);
 
 	const onClickHandler = (id) => {
-		props.history.push(`/detail/${id}`);
+		props.history.push(`/product/detail/${id}`);
 	};
 
 	const index = stateCart.findIndex((item) => {
@@ -92,7 +93,7 @@ const PageProduct = (props) => {
 	};
 
 	if (isPending || isEmpty(stateProductDetail)) {
-		return <h1>Loading product...</h1>;
+		return <Loader />;
 	} else {
 		return (
 			<div className={classname(styles.body)} ref={divRef}>
