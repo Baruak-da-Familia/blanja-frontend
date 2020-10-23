@@ -18,50 +18,30 @@ import {
 	syncingChatDataComplete,
 } from "../../redux/actions/chat";
 
-// const myId = 14;
+/**
+ * message shape
+ */
+/*
+const messageShape = [{
+	user1:{
+		id,
+		name,
+		avatar
+	},
+	user2:{
+		id,
+		name,
+		avatar
+	},
+	messages:[{
+		id,
+		message,
+		time
+	},...]
+},...]
+*/
 
-// const initialMessages = [
-// 	{
-// 		id: 1,
-// 		name: "Jonas Adam",
-// 		avatar: null,
-// 		messages: [
-// 			{
-// 				id: 1,
-// 				message: "Hallo",
-// 				time: "21:16 12-10-2020",
-// 			},
-// 			{
-// 				id: myId,
-// 				message: "Hai",
-// 				time: "21:16 12-10-2020",
-// 			},
-// 		],
-// 	},
-// 	{
-// 		id: 2,
-// 		name: "Bill Gates",
-// 		avatar: null,
-// 		messages: [
-// 			{
-// 				id: 2,
-// 				message: "Hallo",
-// 				time: "21:16 12-10-2020",
-// 			},
-// 			{
-// 				id: myId,
-// 				message: "Hai",
-// 				time: "21:16 12-10-2020",
-// 			},
-// 		],
-// 	},
-// 	{
-// 		id: 3,
-// 		name: "Mark Zuckerberg",
-// 		avatar: null,
-// 		message: [],
-// 	},
-// ];
+const linkRegx = /([\w+]+\:\/\/)?([\w\d-]+\.)*[\w-]+[\.\:]\w+([\/\?\=\&\#]?[\w-]+)*\/?/gm;
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 
@@ -69,6 +49,8 @@ const renderChat = ({ messages }, id) => {
 	return (
 		<>
 			{messages.map((item, index) => {
+				const link = item.message.match(linkRegx);
+				const slicedMessage = item.message.split(" ");
 				if (item.id !== id) {
 					return (
 						<>
@@ -76,7 +58,26 @@ const renderChat = ({ messages }, id) => {
 								key={index}
 								className={classname(styles.otherchat)}
 							>
-								<p key={index}>{item.message}</p>
+								<p key={index}>
+									{link
+										? slicedMessage.map((item) => {
+												const isLink = link.findIndex(
+													(li) => {
+														return li === item;
+													}
+												);
+												if (isLink >= 0) {
+													return (
+														<a href={item}>
+															{item}{" "}
+														</a>
+													);
+												} else {
+													return item + " ";
+												}
+										  })
+										: item.message}
+								</p>
 							</div>
 							<p>{item.time}</p>
 						</>
@@ -88,7 +89,26 @@ const renderChat = ({ messages }, id) => {
 								key={index}
 								className={classname(styles.mychat)}
 							>
-								<p key={index}>{item.message}</p>
+								<p key={index}>
+									{link
+										? slicedMessage.map((item) => {
+												const isLink = link.findIndex(
+													(li) => {
+														return li === item;
+													}
+												);
+												if (isLink >= 0) {
+													return (
+														<a href={item}>
+															{item}{" "}
+														</a>
+													);
+												} else {
+													return item + " ";
+												}
+										  })
+										: item.message}
+								</p>
 							</div>
 							<p className="text-right">{item.time}</p>
 						</>
@@ -115,6 +135,10 @@ const Chat = (props) => {
 	const [socket, setSocket] = React.useState(null);
 	const [messages, setMessage] = useLocalStorage(user.id, []);
 	const dispatch = useDispatch();
+
+	React.useEffect(()=>{
+		document.title = "Chat | Blanja";
+	},[])
 
 	async function fetchChatData() {
 		try {
@@ -176,9 +200,9 @@ const Chat = (props) => {
 				];
 				setMessage(newMessages);
 				setIdx(newMessages.length - 1);
-				setInputValue("apa ini masih ada? " + link);
+				setInputValue(link);
 			} else {
-				setInputValue("apa ini masih ada? " + link);
+				setInputValue(link);
 				setIdx(_idx);
 			}
 		}

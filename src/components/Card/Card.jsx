@@ -6,7 +6,6 @@ import star from "../../assets/img/Star.png";
 import styles from "./styles.module.css";
 import text from "../../assets/text.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductById } from "../../redux/actions/product";
 
 const Rating = (props) => {
 	const _rate = [...Array(props.rate).keys()];
@@ -51,12 +50,13 @@ const Card = (props) => {
 				onClick={() => {
 					if (props.onClickProp) {
 						props.onClickProp(props.id);
-						dispatch(getProductById(props.id));
 					}
 				}}
 			>
 				<Img
-					source={`http://localhost:8000${props.images[0]}`}
+					source={`http://localhost:8000${
+						props.image.split(",")[0]
+					}`}
 					containerStyle={styles.cardImgContainer}
 					imgStyle={styles.cardImg}
 				/>
@@ -79,7 +79,7 @@ const Card = (props) => {
 
 Card.propTypes = {
 	id: PropTypes.number,
-	img: PropTypes.string,
+	image: PropTypes.string,
 	name: PropTypes.string,
 	price: PropTypes.string,
 	seller_name: PropTypes.string,

@@ -15,6 +15,7 @@ const Category = (props) => {
 	const onClickHandler = (id) => {
 		props.history.push(`/detail/${id}`);
 	};
+
 	React.useEffect(() => {
 		dispatch(fetchAllProduct(Number(props.match.params.id)));
 	}, [dispatch]);
@@ -22,6 +23,11 @@ const Category = (props) => {
 	const idx = categoryData.findIndex((item) => {
 		return item.id === Number(props.match.params.id);
 	});
+
+	React.useEffect(() => {
+		document.title = categoryData[idx].name + " | Blanja";
+	}, []);
+
 	return (
 		<div className={styles.category}>
 			<nav className={classname(styles.nav)}>

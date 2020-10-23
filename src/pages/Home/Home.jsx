@@ -9,18 +9,18 @@ import { previewData, categoryData, newData } from "../../utils/dummydata";
 import { fetchAllProduct } from "../../redux/actions/product";
 import { useDispatch, useSelector } from "react-redux";
 
-
 const Home = (props) => {
 	const dispatch = useDispatch();
-	const stateProduct = useSelector(state => state.product.product);
+	const stateProduct = useSelector((state) => state.product.product);
 
 	const onClickHandler = (id) => {
 		props.history.push(`/detail/${id}`);
 	};
 
 	useEffect(() => {
-		dispatch(fetchAllProduct())
-	 }, [dispatch]);
+		document.title = "Mau belanja? ya di Blanja! | Blanja";
+		dispatch(fetchAllProduct());
+	}, [dispatch]);
 
 	return (
 		<main className={styles.home}>
