@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./leftbar.module.css";
-import user from "../../assets/image/bear.jpg";
-import { Accordion, Card } from "react-bootstrap";
+import userDefault from "../../assets/img/default.png";
 
 export default function LeftBar(props) {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const { nav, setNav1, setNav2, setNav3 } = props;
   return (
     <div className={styles.container}>
       <div className={styles.infoitem}>
         <div className={styles.profile}>
-          <img className={styles.image} src={user} alt='' />
+          <div className={styles.containerimage}>
+            <img
+              className={styles.image}
+              src={
+                user.avatar
+                  ? `http://localhost:8000${user.avatar}`
+                  : userDefault
+              }
+              alt=''
+            />
+          </div>
+
           <div className={styles.nameinfo}>
-            <p className={styles.name}>Siapa Ya</p>
+            <p className={styles.name}>{user.name ? user.name : "Anonim"}</p>
             <p className={styles.edit}>
               <i
                 style={{ marginRight: "10px" }}

@@ -1,10 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Table } from "react-bootstrap";
 import styles from "./myproduct.module.css";
 import empty from "../../assets/image/emptyproduct.png";
 import sort from "../../assets/image/sort.png";
 
 export default function MyProduct() {
+  const { dataGetProdBySelId } = useSelector((state) => state.product);
+  function formatRupiah(value) {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
   return (
     <div className={styles.container}>
       {/* Header */}
@@ -37,29 +42,30 @@ export default function MyProduct() {
                 <th style={{ width: "15%" }}>
                   Price <img src={sort} />
                 </th>
-                <th style={{ width: "15%" }}>
+                <th style={{ width: "15%", textAlign: "center" }}>
                   Stock <img src={sort} />
                 </th>
               </tr>
             </thead>
             <tbody borderless>
-              {/* <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr> */}
+              {dataGetProdBySelId
+                ? dataGetProdBySelId.map((item, index) => {
+                    return (
+                      <tr key={index.toString()}>
+                        <td>{item.name}</td>
+                        <td>Rp{formatRupiah(Number(item.price))}</td>
+                        <td style={{ textAlign: "center" }}>{item.qty}</td>
+                      </tr>
+                    );
+                  })
+                : null}
             </tbody>
           </Table>
-          <img className={styles.empty} src={empty} />
+          {dataGetProdBySelId ? null : (
+            <img className={styles.empty} src={empty} />
+          )}
         </div>
       </div>
-      {/* Content */}
-      {/* ............... */}
     </div>
   );
 }

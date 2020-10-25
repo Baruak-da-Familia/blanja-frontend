@@ -34,7 +34,7 @@ export default function ModalAddAddress(props) {
     formData.append("city_of_subdistrict", city);
     formData.append("recipient_telp_number", phone);
     formData.append("postal_code", post);
-    dispatch(addAddressCustomerCreator(1, body));
+    dispatch(addAddressCustomerCreator(Number(user.id), body));
     props.onHide();
   };
   return (

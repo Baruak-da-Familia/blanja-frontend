@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./myprofile.module.css";
 import "./myprofile.module.css";
 import { updateProfileCustomerCreator } from "../../redux/actions/auth";
-import userprofile from "../../assets/image/user.png";
+import userDefault from "../../assets/img/default.png";
 
 let date = [
   1,
@@ -41,20 +41,21 @@ let date = [
 
 export default function MyProfile(props) {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const [biodata, setBiodata] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    gender: "",
-    image: "",
+    name: user.name ? user.name : "",
+    email: user.email ? user.email : "",
+    phone: user.phone_number ? user.phone_number : "-",
+    gender: user.gender ? user.gender : "",
+    image: user.avatar ? user.avatar : "",
     imagePreviewUrl: "",
   });
   const [birthDate, setBirthDate] = useState({
-    date: "1",
-    month: "January",
-    year: "1997",
+    date: user.dob ? user.dob.split(" ")[0] : "1",
+    month: user.dob ? user.dob.split(" ")[1] : "January",
+    year: user.dob ? user.dob.split(" ")[2] : "1997",
   });
-  const { user } = useSelector((state) => state.auth);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email, phone, gender, image } = biodata;
@@ -64,13 +65,17 @@ export default function MyProfile(props) {
     formData.append("email", email);
     formData.append("phone_number", phone);
     formData.append("gender", gender);
-    formData.append("dob", `${date} ${month} ${year}`);
+    formData.append(
+      "dob",
+      `${birthDate.date} ${birthDate.month} ${birthDate.year}`
+    );
     formData.append("avatar", image);
+    console.log(...formData);
     dispatch(updateProfileCustomerCreator(Number(user.id), formData));
   };
 
   const inputRef = React.useRef();
-  console.log(inputRef);
+  // console.log(inputRef);
   const handleChangeFile = (e) => {
     let reader = new FileReader();
     let file = e.target.files[0];
@@ -84,7 +89,7 @@ export default function MyProfile(props) {
     };
     reader.readAsDataURL(file);
   };
-  console.log(biodata.image);
+  // console.log(biodata.image);
   return (
     <div className={styles.container}>
       <input
@@ -110,7 +115,9 @@ export default function MyProfile(props) {
                 className={styles.input}
                 onChange={(e) => {
                   setBiodata({ ...biodata, name: e.target.value });
+                  console.log(biodata.name);
                 }}
+                value={biodata.name}
                 placeholder=''
               />
             </div>
@@ -123,6 +130,7 @@ export default function MyProfile(props) {
                 onChange={(e) => {
                   setBiodata({ ...biodata, email: e.target.value });
                 }}
+                value={biodata.email}
                 placeholder=''
               />
             </div>
@@ -135,6 +143,7 @@ export default function MyProfile(props) {
                 onChange={(e) => {
                   setBiodata({ ...biodata, phone: e.target.value });
                 }}
+                value={biodata.phone}
                 placeholder=''
               />
             </div>
@@ -143,6 +152,7 @@ export default function MyProfile(props) {
             <div className={styles.label}>Gender</div>
             <div className={styles.radioselectcontainer}>
               <input
+                style={{ outline: "none" }}
                 id='male'
                 value='male'
                 name='gender'
@@ -152,12 +162,15 @@ export default function MyProfile(props) {
                 onChange={(e) => {
                   setBiodata({ ...biodata, gender: e.target.value });
                 }}
+                sele
+                checked={biodata.gender === "male" ? true : false}
               />
               <label className={styles.labelradio} htmlfor='male'>
                 Male
               </label>
 
               <input
+                style={{ outline: "none" }}
                 id='female'
                 value='female'
                 name='gender'
@@ -167,6 +180,7 @@ export default function MyProfile(props) {
                 onChange={(e) => {
                   setBiodata({ ...biodata, gender: e.target.value });
                 }}
+                checked={biodata.gender === "female" ? true : false}
               />
               <label className={styles.labelradio} htmlfor='male'>
                 Female
@@ -177,12 +191,13 @@ export default function MyProfile(props) {
             <div className={styles.label}>Date of Birth</div>
             <div className={styles.inputcontainer}>
               <select
+                style={{ outline: "none" }}
                 className={styles.select}
                 name='date'
                 onChange={(e) => {
                   setBirthDate({ ...birthDate, date: e.target.value });
                 }}
-                default={birthDate.date}>
+                defaultValue={Number(birthDate.date)}>
                 <optgroup label='Date...'>
                   {birthDate.month === "February"
                     ? date
@@ -213,12 +228,13 @@ export default function MyProfile(props) {
                 </optgroup>
               </select>
               <select
+                style={{ outline: "none" }}
                 className={styles.select}
                 name='month'
                 onChange={(e) => {
                   setBirthDate({ ...birthDate, month: e.target.value });
                 }}
-                default={birthDate.month}>
+                defaultValue={birthDate.month}>
                 <optgroup label='Month...'>
                   <option value='January'>January</option>
                   <option value='February'>February</option>
@@ -235,12 +251,13 @@ export default function MyProfile(props) {
                 </optgroup>
               </select>
               <select
+                style={{ outline: "none" }}
                 className={styles.select}
                 name='year'
                 onChange={(e) => {
                   setBirthDate({ ...birthDate, year: e.target.value });
                 }}
-                default={birthDate.year}>
+                defaultValue={birthDate.year}>
                 <optgroup label='Year...'>
                   <option value='2000'>2000</option>
                   <option value='1999'>1999</option>
@@ -266,17 +283,19 @@ export default function MyProfile(props) {
         {/* ImageProfile */}
         <div className={styles.imagecontainer}>
           <div className={styles.boximage}>
-            <img
-              className={styles.imageprofile}
-              src={
-                user.avatar
-                  ? user.avatar
-                  : biodata.imagePreviewUrl
-                  ? biodata.imagePreviewUrl
-                  : userprofile
-              }
-              alt=''
-            />
+            <div className={styles.containerimage}>
+              <img
+                className={styles.imageprofile}
+                src={
+                  biodata.imagePreviewUrl
+                    ? biodata.imagePreviewUrl
+                    : user.avatar
+                    ? `http://localhost:8000${user.avatar}`
+                    : userDefault
+                }
+                alt=''
+              />
+            </div>
             <button
               onClick={() => {
                 inputRef.current.click();

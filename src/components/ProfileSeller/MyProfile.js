@@ -1,26 +1,41 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./myprofile.module.css";
 import "./myprofile.module.css";
-import bear from "../../assets/image/bear.jpg";
+import userDefault from "../../assets/img/default.png";
+import { updateProfileStoreCreator } from "../../redux/actions/auth";
 
-export default function MyProfile() {
-  const [biodata, setBiodata] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    desc: "",
-    image: "",
+export default function MyProfile(props) {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const [store, setDataStore] = useState({
+    name: user.store_name ? user.store_name : "",
+    email: user.email ? user.email : "",
+    phone: user.phone_number ? user.phone_number : "-",
+    desc: user.store_desc ? user.store_desc : "-",
+    image: user.avatar ? user.avatar : "",
     imagePreviewUrl: "",
   });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { name, email, phone, desc, image } = store;
+    let formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone_number", phone);
+    formData.append("store_desc", desc);
+    formData.append("avatar", image);
+    console.log(...formData);
+    dispatch(updateProfileStoreCreator(Number(user.id), formData));
+  };
   const inputRef = React.useRef();
   const handleChangeFile = (e) => {
     let reader = new FileReader();
     let file = e.target.files[0];
-    // setBiodata({ ...biodata, image: file });
 
     reader.onloadend = () => {
-      setBiodata({
-        ...biodata,
+      setDataStore({
+        ...store,
         image: file,
         imagePreviewUrl: reader.result,
       });
@@ -53,8 +68,9 @@ export default function MyProfile() {
                 className={styles.input}
                 placeholder=''
                 onChange={(e) => {
-                  setBiodata({ ...biodata, name: e.target.value });
+                  setDataStore({ ...store, name: e.target.value });
                 }}
+                value={store.name}
               />
             </div>
           </div>
@@ -65,8 +81,9 @@ export default function MyProfile() {
                 className={styles.input}
                 placeholder=''
                 onChange={(e) => {
-                  setBiodata({ ...biodata, email: e.target.value });
+                  setDataStore({ ...store, email: e.target.value });
                 }}
+                value={store.email}
               />
             </div>
           </div>
@@ -77,8 +94,9 @@ export default function MyProfile() {
                 className={styles.input}
                 placeholder=''
                 onChange={(e) => {
-                  setBiodata({ ...biodata, phone: e.target.value });
+                  setDataStore({ ...store, phone: e.target.value });
                 }}
+                value={store.phone}
               />
             </div>
           </div>
@@ -95,8 +113,9 @@ export default function MyProfile() {
                   paddingLeft: "7px",
                 }}
                 onChange={(e) => {
-                  setBiodata({ ...biodata, desc: e.target.value });
+                  setDataStore({ ...store, desc: e.target.value });
                 }}
+                value={store.desc}
               />
             </div>
           </div>
@@ -106,8 +125,8 @@ export default function MyProfile() {
             <div className={styles.inputcontainer}>
               <button
                 className={styles.btnsave}
-                onClick={() => {
-                  console.log(biodata);
+                onClick={(e) => {
+                  handleSubmit(e);
                 }}>
                 Save
               </button>
@@ -117,11 +136,19 @@ export default function MyProfile() {
         {/* ImageProfile */}
         <div className={styles.imagecontainer}>
           <div className={styles.boximage}>
-            <img
-              className={styles.imageprofile}
-              src={biodata.imagePreviewUrl}
-              alt=''
-            />
+            <div className={styles.containerimage}>
+              <img
+                className={styles.imageprofile}
+                src={
+                  store.imagePreviewUrl
+                    ? store.imagePreviewUrl
+                    : user.avatar
+                    ? `http://localhost:8000${user.avatar}`
+                    : userDefault
+                }
+                alt=''
+              />
+            </div>
             <button
               className={styles.btnedit}
               onClick={() => {

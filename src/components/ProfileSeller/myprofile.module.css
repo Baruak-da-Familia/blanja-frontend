@@ -89,6 +89,7 @@
   padding: 4px;
   font-size: 16px;
   padding-left: 7px;
+  outline: none;
 }
 .select {
   width: 20%;
@@ -127,10 +128,15 @@
   justify-content: center;
   align-items: center;
 }
-.imageprofile {
+.containerimage {
   width: 111px;
   height: 111px;
+  overflow-y: hidden;
   border-radius: 111px;
+}
+.imageprofile {
+  width: 111px;
+  height: auto;
 }
 .btnedit {
   border-radius: 24px;

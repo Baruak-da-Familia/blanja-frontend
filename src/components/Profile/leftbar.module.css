@@ -34,10 +34,15 @@
   cursor: pointer;
   /* vertical-align: middle; */
 }
-.image {
+.containerimage {
   height: 60.55px;
-  height: 60.55px;
+  width: 60.55px;
   border-radius: 30px;
+  overflow-y: hidden;
+}
+.image {
+  height: auto;
+  width: 60.55px;
 }
 .name {
   color: #222222;

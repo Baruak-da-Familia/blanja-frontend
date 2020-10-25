@@ -1,9 +1,13 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./leftbar.module.css";
 import user from "../../assets/image/bear.jpg";
 import { Accordion, Card } from "react-bootstrap";
+import { getProductBySellerIdCreator } from "../../redux/actions/product";
 
 export default function LeftBar(props) {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const { nav, setNav1, setNav2, setNav3, setNav4, setNav5 } = props;
   return (
     <div className={styles.container}>
@@ -46,7 +50,10 @@ export default function LeftBar(props) {
                 <i className='fa fa-home fa-stack-1x fa-inverse'></i>
               </span>
               <p
-                onClick={setNav1}
+                onClick={() => {
+                  setNav1();
+                  // dispatch(getProductBySellerIdCreator(Number(user.id)));
+                }}
                 className={
                   nav === "storeprofile" ? styles.active : styles.inactive
                 }>
@@ -97,7 +104,11 @@ export default function LeftBar(props) {
                 <i className='fa fa-cube fa-stack-1x fa-inverse'></i>
               </span>
               <p
-                onClick={setNav2}
+                // onClick={setNav2}
+                onClick={() => {
+                  setNav2();
+                  dispatch(getProductBySellerIdCreator(Number(user.id)));
+                }}
                 className={
                   nav === "myproduct" || nav === "selingproduct"
                     ? styles.active
