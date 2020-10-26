@@ -24,8 +24,8 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-bottom: calc((20 / 1440) * 100vw);
+  margin-top: calc((20 / 1440) * 100vw);
 }
 .info {
   display: flex;
@@ -36,22 +36,22 @@
   /* vertical-align: middle; */
 }
 .containerimage {
-  height: 60.55px;
-  width: 60.55px;
-  border-radius: 30px;
-  overflow-y: hidden;
+  height: calc((60.55 / 1440) * 100vw);
+  width: calc((60.55 / 1440) * 100vw);
+  border-radius: calc((30 / 1440) * 100vw);
+  overflow: hidden;
 }
 .image {
   height: auto;
-  width: 60.55px;
+  width: calc((60.55 / 1440) * 100vw);
 }
 .name {
   color: #222222;
   font-family: "Metropolis";
   font-weight: 600;
   font-size: 16px;
-  padding-left: 10px;
-  margin-top: 15px;
+  padding-left: calc((10 / 1440) * 100vw);
+  margin-top: calc((15 / 1440) * 100vw);
 }
 .nameinfo {
   display: flex;
@@ -60,7 +60,7 @@
 }
 .edit {
   color: #9b9b9b;
-  padding-left: 10px;
+  padding-left: calc((10 / 1440) * 100vw);
   margin-top: 0px;
   cursor: pointer;
 }
@@ -70,13 +70,24 @@
   font-weight: 500;
   font-size: 14px;
   padding-left: 10px;
-  margin-top: 15px;
+  margin-top: calc((15 / 1440) * 100vw);
 }
 .inactive {
   color: #9b9b9b;
   font-family: "Metropolis";
   font-weight: 500;
   font-size: 14px;
-  padding-left: 10px;
-  margin-top: 15px;
+  padding-left: calc((10 / 1440) * 100vw);
+  margin-top: calc((15 / 1440) * 100vw);
+}
+.containerArrow {
+  text-align: right;
+  padding-right: calc((30 / 1440) * 100vw);
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  width: calc((100 / 1440) * 100vw);
+  font-size: calc((14 / 1440) * 100vw);
+  align-items: center;
+  margin-top: calc((10 / 1440) * 100vw);
 }

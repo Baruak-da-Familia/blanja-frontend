@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "./profile.module.css";
 
-import HeaderProfile from "../components/ProfileSeller/Header";
 import LeftBar from "../components/ProfileSeller/LeftBar";
 import Main from "../components/ProfileSeller/Main";
 

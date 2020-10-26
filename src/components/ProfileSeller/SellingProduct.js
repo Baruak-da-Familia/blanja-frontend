@@ -9,6 +9,7 @@ import { addProductCreator } from "../../redux/actions/product";
 
 export default function SellingProduct(props) {
   const dispatch = useDispatch();
+  const { isAddProdPending } = useSelector((state) => state.product);
   const [product, setProduct] = useState({
     name: "",
     price: "",
@@ -17,37 +18,19 @@ export default function SellingProduct(props) {
     status: "",
     description: "",
     img: [],
-    imagePreviewUrl: [],
   });
   const inputRef = React.useRef();
   const handleChangeFile = (e) => {
-    let reader = new FileReader();
     let files = e.target.files;
-    let file = files[0];
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      let newImg = [...product.img, files[0]];
-      setProduct({
-        ...product,
-        img: newImg,
-        imagePreviewUrl: [...product.imagePreviewUrl, reader.result],
-      });
-    };
-    // }
+    setProduct({
+      ...product,
+      img: [...product.img, ...files],
+    });
   };
   const { user } = useSelector((state) => state.auth);
   const handleSubmit = (e) => {
     e.preventDefault();
-    const {
-      name,
-      price,
-      qty,
-      category_id,
-      status,
-      description,
-      img,
-      imagePreviewUrl,
-    } = product;
+    const { name, price, qty, category_id, status, description, img } = product;
     let formData = new FormData();
     formData.append("name", name);
     formData.append("price", price);
@@ -162,19 +145,14 @@ export default function SellingProduct(props) {
                 type='radio'
                 value='Baru'
                 name='condition'
-                style={{ marginRight: "5px", marginBottom: "18px" }}
+                className={styles.selectNew}
                 onChange={(e) => {
                   setProduct({ ...product, status: e.target.value });
                 }}
               />
               <p className={styles.valueradio}>New</p>
               <input
-                style={{
-                  marginLeft: "25px",
-                  marginRight: "5px",
-                  backgroundColor: "red",
-                  marginBottom: "18px",
-                }}
+                className={styles.selectOld}
                 type='radio'
                 value='Bekas'
                 name='condition'
@@ -199,101 +177,64 @@ export default function SellingProduct(props) {
         <div className={styles.formcontainer}>
           <div className={(styles.form, styles.formcontainer_img)}>
             <div className={styles.content_img}>
-              {product.imagePreviewUrl[0] ? (
-                <div
-                  className={styles.main_img}
-                  style={{
-                    width: "120px",
-                    height: "120px",
-                    overflowY: "hidden",
-                  }}>
+              <div className={styles.main_img}>
+                <div className={styles.containerMainImg}>
                   <img
-                    style={{ width: "120px", height: "auto" }}
+                    className={styles.mainImg}
                     src={
-                      product.imagePreviewUrl[0]
-                        ? product.imagePreviewUrl[0]
+                      product.img[0]
+                        ? URL.createObjectURL(product.img[0])
                         : main
                     }
                     alt=''
                   />
                 </div>
-              ) : null}
-              {product.imagePreviewUrl[1] ? (
-                <div
-                  className={styles.secondary_img}
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    overflowY: "hidden",
-                  }}>
-                  <img
-                    style={{ width: "80px", height: "auto" }}
-                    src={
-                      product.imagePreviewUrl[1]
-                        ? product.imagePreviewUrl[1]
-                        : secondary
-                    }
-                    alt=''
-                  />
-                </div>
-              ) : null}
-              {product.imagePreviewUrl[2] ? (
-                <div
-                  className={styles.secondary_img}
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    overflowY: "hidden",
-                  }}>
-                  <img
-                    style={{ width: "80px", height: "auto" }}
-                    src={
-                      product.imagePreviewUrl[2]
-                        ? product.imagePreviewUrl[2]
-                        : secondary
-                    }
-                    alt=''
-                  />
-                </div>
-              ) : null}
-              {product.imagePreviewUrl[3] ? (
-                <div
-                  className={styles.secondary_img}
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    overflowY: "hidden",
-                  }}>
-                  <img
-                    style={{ width: "80px", height: "auto" }}
-                    src={
-                      product.imagePreviewUrl[3]
-                        ? product.imagePreviewUrl[3]
-                        : secondary
-                    }
-                    alt=''
-                  />
-                </div>
-              ) : null}
-              {product.imagePreviewUrl[4] ? (
-                <div
-                  className={styles.secondary_img}
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    overflowY: "hidden",
-                  }}>
-                  <img
-                    style={{ width: "80px", height: "auto" }}
-                    src={
-                      product.imagePreviewUrl[4]
-                        ? product.imagePreviewUrl[4]
-                        : secondary
-                    }
-                    alt=''
-                  />
-                </div>
-              ) : null}
+                <p className={styles.mainPhoto}>Foto utama</p>
+              </div>
+              <div className={styles.secondary_img}>
+                <img
+                  className={styles.secondaryImg}
+                  src={
+                    product.img[1]
+                      ? URL.createObjectURL(product.img[1])
+                      : secondary
+                  }
+                  alt=''
+                />
+              </div>
+              <div className={styles.secondary_img}>
+                <img
+                  className={styles.secondaryImg}
+                  src={
+                    product.img[2]
+                      ? URL.createObjectURL(product.img[2])
+                      : secondary
+                  }
+                  alt=''
+                />
+              </div>
+              <div className={styles.secondary_img}>
+                <img
+                  className={styles.secondaryImg}
+                  src={
+                    product.img[3]
+                      ? URL.createObjectURL(product.img[3])
+                      : secondary
+                  }
+                  alt=''
+                />
+              </div>
+              <div className={styles.secondary_img}>
+                <img
+                  className={styles.secondaryImg}
+                  src={
+                    product.img[4]
+                      ? URL.createObjectURL(product.img[4])
+                      : secondary
+                  }
+                  alt=''
+                />
+              </div>
             </div>
             <div className={styles.edit_img}>
               <button
@@ -333,7 +274,11 @@ export default function SellingProduct(props) {
         onClick={(e) => {
           handleSubmit(e);
         }}>
-        Sell
+        {isAddProdPending ? (
+          <i className='fa fa-spinner fa-spin fa-2x fa-fw'></i>
+        ) : (
+          "Sell"
+        )}
       </button>
     </div>
   );

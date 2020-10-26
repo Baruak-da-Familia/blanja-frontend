@@ -108,3 +108,19 @@ export const addProductCreator = createAsyncAction(
     return res.data;
   }
 );
+
+export const getOrderCustomerCreator = createAsyncAction(
+  "GET_ORDER_CUSTOMER",
+  async (id) => {
+    const res = await api.getOrderCustomer(id);
+    return res.data;
+  }
+);
+
+export const getOrderSellerCreator = createAsyncAction(
+  "GET_ORDER_SELLER",
+  async (id) => {
+    const res = await api.getOrderSeller(id);
+    return res.data;
+  }
+);

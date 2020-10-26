@@ -104,3 +104,9 @@ export const updateProfileStore = (id, body) => {
     },
   });
 };
+export const getOrderCustomer = (id) => {
+  return Axios.get(`${API_URL}/order/customer/${id}`);
+};
+export const getOrderSeller = (id) => {
+  return Axios.get(`${API_URL}/order/seller/${id}`);
+};

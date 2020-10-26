@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from "./leftbar.module.css";
 import userDefault from "../../assets/img/default.png";
 import { API_URL } from "../../utils/environment";
+import { getOrderCustomerCreator } from "../../redux/actions/product";
 
 export default function LeftBar(props) {
   const dispatch = useDispatch();
@@ -22,7 +23,12 @@ export default function LeftBar(props) {
 
           <div className={styles.nameinfo}>
             <p className={styles.name}>{user.name ? user.name : "Anonim"}</p>
-            <p className={styles.edit} onClick={setEdit}>
+            <p
+              className={styles.edit}
+              onClick={() => {
+                setEdit();
+                setNav1();
+              }}>
               <i
                 style={{ marginRight: "10px" }}
                 className='fa fa-pencil'
@@ -59,7 +65,12 @@ export default function LeftBar(props) {
           </p>
         </div>
 
-        <div className={styles.info} onClick={setNav3}>
+        <div
+          className={styles.info}
+          onClick={() => {
+            setNav3();
+            dispatch(getOrderCustomerCreator(Number(user.id)));
+          }}>
           <span className='fa-stack'>
             <i
               className='fa fa-circle fa-stack-2x'

@@ -84,11 +84,25 @@
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 10px;
+  border: 1px solid #d4d4d4;
+  box-sizing: border-box;
+  border-radius: 4px;
+  flex-direction: column;
 }
 .empty {
   width: auto;
   height: auto;
+  justify-self: center;
+  justify-self: center;
+  margin-top: 10%;
   /* background-color: blue; */
 }

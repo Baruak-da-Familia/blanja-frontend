@@ -42,7 +42,7 @@ let date = [
 
 export default function MyProfile(props) {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { user, isUpdateCustomerPending } = useSelector((state) => state.auth);
   const [biodata, setBiodata] = useState({
     name: user.name ? user.name : "",
     email: user.email ? user.email : "",
@@ -277,10 +277,14 @@ export default function MyProfile(props) {
                 <button
                   onClick={(e) => {
                     handleSubmit(e);
-                    props.setEdit();
+                    // props.setEdit();
                   }}
                   className={styles.btnsave}>
-                  Save
+                  {isUpdateCustomerPending ? (
+                    <i className='fa fa-spinner fa-spin fa-2x fa-fw'></i>
+                  ) : (
+                    "Save"
+                  )}
                 </button>
               ) : null}
             </div>

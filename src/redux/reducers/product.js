@@ -2,6 +2,8 @@ import * as actions from "../actions/actionTypes";
 import {
   getProductBySellerIdCreator,
   addProductCreator,
+  getOrderCustomerCreator,
+  getOrderSellerCreator,
 } from "../actions/product";
 
 let invoice = Math.floor(Math.random() * 100001) + 1;
@@ -37,6 +39,20 @@ const initialState = {
   isAddProdPending: false,
   isAddProdFulFilled: false,
   isAddProdRejected: false,
+
+  statusGetOrderCust: null,
+  dataGetOrderCust: null,
+  errorGetOrderCust: undefined,
+  isGetOrderCustPending: false,
+  isGetOrderCustFulFilled: false,
+  isGetOrderCustRejected: false,
+
+  statusGetOrderSell: null,
+  dataGetOrderSell: null,
+  errorGetOrderSell: undefined,
+  isGetOrderSellPending: false,
+  isGetOrderSellFulFilled: false,
+  isGetOrderSellRejected: false,
 };
 
 const productReducer = (state = initialState, { type, payload }) => {
@@ -282,6 +298,82 @@ const productReducer = (state = initialState, { type, payload }) => {
         isAddProdRejected: true,
         isAddProdPending: false,
         isAddProdFulFilled: false,
+      };
+
+    case String(getOrderCustomerCreator.pending):
+      return {
+        ...state,
+        isGetOrderCustPending: true,
+      };
+    case String(getOrderCustomerCreator.fulfilled): {
+      let status;
+      let err;
+      let data;
+      if (payload.status === 200) {
+        status = 200;
+        err = undefined;
+        data = payload.data;
+      } else {
+        status = 500;
+        err = payload.error;
+        data = null;
+      }
+      return {
+        ...state,
+        statusGetOrderCust: status,
+        dataGetOrderCust: data,
+        errorGetOrderCust: err,
+        isGetOrderCustPending: false,
+        isGetOrderCustFulFilled: true,
+        isGetOrderCustRejected: false,
+      };
+    }
+    case String(getOrderCustomerCreator.rejected):
+      return {
+        ...state,
+        statusGetOrderCust: 500,
+        errorGetOrderCust: payload,
+        isGetOrderCustRejected: true,
+        isGetOrderCustPending: false,
+        isGetOrderCustFulFilled: false,
+      };
+
+    case String(getOrderSellerCreator.pending):
+      return {
+        ...state,
+        isGetOrderSellPending: true,
+      };
+    case String(getOrderSellerCreator.fulfilled): {
+      let status;
+      let err;
+      let data;
+      if (payload.status === 200) {
+        status = 200;
+        err = undefined;
+        data = payload.data;
+      } else {
+        status = 500;
+        err = payload.error;
+        data = null;
+      }
+      return {
+        ...state,
+        statusGetOrderSell: status,
+        dataGetOrderSell: data,
+        errorGetOrderSell: err,
+        isGetOrderSellPending: false,
+        isGetOrderSellFulFilled: true,
+        isGetOrderSellRejected: false,
+      };
+    }
+    case String(getOrderSellerCreator.rejected):
+      return {
+        ...state,
+        statusGetOrderSell: 500,
+        errorGetOrderSell: payload,
+        isGetOrderSellRejected: true,
+        isGetOrderSellPending: false,
+        isGetOrderSellFulFilled: false,
       };
     default:
       return state;

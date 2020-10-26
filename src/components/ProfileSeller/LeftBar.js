@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./leftbar.module.css";
 import userDefault from "../../assets/img/default.png";
 import { Accordion, Card } from "react-bootstrap";
 import { getProductBySellerIdCreator } from "../../redux/actions/product";
 import { API_URL } from "../../utils/environment";
+import { getOrderSellerCreator } from "../../redux/actions/product";
 
 export default function LeftBar(props) {
+  const [arrow, setArrow] = useState({
+    store: true,
+    product: false,
+    order: false,
+  });
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { nav, setNav1, setNav2, setNav3, setNav4, setNav5, setEdit } = props;
@@ -23,7 +29,12 @@ export default function LeftBar(props) {
           </div>
           <div className={styles.nameinfo}>
             <p className={styles.name}>{user.name ? user.name : "Anonim"}</p>
-            <p className={styles.edit} onClick={setEdit}>
+            <p
+              className={styles.edit}
+              onClick={() => {
+                setEdit();
+                setNav1();
+              }}>
               <i
                 style={{ marginRight: "10px" }}
                 className='fa fa-pencil'
@@ -40,6 +51,14 @@ export default function LeftBar(props) {
               border: "none",
             }}>
             <Accordion.Toggle
+              onClick={() => {
+                setNav1();
+                setArrow({
+                  store: !arrow.store,
+                  product: false,
+                  order: false,
+                });
+              }}
               as={Card.Header}
               eventKey='0'
               style={{
@@ -49,22 +68,33 @@ export default function LeftBar(props) {
                 border: "none",
                 backgroundColor: "#ffffff",
                 cursor: "pointer",
+                flexDirection: "row",
               }}>
-              <span className='fa-stack'>
+              <span className='fa-stack fa-lg' style={{ flex: 1 }}>
                 <i
                   className='fa fa-circle fa-stack-2x'
                   style={{ color: "#456BF3" }}></i>
                 <i className='fa fa-home fa-stack-1x fa-inverse'></i>
               </span>
               <p
-                onClick={() => {
-                  setNav1();
-                  // dispatch(getProductBySellerIdCreator(Number(user.id)));
-                }}
+                style={{ flex: 5 }}
                 className={
                   nav === "storeprofile" ? styles.active : styles.inactive
                 }>
                 Store
+              </p>
+              <p className={styles.containerArrow}>
+                {arrow.store ? (
+                  <i
+                    className='fa fa-chevron-up'
+                    style={{ color: "#222222" }}
+                    aria-hidden='true'></i>
+                ) : (
+                  <i
+                    className='fa fa-chevron-down'
+                    style={{ color: "#9b9b9b" }}
+                    aria-hidden='true'></i>
+                )}
               </p>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey='0'>
@@ -94,6 +124,15 @@ export default function LeftBar(props) {
               border: "none",
             }}>
             <Accordion.Toggle
+              onClick={() => {
+                setNav2();
+                setArrow({
+                  store: false,
+                  product: !arrow.product,
+                  order: false,
+                });
+                dispatch(getProductBySellerIdCreator(Number(user.id)));
+              }}
               as={Card.Header}
               eventKey='1'
               style={{
@@ -103,25 +142,35 @@ export default function LeftBar(props) {
                 border: "none",
                 backgroundColor: "#ffffff",
                 cursor: "pointer",
+                flexDirection: "row",
               }}>
-              <span className='fa-stack'>
+              <span className='fa-stack fa-lg' style={{ flex: 1 }}>
                 <i
                   className='fa fa-circle fa-stack-2x'
                   style={{ color: "#F36F45" }}></i>
                 <i className='fa fa-cube fa-stack-1x fa-inverse'></i>
               </span>
               <p
-                // onClick={setNav2}
-                onClick={() => {
-                  setNav2();
-                  dispatch(getProductBySellerIdCreator(Number(user.id)));
-                }}
+                style={{ flex: 5 }}
                 className={
                   nav === "myproduct" || nav === "selingproduct"
                     ? styles.active
                     : styles.inactive
                 }>
                 Product
+              </p>
+              <p className={styles.containerArrow}>
+                {arrow.product ? (
+                  <i
+                    className='fa fa-chevron-up'
+                    style={{ color: "#222222" }}
+                    aria-hidden='true'></i>
+                ) : (
+                  <i
+                    className='fa fa-chevron-down'
+                    style={{ color: "#9b9b9b" }}
+                    aria-hidden='true'></i>
+                )}
               </p>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey='1'>
@@ -158,6 +207,15 @@ export default function LeftBar(props) {
               border: "none",
             }}>
             <Accordion.Toggle
+              onClick={() => {
+                setNav4();
+                setArrow({
+                  store: false,
+                  product: false,
+                  order: !arrow.order,
+                });
+                dispatch(getOrderSellerCreator(Number(user.id)));
+              }}
               as={Card.Header}
               eventKey='2'
               style={{
@@ -167,21 +225,35 @@ export default function LeftBar(props) {
                 border: "none",
                 backgroundColor: "#ffffff",
                 cursor: "pointer",
+                flexDirection: "row",
               }}>
-              <span className='fa-stack'>
+              <span className='fa-stack fa-lg' style={{ flex: 1 }}>
                 <i
                   className='fa fa-circle fa-stack-2x'
                   style={{ color: "#F3456F" }}></i>
                 <i className='fa fa fa-shopping-cart fa-stack-1x fa-inverse'></i>
               </span>
               <p
-                onClick={setNav4}
+                style={{ flex: 5 }}
                 className={
                   nav === "myorder" || nav === "ordercancel"
                     ? styles.active
                     : styles.inactive
                 }>
                 Order
+              </p>
+              <p className={styles.containerArrow}>
+                {arrow.order ? (
+                  <i
+                    className='fa fa-chevron-up'
+                    style={{ color: "#222222" }}
+                    aria-hidden='true'></i>
+                ) : (
+                  <i
+                    className='fa fa-chevron-down'
+                    style={{ color: "#9b9b9b" }}
+                    aria-hidden='true'></i>
+                )}
               </p>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey='2'>

@@ -4,11 +4,11 @@ import styles from "./myprofile.module.css";
 import "./myprofile.module.css";
 import userDefault from "../../assets/img/default.png";
 import { updateProfileStoreCreator } from "../../redux/actions/auth";
-import {API_URL} from "../../utils/environment"
+import { API_URL } from "../../utils/environment";
 
 export default function MyProfile(props) {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { user, isUpdateStorePending } = useSelector((state) => state.auth);
   const [store, setDataStore] = useState({
     name: user.store_name ? user.store_name : "",
     email: user.email ? user.email : "",
@@ -129,9 +129,13 @@ export default function MyProfile(props) {
                   className={styles.btnsave}
                   onClick={(e) => {
                     handleSubmit(e);
-                    props.setEdit();
+                    // props.setEdit();
                   }}>
-                  Save
+                  {isUpdateStorePending ? (
+                    <i className='fa fa-spinner fa-spin fa-2x fa-fw'></i>
+                  ) : (
+                    "Save"
+                  )}
                 </button>
               ) : null}
             </div>

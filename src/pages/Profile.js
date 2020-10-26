@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "./profile.module.css";
 
-import HeaderProfile from "../components/Profile/Header";
 import LeftBar from "../components/Profile/LeftBar";
 import Main from "../components/Profile/Main";
 import ModalAddAddress from "../components/Profile/ModalAddAddress";
