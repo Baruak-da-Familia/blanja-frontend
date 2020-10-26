@@ -92,7 +92,7 @@ const ResetPasswordSeller = ({ location, history }) => {
                             <input
                                 className={classname(styles.loginInput)}
                                 placeholder="Confirm new password"
-                                name="password1"
+                                name="passwordRepeat"
                                 type='password'
 
                                 ref={register({
@@ -108,7 +108,7 @@ const ResetPasswordSeller = ({ location, history }) => {
                         </div>
                         <p style={{ fontSize: 16, color: 'red', width: 400 }}>
 
-                            {errors.password && errors.password.message}
+                            {errors.passwordRepeat && errors.passwordRepeat.message}
                         </p>
 
                         <button
