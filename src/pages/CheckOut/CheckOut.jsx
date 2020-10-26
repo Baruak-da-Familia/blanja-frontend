@@ -7,6 +7,7 @@ import ModalAddAddress from "../../components/Profile/ModalAddAddress";
 import ModalSelectPayment from "../../components/CheckOut/ModalSelectPayment";
 import { useDispatch, useSelector } from "react-redux";
 import { transaction, addPaymentMethod, clearCart } from "../../redux/actions/product";
+import {API_URL} from "../../utils/environment";
 import './Checkout.css';
 
 const CheckOut = (props) => {
@@ -59,6 +60,10 @@ const CheckOut = (props) => {
    //    }
    // );
 
+   useEffect(() => {
+		document.title = "Checkout | Blanja";
+	}, []);
+
    // const { data } = props.location;
    const [showChooseAddress, setShowChooseAddress] = useState(false);
    const [showAddAddress, setShowAddAddress] = useState(false);
@@ -103,7 +108,7 @@ const CheckOut = (props) => {
                      return (
                         <div className="row no-gutters shadow align-items-center container-items" key={item.id}>
                            <div className="col-2">
-                              <img src={`http://localhost:8000${item.images}`} alt="" />
+                              <img src={`${API_URL}${item.images}`} alt="" />
                            </div>
                            <div className="col">
                               <p className={classname(text.text, "text-title")}>{item.name}</p>

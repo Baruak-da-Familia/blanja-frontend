@@ -31,6 +31,7 @@ function App() {
 					<PublicRoute path="/EmailInput" exact component={EmailInput} />
 					<PublicRoute path="/ResetPasswordCustomer" exact component={ResetPasswordCustomer} />
 					<PublicRoute path="/ResetPasswordSeller" exact component={ResetPasswordSeller} />
+
 					<PublicRoute
 						exact
 						path="/"
@@ -85,7 +86,7 @@ function App() {
 					<PublicRoute
 						exact
 						enableNavbar
-						path="/detail/:id"
+						path="/product/detail/:id"
 						component={ProductDetail}
 					/>
 				</Switch>

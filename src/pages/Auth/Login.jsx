@@ -28,6 +28,11 @@ const Login = (props) => {
 	// console.log(userAddress)
 
 	useEffect(() => {
+		document.title = "Login | Blanja";
+	}, []);
+
+
+	useEffect(() => {
 		if (statusLogin === 200) {
 			props.history.push("/");
 		}
@@ -174,6 +179,7 @@ const Login = (props) => {
 								<Link
 									className={classname(styles.bla)}
 									to="/RegisterCustomer"
+
 								>
 									Register
 								</Link>
@@ -307,6 +313,7 @@ const Login = (props) => {
 				)}
 		</div>
 	);
+
 };
 
 export default Login;
