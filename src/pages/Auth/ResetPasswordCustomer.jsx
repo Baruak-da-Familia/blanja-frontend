@@ -11,10 +11,8 @@ import { authClearState, authResetPasswordCustomerFullf } from '../../redux/acti
 const ResetPasswordCustomer = ({ location, history }) => {
     const dispatch = useDispatch()
     const msg = useSelector((state) => state.auth.user.msg);
-    
+    const [errMsg, setErrMsg] = useState(null);
 
-    console.log(msg)
-    // const [errMsgSllr, setErrMsgSllr] = useState(null)
 
     const { handleSubmit, register, errors } = useForm();
 
@@ -25,10 +23,11 @@ const ResetPasswordCustomer = ({ location, history }) => {
     }
 
     useEffect(() => {
-        if(msg === "change password success") {
+        if (msg === "change password success") {
             history.push("/login");
             dispatch(authClearState())
         }
+
     }, [msg])
 
     const onSubmit = (data) => {
@@ -36,8 +35,16 @@ const ResetPasswordCustomer = ({ location, history }) => {
             id: getIdUser(),
             password: data.password
         }
-        console.log(newData)
-        dispatch(authResetPasswordCustomerFullf(newData))
+        if (data.password !== data.passwordRepeat) {
+            setErrMsg(`Password doesn't match`)
+        } else {
+            // console.log(newData)
+            // console.log(data.password)
+            // console.log(data.passwordRepeat)
+            dispatch(authResetPasswordCustomerFullf(newData))
+        }
+
+
     };
 
     return (
@@ -56,12 +63,17 @@ const ResetPasswordCustomer = ({ location, history }) => {
                     <p className={classname(styles.desc)}>
                         Reset password for customer
 						</p>
-
+                    {errMsg === null ? null : (
+                        <p className={classname(styles.errMsg)} style={{ marginTop: 125 }}>
+                            {errMsg}
+                        </p>
+                    )}
                     <form className={classname(styles.formContainer)} style={{ marginTop: 150 }}>
-                        
+
                         <div>
                             <input
                                 className={classname(styles.loginInput)}
+                                id="passwordNew"
                                 placeholder="Password"
                                 name="password"
                                 type='password'
@@ -81,12 +93,13 @@ const ResetPasswordCustomer = ({ location, history }) => {
 
                             {errors.password && errors.password.message}
                         </p>
-                        
+
                         <div>
                             <input
                                 className={classname(styles.loginInput)}
+                                id="passwordNewRepeat"
                                 placeholder="Confirm new password"
-                                name="password"
+                                name="passwordRepeat"
                                 type='password'
 
                                 ref={register({

@@ -6,11 +6,12 @@ import corpName from "../../assets/img/logo.png";
 import classname from "../../helpers/classJoiner";
 import styles from "./styles.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { authClearState , authResetPasswordSellerFullf } from '../../redux/actions/auth'
+import { authClearState, authResetPasswordSellerFullf } from '../../redux/actions/auth'
 
 const ResetPasswordSeller = ({ location, history }) => {
     const dispatch = useDispatch()
     const msg = useSelector((state) => state.auth.user.msg);
+    const [errMsg, setErrMsg] = useState(null);
 
 
     const { handleSubmit, register, errors } = useForm();
@@ -22,7 +23,7 @@ const ResetPasswordSeller = ({ location, history }) => {
     }
 
     useEffect(() => {
-        if(msg === "change password success") {
+        if (msg === "change password success") {
             history.push("/login");
             dispatch(authClearState())
         }
@@ -33,8 +34,12 @@ const ResetPasswordSeller = ({ location, history }) => {
             id: getIdUser(),
             password: data.password
         }
-        console.log(newData)
-        dispatch(authResetPasswordSellerFullf(newData))
+        if (data.password !== data.passwordRepeat) {
+            setErrMsg(`Password doesn't match`)
+        } else {
+            dispatch(authResetPasswordSellerFullf(newData))
+
+        }
     };
 
     return (
@@ -53,9 +58,13 @@ const ResetPasswordSeller = ({ location, history }) => {
                     <p className={classname(styles.desc)}>
                         Reset password for seller
 						</p>
-
+                    {errMsg === null ? null : (
+                        <p className={classname(styles.errMsg)} style={{ marginTop: 125 }}>
+                            {errMsg}
+                        </p>
+                    )}
                     <form className={classname(styles.formContainer)} style={{ marginTop: 150 }}>
-                        
+
                         <div>
                             <input
                                 className={classname(styles.loginInput)}
@@ -78,7 +87,7 @@ const ResetPasswordSeller = ({ location, history }) => {
 
                             {errors.password && errors.password.message}
                         </p>
-                    
+
                         <div>
                             <input
                                 className={classname(styles.loginInput)}
@@ -100,7 +109,7 @@ const ResetPasswordSeller = ({ location, history }) => {
                         <p style={{ fontSize: 16, color: 'red', width: 400 }}>
 
                             {errors.password && errors.password.message}
-                        </p>            
+                        </p>
 
                         <button
                             style={{ marginTop: 20 }}
