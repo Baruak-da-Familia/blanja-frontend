@@ -1,22 +1,29 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./leftbar.module.css";
-import user from "../../assets/image/bear.jpg";
+import userDefault from "../../assets/img/default.png";
 import { Accordion, Card } from "react-bootstrap";
 import { getProductBySellerIdCreator } from "../../redux/actions/product";
+import { API_URL } from "../../utils/environment";
 
 export default function LeftBar(props) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { nav, setNav1, setNav2, setNav3, setNav4, setNav5 } = props;
+  const { nav, setNav1, setNav2, setNav3, setNav4, setNav5, setEdit } = props;
   return (
     <div className={styles.container}>
       <div className={styles.infoitem}>
         <div className={styles.profile}>
-          <img className={styles.image} src={user} alt='' />
+          <div className={styles.containerimage}>
+            <img
+              className={styles.image}
+              src={user.avatar ? `${API_URL}${user.avatar}` : userDefault}
+              alt=''
+            />
+          </div>
           <div className={styles.nameinfo}>
-            <p className={styles.name}>Siapa Ya</p>
-            <p className={styles.edit}>
+            <p className={styles.name}>{user.name ? user.name : "Anonim"}</p>
+            <p className={styles.edit} onClick={setEdit}>
               <i
                 style={{ marginRight: "10px" }}
                 className='fa fa-pencil'

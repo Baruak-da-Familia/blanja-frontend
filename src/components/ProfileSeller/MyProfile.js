@@ -4,6 +4,7 @@ import styles from "./myprofile.module.css";
 import "./myprofile.module.css";
 import userDefault from "../../assets/img/default.png";
 import { updateProfileStoreCreator } from "../../redux/actions/auth";
+import {API_URL} from "../../utils/environment"
 
 export default function MyProfile(props) {
   const dispatch = useDispatch();
@@ -123,13 +124,16 @@ export default function MyProfile(props) {
           <div className={styles.itemform}>
             <div className={styles.label}>{""}</div>
             <div className={styles.inputcontainer}>
-              <button
-                className={styles.btnsave}
-                onClick={(e) => {
-                  handleSubmit(e);
-                }}>
-                Save
-              </button>
+              {props.edit ? (
+                <button
+                  className={styles.btnsave}
+                  onClick={(e) => {
+                    handleSubmit(e);
+                    props.setEdit();
+                  }}>
+                  Save
+                </button>
+              ) : null}
             </div>
           </div>
         </div>
@@ -143,19 +147,21 @@ export default function MyProfile(props) {
                   store.imagePreviewUrl
                     ? store.imagePreviewUrl
                     : user.avatar
-                    ? `http://localhost:8000${user.avatar}`
+                    ? `${API_URL}${user.avatar}`
                     : userDefault
                 }
                 alt=''
               />
             </div>
-            <button
-              className={styles.btnedit}
-              onClick={() => {
-                inputRef.current.click();
-              }}>
-              Select image
-            </button>
+            {props.edit ? (
+              <button
+                className={styles.btnedit}
+                onClick={() => {
+                  inputRef.current.click();
+                }}>
+                Select image
+              </button>
+            ) : null}
           </div>
         </div>
       </div>

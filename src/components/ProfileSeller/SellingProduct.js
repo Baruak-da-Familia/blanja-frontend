@@ -5,37 +5,35 @@ import "./myprofile.module.css";
 import main from "../../assets/image/mainphoto.png";
 import secondary from "../../assets/image/secondaryphoto.png";
 import formattext from "../../assets/image/formattext.png";
+import { addProductCreator } from "../../redux/actions/product";
 
 export default function SellingProduct(props) {
+  const dispatch = useDispatch();
   const [product, setProduct] = useState({
     name: "",
     price: "",
-    stock: "",
-    category: "",
-    condition: "",
-    desc: "",
-    image: [],
+    qty: "",
+    category_id: "",
+    status: "",
+    description: "",
+    img: [],
     imagePreviewUrl: [],
   });
-  // const [birthDate, setBirthDate] = useState({ date: "", month: "", year: "" });
   const inputRef = React.useRef();
   const handleChangeFile = (e) => {
     let reader = new FileReader();
-    let file = e.target.files[0];
-
+    let files = e.target.files;
+    let file = files[0];
+    reader.readAsDataURL(file);
     reader.onloadend = () => {
-      let newImg = product.image;
-      newImg.push(file);
-      let newPrev = product.imagePreviewUrl;
-      newPrev.push(reader.result);
+      let newImg = [...product.img, files[0]];
       setProduct({
         ...product,
-        image: newImg,
-        imagePreviewUrl: newPrev,
+        img: newImg,
+        imagePreviewUrl: [...product.imagePreviewUrl, reader.result],
       });
     };
-    reader.readAsDataURL(file);
-    console.log(product.image);
+    // }
   };
   const { user } = useSelector((state) => state.auth);
   const handleSubmit = (e) => {
@@ -43,23 +41,27 @@ export default function SellingProduct(props) {
     const {
       name,
       price,
-      stock,
-      category,
-      condition,
-      desc,
-      image,
+      qty,
+      category_id,
+      status,
+      description,
+      img,
       imagePreviewUrl,
     } = product;
     let formData = new FormData();
     formData.append("name", name);
     formData.append("price", price);
-    formData.append("qty", stock);
-    formData.append("category_id", category);
-    formData.append("status", condition);
-    formData.append("img", image);
-    formData.append("description", desc);
-    // dispatch(updateProfileCustomerCreator(Number(user.id), formData));
+    formData.append("qty", qty);
+    formData.append("category_id", category_id);
+    formData.append("status", status);
+    for (let i = 0; i < img.length; i++) {
+      formData.append("img", img[i]);
+    }
+    formData.append("description", description);
+    formData.append("seller_id", user.id);
+    dispatch(addProductCreator(formData));
   };
+  console.log(product.img, product.imagePreviewUrl);
   return (
     <div
       style={{
@@ -73,6 +75,7 @@ export default function SellingProduct(props) {
         onChange={(e) => handleChangeFile(e)}
         ref={inputRef}
         type='file'
+        multiple
         className={styles.hiddeninput}
       />
       {/* INVENTORY */}
@@ -119,7 +122,7 @@ export default function SellingProduct(props) {
             <input
               className={styles.input}
               onChange={(e) => {
-                setProduct({ ...product, stock: e.target.value });
+                setProduct({ ...product, qty: e.target.value });
               }}
             />
           </div>
@@ -129,7 +132,7 @@ export default function SellingProduct(props) {
               className={styles.input}
               name='category'
               onChange={(e) => {
-                setProduct({ ...product, category: e.target.value });
+                setProduct({ ...product, category_id: e.target.value });
               }}
               defaultValue='1'>
               <optgroup label='Category...'>
@@ -157,11 +160,11 @@ export default function SellingProduct(props) {
             <div className={styles.radioselect}>
               <input
                 type='radio'
-                value='New'
+                value='Baru'
                 name='condition'
                 style={{ marginRight: "5px", marginBottom: "18px" }}
                 onChange={(e) => {
-                  setProduct({ ...product, condition: e.target.value });
+                  setProduct({ ...product, status: e.target.value });
                 }}
               />
               <p className={styles.valueradio}>New</p>
@@ -173,10 +176,10 @@ export default function SellingProduct(props) {
                   marginBottom: "18px",
                 }}
                 type='radio'
-                value='Old'
+                value='Bekas'
                 name='condition'
                 onChange={(e) => {
-                  setProduct({ ...product, condition: e.target.value });
+                  setProduct({ ...product, status: e.target.value });
                 }}
               />
               <p className={styles.valueradio}>Old</p>
@@ -196,61 +199,101 @@ export default function SellingProduct(props) {
         <div className={styles.formcontainer}>
           <div className={(styles.form, styles.formcontainer_img)}>
             <div className={styles.content_img}>
-              <div className={styles.main_img}>
-                <img
-                  style={{ width: "120px", height: "120px" }}
-                  src={
-                    product.imagePreviewUrl[0]
-                      ? product.imagePreviewUrl[0]
-                      : main
-                  }
-                  alt=''
-                />
-              </div>
-              <div className={styles.secondary_img}>
-                <img
-                  style={{ width: "80px", height: "80px" }}
-                  src={
-                    product.imagePreviewUrl[1]
-                      ? product.imagePreviewUrl[1]
-                      : secondary
-                  }
-                  alt=''
-                />
-              </div>
-              <div className={styles.secondary_img}>
-                <img
-                  style={{ width: "80px", height: "80px" }}
-                  src={
-                    product.imagePreviewUrl[2]
-                      ? product.imagePreviewUrl[2]
-                      : secondary
-                  }
-                  alt=''
-                />
-              </div>
-              <div className={styles.secondary_img}>
-                <img
-                  style={{ width: "80px", height: "80px" }}
-                  src={
-                    product.imagePreviewUrl[3]
-                      ? product.imagePreviewUrl[3]
-                      : secondary
-                  }
-                  alt=''
-                />
-              </div>
-              <div className={styles.secondary_img}>
-                <img
-                  style={{ width: "80px", height: "80px" }}
-                  src={
-                    product.imagePreviewUrl[4]
-                      ? product.imagePreviewUrl[4]
-                      : secondary
-                  }
-                  alt=''
-                />
-              </div>
+              {product.imagePreviewUrl[0] ? (
+                <div
+                  className={styles.main_img}
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    overflowY: "hidden",
+                  }}>
+                  <img
+                    style={{ width: "120px", height: "auto" }}
+                    src={
+                      product.imagePreviewUrl[0]
+                        ? product.imagePreviewUrl[0]
+                        : main
+                    }
+                    alt=''
+                  />
+                </div>
+              ) : null}
+              {product.imagePreviewUrl[1] ? (
+                <div
+                  className={styles.secondary_img}
+                  style={{
+                    width: "80px",
+                    height: "80px",
+                    overflowY: "hidden",
+                  }}>
+                  <img
+                    style={{ width: "80px", height: "auto" }}
+                    src={
+                      product.imagePreviewUrl[1]
+                        ? product.imagePreviewUrl[1]
+                        : secondary
+                    }
+                    alt=''
+                  />
+                </div>
+              ) : null}
+              {product.imagePreviewUrl[2] ? (
+                <div
+                  className={styles.secondary_img}
+                  style={{
+                    width: "80px",
+                    height: "80px",
+                    overflowY: "hidden",
+                  }}>
+                  <img
+                    style={{ width: "80px", height: "auto" }}
+                    src={
+                      product.imagePreviewUrl[2]
+                        ? product.imagePreviewUrl[2]
+                        : secondary
+                    }
+                    alt=''
+                  />
+                </div>
+              ) : null}
+              {product.imagePreviewUrl[3] ? (
+                <div
+                  className={styles.secondary_img}
+                  style={{
+                    width: "80px",
+                    height: "80px",
+                    overflowY: "hidden",
+                  }}>
+                  <img
+                    style={{ width: "80px", height: "auto" }}
+                    src={
+                      product.imagePreviewUrl[3]
+                        ? product.imagePreviewUrl[3]
+                        : secondary
+                    }
+                    alt=''
+                  />
+                </div>
+              ) : null}
+              {product.imagePreviewUrl[4] ? (
+                <div
+                  className={styles.secondary_img}
+                  style={{
+                    width: "80px",
+                    height: "80px",
+                    overflowY: "hidden",
+                  }}>
+                  <img
+                    style={{ width: "80px", height: "auto" }}
+                    src={
+                      product.imagePreviewUrl[4]
+                        ? product.imagePreviewUrl[4]
+                        : secondary
+                    }
+                    alt=''
+                  />
+                </div>
+              ) : null}
             </div>
             <div className={styles.edit_img}>
               <button
@@ -279,7 +322,7 @@ export default function SellingProduct(props) {
             <textarea
               className={styles.content_description}
               onChange={(e) => {
-                setProduct({ ...product, desc: e.target.value });
+                setProduct({ ...product, description: e.target.value });
               }}
             />
           </div>
@@ -287,8 +330,8 @@ export default function SellingProduct(props) {
       </div>
       <button
         className={styles.btnsell}
-        onClick={() => {
-          console.log(product);
+        onClick={(e) => {
+          handleSubmit(e);
         }}>
         Sell
       </button>

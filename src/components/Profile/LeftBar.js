@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./leftbar.module.css";
 import userDefault from "../../assets/img/default.png";
+import { API_URL } from "../../utils/environment";
 
 export default function LeftBar(props) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { nav, setNav1, setNav2, setNav3 } = props;
+  const { nav, setNav1, setNav2, setNav3, setEdit } = props;
   return (
     <div className={styles.container}>
       <div className={styles.infoitem}>
@@ -14,18 +15,14 @@ export default function LeftBar(props) {
           <div className={styles.containerimage}>
             <img
               className={styles.image}
-              src={
-                user.avatar
-                  ? `http://localhost:8000${user.avatar}`
-                  : userDefault
-              }
+              src={user.avatar ? `${API_URL}${user.avatar}` : userDefault}
               alt=''
             />
           </div>
 
           <div className={styles.nameinfo}>
             <p className={styles.name}>{user.name ? user.name : "Anonim"}</p>
-            <p className={styles.edit}>
+            <p className={styles.edit} onClick={setEdit}>
               <i
                 style={{ marginRight: "10px" }}
                 className='fa fa-pencil'

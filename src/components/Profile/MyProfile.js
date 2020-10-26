@@ -4,6 +4,7 @@ import styles from "./myprofile.module.css";
 import "./myprofile.module.css";
 import { updateProfileCustomerCreator } from "../../redux/actions/auth";
 import userDefault from "../../assets/img/default.png";
+import { API_URL } from "../../utils/environment";
 
 let date = [
   1,
@@ -157,7 +158,7 @@ export default function MyProfile(props) {
                 value='male'
                 name='gender'
                 type='radio'
-                className={styles.radioselect}
+                // className={styles.radioselect}
                 placeholder=''
                 onChange={(e) => {
                   setBiodata({ ...biodata, gender: e.target.value });
@@ -175,7 +176,7 @@ export default function MyProfile(props) {
                 value='female'
                 name='gender'
                 type='radio'
-                className={styles.radioselect}
+                // className={styles.radioselect}
                 placeholder=''
                 onChange={(e) => {
                   setBiodata({ ...biodata, gender: e.target.value });
@@ -272,11 +273,16 @@ export default function MyProfile(props) {
           <div className={styles.itemform}>
             <div className={styles.label}>{""}</div>
             <div className={styles.inputcontainer}>
-              <button
-                onClick={(e) => handleSubmit(e)}
-                className={styles.btnsave}>
-                Save
-              </button>
+              {props.edit ? (
+                <button
+                  onClick={(e) => {
+                    handleSubmit(e);
+                    props.setEdit();
+                  }}
+                  className={styles.btnsave}>
+                  Save
+                </button>
+              ) : null}
             </div>
           </div>
         </div>
@@ -290,19 +296,21 @@ export default function MyProfile(props) {
                   biodata.imagePreviewUrl
                     ? biodata.imagePreviewUrl
                     : user.avatar
-                    ? `http://localhost:8000${user.avatar}`
+                    ? `${API_URL}${user.avatar}`
                     : userDefault
                 }
                 alt=''
               />
             </div>
-            <button
-              onClick={() => {
-                inputRef.current.click();
-              }}
-              className={styles.btnedit}>
-              Select image
-            </button>
+            {props.edit ? (
+              <button
+                onClick={() => {
+                  inputRef.current.click();
+                }}
+                className={styles.btnedit}>
+                Select image
+              </button>
+            ) : null}
           </div>
         </div>
       </div>

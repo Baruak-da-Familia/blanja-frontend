@@ -100,3 +100,11 @@ export const addPaymentMethod = (data) => {
     },
   };
 };
+
+export const addProductCreator = createAsyncAction(
+  "ADD_PRODUCT",
+  async (body) => {
+    const res = await api.addProduct(body);
+    return res.data;
+  }
+);

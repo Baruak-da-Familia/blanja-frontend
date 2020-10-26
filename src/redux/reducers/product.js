@@ -1,5 +1,8 @@
 import * as actions from "../actions/actionTypes";
-import { getProductBySellerIdCreator } from "../actions/product";
+import {
+  getProductBySellerIdCreator,
+  addProductCreator,
+} from "../actions/product";
 
 let invoice = Math.floor(Math.random() * 100001) + 1;
 const initialState = {
@@ -27,6 +30,13 @@ const initialState = {
   isGetProdBySelIdPending: false,
   isGetProdBySelIdFulFilled: false,
   isGetProdBySelIdRejected: false,
+
+  statusAddProd: null,
+  dataAddProd: null,
+  errorAddProd: undefined,
+  isAddProdPending: false,
+  isAddProdFulFilled: false,
+  isAddProdRejected: false,
 };
 
 const productReducer = (state = initialState, { type, payload }) => {
@@ -233,6 +243,45 @@ const productReducer = (state = initialState, { type, payload }) => {
         isGetProdBySelIdRejected: true,
         isGetProdBySelIdPending: false,
         isGetProdBySelIdFulFilled: false,
+      };
+
+    case String(addProductCreator.pending):
+      return {
+        ...state,
+        isAddProdPending: true,
+      };
+    case String(addProductCreator.fulfilled): {
+      let status;
+      let err;
+      let data;
+      if (payload.status === 200) {
+        status = 200;
+        err = undefined;
+        data = payload.data;
+      } else {
+        status = 500;
+        err = payload.error;
+        data = [];
+      }
+      return {
+        ...state,
+        dataGetProdBySelId: [...state.dataGetProdBySelId, data],
+        statusAddProd: status,
+        dataAddProd: data,
+        errorAddProd: err,
+        isAddProdPending: false,
+        isAddProdFulFilled: true,
+        isAddProdRejected: false,
+      };
+    }
+    case String(addProductCreator.rejected):
+      return {
+        ...state,
+        statusAddProd: 500,
+        errorAddProd: payload,
+        isAddProdRejected: true,
+        isAddProdPending: false,
+        isAddProdFulFilled: false,
       };
     default:
       return state;
