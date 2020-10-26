@@ -7,7 +7,7 @@ import ModalAddAddress from "../../components/Profile/ModalAddAddress";
 import ModalSelectPayment from "../../components/CheckOut/ModalSelectPayment";
 import { useDispatch, useSelector } from "react-redux";
 import { transaction, addPaymentMethod, clearCart } from "../../redux/actions/product";
-import {API_URL} from "../../utils/environment";
+import { API_URL } from "../../utils/environment";
 import './Checkout.css';
 
 const CheckOut = (props) => {
@@ -42,6 +42,8 @@ const CheckOut = (props) => {
    const dataTransaction = useSelector(state => state.product.checkout);
    const dispatch = useDispatch();
 
+   const joinedAdrress = `${stateAuth.address}, ${stateAuth.city_of_subdistrict}, ${stateAuth.postal_code}, ${stateAuth.recipient_telp_number}`;
+
    // let invoice = Math.floor(Math.random() * 100001) + 1;
    // const [dataTransaction, setDataTransaction] = useState(
    //    {
@@ -61,8 +63,8 @@ const CheckOut = (props) => {
    // );
 
    useEffect(() => {
-		document.title = "Checkout | Blanja";
-	}, []);
+      document.title = "Checkout | Blanja";
+   }, []);
 
    // const { data } = props.location;
    const [showChooseAddress, setShowChooseAddress] = useState(false);
@@ -97,8 +99,8 @@ const CheckOut = (props) => {
                   <h4 className={classname(text.text, "text-title")}>Shipping Adress</h4>
                   <div className="row no-gutters shadow align-content-center container-select-all">
                      <div className="col">
-                        <p className={classname(text.text, "text-title")}>Andreas Jane</p>
-                        <p className="text-addres mb-4">Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c 16] Sokaraja, Kab. Banyumas, 53181</p>
+                        <p className={classname(text.text, "text-title")}>{stateAuth.recipient_name}</p>
+                        <p className="text-addres mb-4">{joinedAdrress}</p>
                         <button type="button" className={classname(colors.grayText, "btn btn-outline-secondary btn-choose-address")} onClick={() => setShowChooseAddress(true)}>Choose another address</button>
                      </div>
                   </div>
