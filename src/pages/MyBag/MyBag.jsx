@@ -109,7 +109,8 @@ const MyBag = () => {
 		dispatch(addToCheckout({ sendData }));
 	};
 
-	const handleDeleteCart = () => {
+	const handleDeleteCart = (e) => {
+		e.preventDefault()
 		if (window.confirm("Are you sure to delete the bag?")) {
 			dispatch(clearCart());
 		} else {
@@ -140,7 +141,7 @@ const MyBag = () => {
 										text.text,
 										"text-title"
 									)}
-								>{`Select all item (${cart.length} items selected)`}</p>
+								>{`Select all item (${stateCarts.filter(item => item.selected === true).length} items selected)`}</p>
 							</div>
 							<div className="col-1">
 								<a

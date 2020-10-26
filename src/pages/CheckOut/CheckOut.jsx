@@ -6,7 +6,7 @@ import ModalChooseAddress from "../../components/CheckOut/ModalChooseAddress";
 import ModalAddAddress from "../../components/Profile/ModalAddAddress";
 import ModalSelectPayment from "../../components/CheckOut/ModalSelectPayment";
 import { useDispatch, useSelector } from "react-redux";
-import { transaction, addPaymentMethod, clearCart } from "../../redux/actions/product";
+import { transaction, addPaymentMethod, clearCart, clearCheckout } from "../../redux/actions/product";
 import { API_URL } from "../../utils/environment";
 import './Checkout.css';
 
@@ -76,9 +76,10 @@ const CheckOut = (props) => {
          alert("Please select a payment method..!")
       } else {
          dispatch(transaction(dataTransaction));
-         alert("Transaction success")
-         dispatch(clearCart())
-         setShowPayment(false)
+         alert("Transaction success");
+         dispatch(clearCart());
+         dispatch(clearCheckout());
+         setShowPayment(false);
       }
    };
 
