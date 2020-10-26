@@ -57,6 +57,8 @@ const PageProduct = (props) => {
 		return item.id === stateProductDetail.id;
 	});
 
+	const joinedAdrress = `${stateAuth.address}, ${stateAuth.city_of_subdistrict}, ${stateAuth.postal_code}, ${stateAuth.recipient_telp_number}`;
+
 	const kirim = () => {
 		let invoice = Math.floor(Math.random() * 100001) + 1;
 		const sendData = {
@@ -72,13 +74,12 @@ const PageProduct = (props) => {
 			seller_name: stateProductDetail.seller_name,
 			payment_method: "",
 			// "address": stateAddres,
-			address:
-				"Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c 16] Sokaraja, Kab. Banyumas, 53181",
+			address: joinedAdrress,
 			products: [{ id: stateProductDetail.id, qty: qty }],
 			selected: true,
 		};
 		dispatch(addToCart(sendData));
-		props.history.push("/checkout");
+		props.history.push("/mybag");
 	};
 
 	if (isPending || isEmpty(stateProductDetail)) {
@@ -116,22 +117,22 @@ const PageProduct = (props) => {
 							>
 								{stateProductDetail.images !== undefined
 									? stateProductDetail.images.map(
-											(image, index) => {
-												return (
-													<img
-														key={index}
-														alt=""
-														className={classname(
-															styles.exampleImg
-														)}
-														src={`${API_URL}${image}`}
-														onClick={() => {
-															setImgId(index);
-														}}
-													/>
-												);
-											}
-									  )
+										(image, index) => {
+											return (
+												<img
+													key={index}
+													alt=""
+													className={classname(
+														styles.exampleImg
+													)}
+													src={`${API_URL}${image}`}
+													onClick={() => {
+														setImgId(index);
+													}}
+												/>
+											);
+										}
+									)
 									: null}
 							</div>
 						</div>
@@ -168,8 +169,8 @@ const PageProduct = (props) => {
 						>
 							Rp
 							{Number(stateProductDetail.price).toLocaleString(
-								"id-ID"
-							)}
+							"id-ID"
+						)}
 						</p>
 						<p
 							style={{
@@ -294,33 +295,33 @@ const PageProduct = (props) => {
 									item already in bag
 								</button>
 							) : (
-								<button
-									className={classname(styles.chatAddBtn)}
-									onClick={() =>
-										dispatch(
-											addToCart({
-												brand: stateProductDetail.brand,
-												id: stateProductDetail.id,
-												images:
-													stateProductDetail
-														.images[0],
-												name: stateProductDetail.name,
-												price: Number(
-													stateProductDetail.price
-												),
-												qty: qty,
-												seller_id:
-													stateProductDetail.seller_id,
-												seller_name:
-													stateProductDetail.seller_name,
-												selected: false,
-											})
-										)
-									}
-								>
-									add bag
-								</button>
-							)}
+									<button
+										className={classname(styles.chatAddBtn)}
+										onClick={() =>
+											dispatch(
+												addToCart({
+													brand: stateProductDetail.brand,
+													id: stateProductDetail.id,
+													images:
+														stateProductDetail
+															.images[0],
+													name: stateProductDetail.name,
+													price: Number(
+														stateProductDetail.price
+													),
+													qty: qty,
+													seller_id:
+														stateProductDetail.seller_id,
+													seller_name:
+														stateProductDetail.seller_name,
+													selected: false,
+												})
+											)
+										}
+									>
+										add bag
+									</button>
+								)}
 
 							<button
 								className={classname(styles.buyBtn)}
