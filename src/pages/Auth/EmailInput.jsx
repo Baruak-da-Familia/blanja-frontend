@@ -6,13 +6,16 @@ import corpName from "../../assets/img/logo.png";
 import classname from "../../helpers/classJoiner";
 import styles from "./styles.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { authResetPasswordCustomer } from "../../redux/actions/auth";
+import { authClearState, authResetPasswordCustomer, authResetPasswordSeller } from "../../redux/actions/auth";
 
 const EmailInput = () => {
     const dispatch = useDispatch()
     const [userType, setUserType] = useState(false);
     const [errMsg, setErrMsg] = useState(null)
     const email = useSelector((state) => state.auth.isFulfilled)
+    // const resErrMsg = useSelector((state) => state.auth)
+
+    // console.log(email)
     // const [errMsgSllr, setErrMsgSllr] = useState(null)
 
 
@@ -20,16 +23,20 @@ const EmailInput = () => {
 
     useEffect(() => {
         if (email === true) {
-            setErrMsg('email sent')
-        } 
-    }, [email]);
+            setErrMsg('Email sent')
+            dispatch(authClearState())
+        }
+        // if (email === null) {
+        //     setErrMsg('Email not found')
+        // }
+    }, [email, dispatch]);
 
     const onSubmitCustomer = (data) => {
         dispatch(authResetPasswordCustomer(data))
     };
 
     const onSubmitSeller = (data) => {
-        // console.log('seller')
+        dispatch(authResetPasswordSeller(data))
     };
 
     return (
@@ -51,7 +58,7 @@ const EmailInput = () => {
 						</p>
 
                         <div className={classname(styles.userType)}>
-                            {errMsg === null ? null : (<p className={classname(styles.errMsg)}>{errMsg}</p>)}
+                            {errMsg === null ? null : (<p className={classname(styles.errMsgRP)}>{errMsg}</p>)}
 
                             {userType === false ? (
                                 <button
@@ -83,25 +90,29 @@ const EmailInput = () => {
 
                         <form className={classname(styles.formContainer)}>
                             {/* <p className={classname(styles.errMsg)}> */}
-                            <p style={{ fontSize: 16, color: 'red' }}>
-                                {errors.email && errors.email.message}
-
-                            </p>
+                            
                             {/* </p> */}
                             <div>
                                 <input
-                                    className={classname(styles.emailInput)}
+                                    className={classname(styles.registerInput)}
+                                    id="emailCust"
                                     placeholder="Email"
                                     name="email"
                                     ref={register({
                                         required: "Required",
                                         pattern: {
                                             value: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
-                                            message: "bukan email",
+                                            message: "Wrong email format",
                                         },
                                     })}
+                                    type="email"
+
                                 />
                             </div>
+                            <p style={{ fontSize: 16, color: 'red', marginTop: -16 }}>
+                                {errors.email && errors.email.message}
+
+                            </p>
 
                             <button
                                 className={classname(styles.loginSubmit)}
@@ -141,8 +152,10 @@ const EmailInput = () => {
                                 Reset password for seller
 						</p>
 
-                            {/* {errMsgSllr === null ? null : (<p className={classname(styles.errMsg)}>{errMsgSllr}</p>)} */}
+
                             <div className={classname(styles.userType)}>
+                                {errMsg === null ? null : (<p className={classname(styles.errMsgRP)}>{errMsg}</p>)}
+
                                 <button
                                     className={classname(
                                         styles.userTypeBtnCustomer
@@ -175,25 +188,29 @@ const EmailInput = () => {
 
                             <form className={classname(styles.formContainer)}>
                                 {/* <p className={classname(styles.errMsg)}> */}
-                                <p style={{ fontSize: 16, color: 'red' }}>
-                                    {errors.email && errors.email.message}
-
-                                </p>
+                                
                                 {/* </p> */}
                                 <div>
                                     <input
-                                        className={classname(styles.emailInput)}
+                                        className={classname(styles.registerInput)}
+                                        id="emailCust"
                                         placeholder="Email"
                                         name="email"
                                         ref={register({
                                             required: "Required",
                                             pattern: {
                                                 value: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
-                                                message: "bukan email",
+                                                message: "Wrong email format",
                                             },
                                         })}
+                                        type="email"
+
                                     />
                                 </div>
+                                <p style={{ fontSize: 16, color: 'red', marginTop: -16 }}>
+                                    {errors.email && errors.email.message}
+
+                                </p>
                                 <button
                                     className={classname(styles.loginSubmit)}
                                     type="submit"

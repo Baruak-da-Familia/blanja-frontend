@@ -41,18 +41,7 @@ const PageProduct = (props) => {
 	})
 
 	const kirim = () => {
-		// console.log(cart.filter(item => item.selected === true));
-		// stateCarts.filter(item => item.selected === true)
-		// brand: stateProductDetail.brand,
-		// 	id: stateProductDetail.id,
-		// 		images: stateProductDetail.images[0],
-		// 			name: stateProductDetail.name,
-		// 				price: Number(stateProductDetail.price),
-		// 					qty: qty,
-		// 						seller_id: stateProductDetail.seller_id,
-		// 							seller_name: stateProductDetail.seller_name,
-		// 								selected: false,
-											let invoice = Math.floor(Math.random() * 100001) + 1;
+		let invoice = Math.floor(Math.random() * 100001) + 1;
 		const sendData = {
 			"brand": stateProductDetail.brand,
 			"id": invoice,
@@ -140,7 +129,39 @@ const PageProduct = (props) => {
 					<p style={{ fontWeight: 500, fontSize: 16, marginTop: 10 }}>
 						{stateProductDetail.brand}
 					</p>
-					<p style={{ marginTop: 15.29 }}>[rating]</p>
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "row",
+							// marginTop: ,
+						}}
+					>
+						<img
+							alt=""
+							style={{ marginRight: 8.57, height: 20.57, width: 22.29 }}
+							src={starMedium}
+						/>
+						<img
+							alt=""
+							style={{ marginRight: 8.57, height: 20.57, width: 22.29 }}
+							src={starMedium}
+						/>
+						<img
+							alt=""
+							style={{ marginRight: 8.57, height: 20.57, width: 22.29 }}
+							src={starMedium}
+						/>
+						<img
+							alt=""
+							style={{ marginRight: 8.57, height: 20.57, width: 22.29 }}
+							src={starMedium}
+						/>
+						<img
+							alt=""
+							style={{ marginRight: 8.57, height: 20.57, width: 22.29 }}
+							src={starMedium}
+						/>
+					</div>
 					<p
 						style={{
 							fontWeight: 500,
@@ -196,7 +217,7 @@ const PageProduct = (props) => {
 					</div>
 					<div className={classname(styles.sizeQtyActCont)}>
 						<button className={classname(styles.sizeQtyBtn)}>
-							<p style={{ fontSize: 50, marginTop: -20.5 }}>-</p>
+							<p style={{ fontSize: 50, marginTop: -24.5 }}>-</p>
 						</button>
 						<p
 							style={{
@@ -212,7 +233,7 @@ const PageProduct = (props) => {
 							className={classname(styles.sizeQtyBtn)}
 							style={{ marginLeft: 10 }}
 						>
-							<p style={{ fontSize: 30, marginTop: -3.5 }}>+</p>
+							<p style={{ fontSize: 30, marginTop: -7 }}>+</p>
 						</button>
 						<button
 							className={classname(styles.sizeQtyBtn)}
@@ -224,7 +245,7 @@ const PageProduct = (props) => {
 								}
 							}}
 						>
-							<p style={{ fontSize: 50, marginTop: -20.5 }}
+							<p style={{ fontSize: 50, marginTop: -24.5 }}
 							>-</p>
 						</button>
 						<p
@@ -243,7 +264,7 @@ const PageProduct = (props) => {
 								setQty(qty + 1)
 							}}
 						>
-							<p style={{ fontSize: 30, marginTop: -3.5 }}>+</p>
+							<p style={{ fontSize: 30, marginTop: -7 }}>+</p>
 						</button>
 					</div>
 					<div className={classname(styles.actionBtnContainer)}>

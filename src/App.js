@@ -4,7 +4,8 @@ import Navbar from "./components/Navbar/Navbar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Auth/Login";
-import Register from "./pages/Auth/Register";
+import RegisterCustomer from "./pages/Auth/RegisterCustomer";
+import RegisterSeller from "./pages/Auth/RegisterSeller";
 import Chat from "./pages/Chat/Chat";
 import Profile from "./pages/Profile";
 import ProfileSeller from "./pages/ProfileSeller";
@@ -15,6 +16,9 @@ import MyBag from "./pages/MyBag/MyBag";
 import Checkout from "./pages/CheckOut/CheckOut";
 import PrivateRoute from "./components/Route/PrivateRoute";
 import PublicRoute from "./components/Route/PublicRoute";
+import EmailInput from "./pages/Auth/EmailInput";
+import ResetPasswordCustomer from "./pages/Auth/ResetPasswordCustomer";
+import ResetPasswordSeller from "./pages/Auth/ResetPasswordSeller";
 
 function App() {
 	return (
@@ -22,7 +26,11 @@ function App() {
 			<Router>
 				<Switch>
 					<PublicRoute path="/login" exact component={Login} />
-					<PublicRoute path="/Register" exact component={Register} />
+					<PublicRoute path="/RegisterCustomer" exact component={RegisterCustomer} />
+					<PublicRoute path="/RegisterSeller" exact component={RegisterSeller} />
+					<PublicRoute path="/EmailInput" exact component={EmailInput} />
+					<PublicRoute path="/ResetPasswordCustomer" exact component={ResetPasswordCustomer} />
+					<PublicRoute path="/ResetPasswordSeller" exact component={ResetPasswordSeller} />
 					<PublicRoute
 						exact
 						path="/"

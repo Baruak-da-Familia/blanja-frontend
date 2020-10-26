@@ -6,12 +6,14 @@ import corpName from "../../assets/img/logo.png";
 import classname from "../../helpers/classJoiner";
 import styles from "./styles.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { authResetPasswordCustomerFullf } from '../../redux/actions/auth'
+import { authClearState, authResetPasswordCustomerFullf } from '../../redux/actions/auth'
 
-const ResetPassword = ({ location }) => {
+const ResetPasswordCustomer = ({ location, history }) => {
     const dispatch = useDispatch()
-    const [userType, setUserType] = useState(false);
-    const [errMsg, setErrMsg] = useState(null)
+    const msg = useSelector((state) => state.auth.user.msg);
+    
+
+    console.log(msg)
     // const [errMsgSllr, setErrMsgSllr] = useState(null)
 
     const { handleSubmit, register, errors } = useForm();
@@ -22,6 +24,13 @@ const ResetPassword = ({ location }) => {
         return id[1]
     }
 
+    useEffect(() => {
+        if(msg === "change password success") {
+            history.push("/login");
+            dispatch(authClearState())
+        }
+    }, [msg])
+
     const onSubmit = (data) => {
         const newData = {
             id: getIdUser(),
@@ -29,7 +38,6 @@ const ResetPassword = ({ location }) => {
         }
         console.log(newData)
         dispatch(authResetPasswordCustomerFullf(newData))
-        // console.log('customer')
     };
 
     return (
@@ -49,45 +57,14 @@ const ResetPassword = ({ location }) => {
                         Reset password for customer
 						</p>
 
-                    <div className={classname(styles.userType)}>
-                        {errMsg === null ? null : (<p className={classname(styles.errMsg)}>{errMsg}</p>)}
-
-                        {userType === false ? (
-                            <button
-                                className={classname(
-                                    styles.userTypeBtnCustomerActive
-                                )}
-                            >
-                                Customer
-                            </button>
-                        ) : (
-                                <button
-                                    className={classname(
-                                        styles.userTypeBtnCustomer
-                                    )}
-                                >
-                                    Customer
-                                </button>
-                            )}
-                        <button
-                            className={classname(styles.userTypeBtnSeller)}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setUserType(true);
-                            }}
-                        >
-                            Seller
-							</button>
-                    </div>
-
-                    <form className={classname(styles.formContainer)}>
+                    <form className={classname(styles.formContainer)} style={{ marginTop: 150 }}>
                         <p style={{ fontSize: 16, color: 'red' }}>
 
                             {errors.password && errors.password.message}
                         </p>
                         <div>
                             <input
-                                className={classname(styles.passwordInput)}
+                                className={classname(styles.loginInput)}
                                 placeholder="Password"
                                 name="password"
                                 type='password'
@@ -96,7 +73,7 @@ const ResetPassword = ({ location }) => {
                                     required: "Required",
                                     pattern: {
                                         value: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/,
-                                        message: "bukan password",
+                                        message: "Password must contain at least 1 number, an uppercase letter and more than 8 characters",
                                     },
                                     validate: (value) =>
                                         value !== "admin" || "Nice try!",
@@ -110,16 +87,16 @@ const ResetPassword = ({ location }) => {
                         </p>
                         <div>
                             <input
-                                className={classname(styles.passwordInput)}
+                                className={classname(styles.loginInput)}
                                 placeholder="Confirm new password"
-                                name="password1"
+                                name="password"
                                 type='password'
 
                                 ref={register({
                                     required: "Required",
                                     pattern: {
                                         value: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/,
-                                        message: "bukan password",
+                                        message: "Password must contain at least 1 number, an uppercase letter and more than 8 characters",
                                     },
                                     validate: (value) =>
                                         value !== "admin" || "Nice try!",
@@ -127,6 +104,7 @@ const ResetPassword = ({ location }) => {
                             />
                         </div>
                         <button
+                            style={{ marginTop: 20 }}
                             className={classname(styles.loginSubmit)}
                             type="submit"
                         >
@@ -140,7 +118,7 @@ const ResetPassword = ({ location }) => {
                         <span onClick={() => { }}>
                             <Link
                                 className={classname(styles.bla)}
-                                to="/Register"
+                                to="/RegisterCustomer"
                             >
                                 Register
 								</Link>
@@ -153,4 +131,4 @@ const ResetPassword = ({ location }) => {
     );
 };
 
-export default ResetPassword;
+export default ResetPasswordCustomer;

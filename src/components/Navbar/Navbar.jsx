@@ -103,7 +103,7 @@ const Navbar = (props) => {
 								colors.white
 							)}
 							onClick={() => {
-								props.history.push("/register");
+								props.history.push("/RegisterCustomer");
 							}}
 						>
 							Signup

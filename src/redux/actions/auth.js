@@ -9,7 +9,9 @@ import {
   updateProfileCustomer,
   addAddressCustomer,
   resetPasswordCustomer,
+  resetPasswordSeller,
 	sendEmailCustomer,
+  sendEmailSeller,
 
 } from "../../utils/reqData";
 
@@ -44,6 +46,14 @@ export const authResetPasswordCustomer = (data) => {
 		payload: sendEmailCustomer(data),
 	};
 };
+
+export const authResetPasswordSeller = (data) => {
+	return {
+		type: actions.AUTH_RESET_PASSWORD,
+		payload: sendEmailSeller(data),
+	};
+};
+
 export const authResetPasswordCustomerFullf = (data) => {
 	return {
 		type: actions.AUTH_RESET_FULLFILED,
@@ -51,6 +61,18 @@ export const authResetPasswordCustomerFullf = (data) => {
 	};
 };
 
+export const authResetPasswordSellerFullf = (data) => {
+	return {
+		type: actions.AUTH_RESET_FULLFILED,
+		payload: resetPasswordSeller(data),
+	};
+};
+
+export const authClearState = () => {
+  return {
+    type: actions.AUTH_CLEAR_STATE
+  }
+}
 
 export const updateProfileCustomerCreator = createAsyncAction(
   "UPDATECUSTOMER",

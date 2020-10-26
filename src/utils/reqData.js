@@ -80,7 +80,14 @@ export const sendEmailCustomer = (data) => {
     return Axios.post(`http://localhost:8000/auth/sendemailcustomer`, data);
 }
 
+export const sendEmailSeller = (data) => {
+  return Axios.post(`http://localhost:8000/auth/sendemailseller`, data);
+}
+
 export const resetPasswordCustomer = (data) => {
     return Axios.post(`http://localhost:8000/auth/resetpasscustomer`, data);
 }
 
+export const resetPasswordSeller = (data) => {
+  return Axios.post(`http://localhost:8000/auth/resetpassseller`, data);
+}
