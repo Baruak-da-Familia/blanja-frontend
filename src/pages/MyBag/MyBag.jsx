@@ -15,7 +15,7 @@ import {
 	addToCheckout,
 	clearCart,
 } from "../../redux/actions/product";
-import {API_URL} from "../../utils/environment";
+import { API_URL } from "../../utils/environment";
 
 const MyBag = () => {
 	const [cart, setCart] = useState([
@@ -76,7 +76,8 @@ const MyBag = () => {
 	const dispatch = useDispatch();
 	const stateCarts = useSelector((state) => state.product.carts);
 	const stateAuth = useSelector((state) => state.auth.user);
-	const stateAddres = useSelector((state) => state.auth.userAddress);
+
+	const joinedAdrress = `${stateAuth.address}, ${stateAuth.city_of_subdistrict}, ${stateAuth.postal_code}, ${stateAuth.recipient_telp_number}`;
 
 	const kirim = () => {
 		// console.log(cart.filter(item => item.selected === true));
@@ -95,8 +96,7 @@ const MyBag = () => {
 				}, 5000),
 			payment_method: "",
 			// "address": stateAddres,
-			address:
-				"Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c 16] Sokaraja, Kab. Banyumas, 53181",
+			address: joinedAdrress,
 			products: stateCarts
 				.filter((item) => item.selected === true)
 				.map((item) => {
@@ -209,22 +209,22 @@ const MyBag = () => {
 													-
 												</button>
 											) : (
-												<button
-													className={classname(
-														colors.lightGray,
-														"btn btn-secondary btn-quantity"
-													)}
-													onClick={() =>
-														dispatch(
-															decreaseQuantity(
-																item.id
+													<button
+														className={classname(
+															colors.lightGray,
+															"btn btn-secondary btn-quantity"
+														)}
+														onClick={() =>
+															dispatch(
+																decreaseQuantity(
+																	item.id
+																)
 															)
-														)
-													}
-												>
-													-
-												</button>
-											)}
+														}
+													>
+														-
+													</button>
+												)}
 											<p>{item.qty}</p>
 											<button
 												className={classname(
@@ -308,41 +308,41 @@ const MyBag = () => {
 							</div>
 							{stateCarts.filter((item) => item.selected === true)
 								.length ? (
-								<Link
-									to={{
-										pathname: "/checkout",
-										data: cart.filter(
-											(item) => item.selected === true
-										),
-									}}
-								>
+									<Link
+										to={{
+											pathname: "/checkout",
+											data: cart.filter(
+												(item) => item.selected === true
+											),
+										}}
+									>
+										<button
+											className={classname(
+												"btn btn-danger btn-buy",
+												colors.primary
+											)}
+											onClick={kirim}
+										>
+											Buy
+									</button>
+									</Link>
+								) : (
 									<button
 										className={classname(
 											"btn btn-danger btn-buy",
 											colors.primary
 										)}
-										onClick={kirim}
+										onClick={() => setShowAlert(true)}
 									>
 										Buy
 									</button>
-								</Link>
-							) : (
-								<button
-									className={classname(
-										"btn btn-danger btn-buy",
-										colors.primary
-									)}
-									onClick={() => setShowAlert(true)}
-								>
-									Buy
-								</button>
-							)}
+								)}
 						</div>
 						{showAlert
 							? (setTimeout(() => {
-									setShowAlert(false);
-							  }, 4000),
-							  (
+								setShowAlert(false);
+							}, 4000),
+								(
 									<Alert
 										className={classname(
 											"mt-5 alert-empty",
@@ -369,21 +369,21 @@ const MyBag = () => {
 											then continue to payment.
 										</p>
 									</Alert>
-							  ))
+								))
 							: ""}
 					</div>
 				</div>
 			) : (
-				<h1
-					className={classname(
-						text.headline,
-						colors.grayText,
-						"text-empty-cart"
-					)}
-				>
-					(My bag is empty)
-				</h1>
-			)}
+					<h1
+						className={classname(
+							text.headline,
+							colors.grayText,
+							"text-empty-cart"
+						)}
+					>
+						(My bag is empty)
+					</h1>
+				)}
 		</div>
 	);
 };
