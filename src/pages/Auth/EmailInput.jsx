@@ -128,7 +128,7 @@ const EmailInput = () => {
                             <span onClick={() => { }}>
                                 <Link
                                     className={classname(styles.bla)}
-                                    to="/Register"
+                                    to="/RegisterCustomer"
                                 >
                                     Register
 								</Link>
@@ -225,7 +225,7 @@ const EmailInput = () => {
                                 <span onClick={() => { }}>
                                     <Link
                                         className={classname(styles.bla)}
-                                        to="/Register"
+                                        to="/RegisterSeller"
                                     >
                                         Register
 								</Link>

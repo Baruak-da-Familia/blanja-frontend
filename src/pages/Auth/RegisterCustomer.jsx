@@ -126,7 +126,7 @@ const Login = (props) => {
 							})}
 						/>
 					</div>
-					<p style={{ fontSize: 16, color: "red", marginTop: -20 }}>
+					<p style={{ fontSize: 16, color: "red", marginTop: -20, width: 400 }}>
 						{errors.password && errors.password.message}
 					</p>
 					<button
@@ -141,7 +141,7 @@ const Login = (props) => {
 				<p>
 					Already have a Tokopedia account?{" "}
 					<span onClick={() => { }}>
-						<Link className={classname(styles.bla)} to="/">
+						<Link className={classname(styles.bla)} to="/login">
 							Login
 								</Link>
 					</span>

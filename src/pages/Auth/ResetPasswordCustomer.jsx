@@ -58,10 +58,7 @@ const ResetPasswordCustomer = ({ location, history }) => {
 						</p>
 
                     <form className={classname(styles.formContainer)} style={{ marginTop: 150 }}>
-                        <p style={{ fontSize: 16, color: 'red' }}>
-
-                            {errors.password && errors.password.message}
-                        </p>
+                        
                         <div>
                             <input
                                 className={classname(styles.loginInput)}
@@ -80,11 +77,11 @@ const ResetPasswordCustomer = ({ location, history }) => {
                                 })}
                             />
                         </div>
-
-                        <p style={{ fontSize: 16, color: 'red' }}>
+                        <p style={{ fontSize: 16, color: 'red', width: 400 }}>
 
                             {errors.password && errors.password.message}
                         </p>
+                        
                         <div>
                             <input
                                 className={classname(styles.loginInput)}
@@ -103,6 +100,10 @@ const ResetPasswordCustomer = ({ location, history }) => {
                                 })}
                             />
                         </div>
+                        <p style={{ fontSize: 16, color: 'red', width: 400 }}>
+
+                            {errors.password && errors.password.message}
+                        </p>
                         <button
                             style={{ marginTop: 20 }}
                             className={classname(styles.loginSubmit)}
