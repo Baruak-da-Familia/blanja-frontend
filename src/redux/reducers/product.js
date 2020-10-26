@@ -6,14 +6,14 @@ import {
   getOrderSellerCreator,
 } from "../actions/product";
 
-let invoice = Math.floor(Math.random() * 100001) + 1;
+// let invoice = Math.floor(Math.random() * 100001) + 1;
 const initialState = {
   msg: "",
   status: "",
   product: [],
   carts: [],
   checkout: {
-    id: invoice,
+    id: "",
     customer_id: "",
     seller_id: "",
     amount: "",
@@ -136,7 +136,7 @@ const productReducer = (state = initialState, { type, payload }) => {
         ...state,
         checkout: {
           ...state.checkout,
-          id: invoice,
+          id: payload.id,
           customer_id: payload.customer_id,
           seller_id: payload.seller_id,
           amount: payload.amount,
@@ -149,7 +149,7 @@ const productReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         checkout: {
-          id: invoice,
+          id: "",
           customer_id: "",
           seller_id: "",
           amount: "",
@@ -211,7 +211,7 @@ const productReducer = (state = initialState, { type, payload }) => {
           ...state,
           isPending: false,
           isFulfilled: true,
-          status: payload.data.data.msg,
+          // status: payload.data.data.msg,
         };
       } else {
         return {
