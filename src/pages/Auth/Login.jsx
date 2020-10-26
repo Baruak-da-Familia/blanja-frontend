@@ -25,11 +25,12 @@ const Login = (props) => {
 
 	const { handleSubmit, register, errors } = useForm();
 
-		// console.log(userAddress)
-		
+	// console.log(userAddress)
+
 	useEffect(() => {
 		document.title = "Login | Blanja";
 	}, []);
+
 
 	useEffect(() => {
 		if (statusLogin === 200) {
@@ -79,11 +80,7 @@ const Login = (props) => {
 						</p>
 
 						<div className={classname(styles.userType)}>
-							{errMsg === null ? null : (
-								<p className={classname(styles.errMsg)}>
-									{errMsg}
-								</p>
-							)}
+
 
 							{userType === false ? (
 								<button
@@ -94,14 +91,14 @@ const Login = (props) => {
 									Customer
 								</button>
 							) : (
-								<button
-									className={classname(
-										styles.userTypeBtnCustomer
-									)}
-								>
-									Customer
-								</button>
-							)}
+									<button
+										className={classname(
+											styles.userTypeBtnCustomer
+										)}
+									>
+										Customer
+									</button>
+								)}
 							<button
 								className={classname(styles.userTypeBtnSeller)}
 								onClick={(e) => {
@@ -112,32 +109,34 @@ const Login = (props) => {
 								Seller
 							</button>
 						</div>
-
-						<form className={classname(styles.formContainer)}>
-							<p style={{ fontSize: 16, color: "red" }}>
-								{errors.email && errors.email.message}
+						{errMsg === null ? null : (
+							<p className={classname(styles.errMsg)}>
+								{errMsg}
 							</p>
+						)}
+						<form className={classname(styles.formContainer)}>
+
 							<div>
 								<input
-									className={classname(styles.emailInput)}
+									className={classname(styles.loginInput)}
 									placeholder="Email"
 									name="email"
 									ref={register({
 										required: "Required",
 										pattern: {
 											value: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
-											message: "Bukan email",
+											message: "Wrong email format",
 										},
 									})}
 								/>
 							</div>
-
 							<p style={{ fontSize: 16, color: "red" }}>
-								{errors.password && errors.password.message}
+								{errors.email && errors.email.message}
 							</p>
+
 							<div>
 								<input
-									className={classname(styles.passwordInput)}
+									className={classname(styles.loginInput)}
 									placeholder="Password"
 									name="password"
 									type="password"
@@ -145,15 +144,18 @@ const Login = (props) => {
 										required: "Required",
 										pattern: {
 											value: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/,
-											message: "Bukan password",
+											message: "Password must contain at least 1 number, an uppercase letter and more than 8 characters",
 										},
 										validate: (value) =>
 											value !== "admin" || "Nice try!",
 									})}
 								/>
 							</div>
+							<p style={{ fontSize: 16, color: "red", width: 400 }}>
+								{errors.password && errors.password.message}
+							</p>
 							<p className={classname(styles.forgot)}>
-								<span onClick={() => {}}>
+								<span onClick={() => { }}>
 									<Link
 										className={classname(styles.bla)}
 										to="/EmailInput"
@@ -173,10 +175,11 @@ const Login = (props) => {
 					<div className={classname(styles.signUpBtn)}>
 						<p>
 							Don't have a Tokopedia account?{" "}
-							<span onClick={() => {}}>
+							<span onClick={() => { }}>
 								<Link
 									className={classname(styles.bla)}
-									to="/register"
+									to="/RegisterCustomer"
+
 								>
 									Register
 								</Link>
@@ -185,126 +188,132 @@ const Login = (props) => {
 					</div>
 				</div>
 			) : (
-				// <p>FORM DIBAWAH PUNYA SELLER, YANG ATAS PUNYA CUSTOMER</p>
-				<div>
-					<form
-						className={classname(styles.login)}
-						onSubmit={handleSubmit(onSubmitSeller)}
-					>
-						<img
-							alt="logo"
-							className={classname(styles.logo)}
-							src={corpName}
-						/>
-						<p className={classname(styles.desc)}>
-							Please login with your seller account
+					// <p>FORM DIBAWAH PUNYA SELLER, YANG ATAS PUNYA CUSTOMER</p>
+					<div>
+						<form
+							className={classname(styles.login)}
+							onSubmit={handleSubmit(onSubmitSeller)}
+						>
+							<img
+								alt="logo"
+								className={classname(styles.logo)}
+								src={corpName}
+							/>
+							<p className={classname(styles.desc)}>
+								Please login with your seller account
 						</p>
 
-						{/* {errMsgSllr === null ? null : (<p className={classname(styles.errMsg)}>{errMsgSllr}</p>)} */}
-						<div className={classname(styles.userType)}>
-							<button
-								className={classname(
-									styles.userTypeBtnCustomer
-								)}
-								onClick={(e) => {
-									e.preventDefault();
-									setUserType(false);
-								}}
-							>
-								Customer
+							{/* {errMsgSllr === null ? null : (<p className={classname(styles.errMsg)}>{errMsgSllr}</p>)} */}
+							<div className={classname(styles.userType)}>
+								<button
+									className={classname(
+										styles.userTypeBtnCustomer
+									)}
+									onClick={(e) => {
+										e.preventDefault();
+										setUserType(false);
+									}}
+								>
+									Customer
 							</button>
-							{userType === true ? (
-								<button
-									className={classname(
-										styles.userTypeBtnSellerActive
+								{userType === true ? (
+									<button
+										className={classname(
+											styles.userTypeBtnSellerActive
+										)}
+									>
+										Seller
+									</button>
+								) : (
+										<button
+											className={classname(
+												styles.userTypeBtnSeller
+											)}
+										>
+											Seller
+										</button>
 									)}
-								>
-									Seller
-								</button>
-							) : (
-								<button
-									className={classname(
-										styles.userTypeBtnSeller
-									)}
-								>
-									Seller
-								</button>
+							</div>
+							{errMsg === null ? null : (
+								<p className={classname(styles.errMsg)}>
+									{errMsg}
+								</p>
 							)}
-						</div>
+							<form className={classname(styles.formContainer)}>
 
-						<form className={classname(styles.formContainer)}>
-							<p style={{ fontSize: 16, color: "red" }}>
-								{errors.email && errors.email.message}
-							</p>
-							<div>
-								<input
-									className={classname(styles.emailInput)}
-									placeholder="Email"
-									name="email"
-									ref={register({
-										required: "Required",
-										pattern: {
-											value: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
-											message: "Bukan email",
-										},
-									})}
-								/>
-							</div>
+								<div>
+									<input
+										className={classname(styles.loginInput)}
+										placeholder="Email"
+										name="email"
+										ref={register({
+											required: "Required",
+											pattern: {
+												value: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
+												message: "Wrong email format",
+											},
+										})}
+									/>
+								</div>
+								<p style={{ fontSize: 16, color: "red" }}>
+									{errors.email && errors.email.message}
+								</p>
 
-							<p style={{ fontSize: 16, color: "red" }}>
-								{errors.password && errors.password.message}
-							</p>
-							<div>
-								<input
-									className={classname(styles.passwordInput)}
-									placeholder="Password"
-									name="password"
-									type="password"
-									ref={register({
-										required: "Required",
-										pattern: {
-											value: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/,
-											message: "Bukan password",
-										},
-										// validate: value => value !== "admin" || "Nice try!"
-									})}
-								/>
-							</div>
-							<p className={classname(styles.forgot)}>
-								<span onClick={() => {}}>
+								<div>
+									<input
+										className={classname(styles.loginInput)}
+										placeholder="Password"
+										name="password"
+										type="password"
+										ref={register({
+											required: "Required",
+											pattern: {
+												value: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/,
+												message: "Password must contain at least 1 number, an uppercase letter and more than 8 characters",
+											},
+											// validate: value => value !== "admin" || "Nice try!"
+										})}
+									/>
+								</div>
+								<p style={{ fontSize: 16, color: "red" }}>
+									{errors.password && errors.password.message}
+								</p>
+								<p className={classname(styles.forgot)}>
+									<span onClick={() => { }}>
+										<Link
+											className={classname(styles.bla)}
+											to="/EmailInput"
+										>
+											Forgot password?
+									</Link>
+									</span>
+								</p>
+								<button
+									className={classname(styles.loginSubmit)}
+									type="submit"
+								>
+									Submit
+							</button>
+							</form>
+						</form>
+						<div className={classname(styles.signUpBtn)}>
+							<p>
+								Don't have a Tokopedia account?{" "}
+								<span onClick={() => { }}>
 									<Link
 										className={classname(styles.bla)}
-										to="/ResetPassword"
+										to="/RegisterSeller"
 									>
-										Forgot password?
-									</Link>
+										Register
+								</Link>
 								</span>
 							</p>
-							<button
-								className={classname(styles.loginSubmit)}
-								type="submit"
-							>
-								Submit
-							</button>
-						</form>
-					</form>
-					<div className={classname(styles.signUpBtn)}>
-						<p>
-							Don't have a Tokopedia account?{" "}
-							<span onClick={() => {}}>
-								<Link
-									className={classname(styles.bla)}
-									to="/register"
-								>
-									Register
-								</Link>
-							</span>
-						</p>
+						</div>
 					</div>
-				</div>
-			)}
+				)}
 		</div>
 	);
+
 };
 
 export default Login;

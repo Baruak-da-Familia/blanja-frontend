@@ -89,6 +89,10 @@ export const sendEmailCustomer = (data) => {
   return Axios.post(`${API_URL}/auth/sendemailcustomer`, data);
 };
 
+export const sendEmailSeller = (data) => {
+  return Axios.post(`http://localhost:8000/auth/sendemailseller`, data);
+};
+
 export const resetPasswordCustomer = (data) => {
   return Axios.post(`${API_URL}/auth/resetpasscustomer`, data);
 };
@@ -109,4 +113,8 @@ export const getOrderCustomer = (id) => {
 };
 export const getOrderSeller = (id) => {
   return Axios.get(`${API_URL}/order/seller/${id}`);
+};
+
+export const resetPasswordSeller = (data) => {
+  return Axios.post(`http://localhost:8000/auth/resetpassseller`, data);
 };

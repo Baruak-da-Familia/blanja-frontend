@@ -10,6 +10,8 @@ import {
   resetPasswordCustomer,
   sendEmailCustomer,
   updateProfileStore,
+  resetPasswordSeller,
+  sendEmailSeller,
 } from "../../utils/reqData";
 
 export const authLoginCustomerCreator = (data) => {
@@ -43,10 +45,31 @@ export const authResetPasswordCustomer = (data) => {
     payload: sendEmailCustomer(data),
   };
 };
+
+export const authResetPasswordSeller = (data) => {
+  return {
+    type: actions.AUTH_RESET_PASSWORD,
+    payload: sendEmailSeller(data),
+  };
+};
+
 export const authResetPasswordCustomerFullf = (data) => {
   return {
     type: actions.AUTH_RESET_FULLFILED,
     payload: resetPasswordCustomer(data),
+  };
+};
+
+export const authResetPasswordSellerFullf = (data) => {
+  return {
+    type: actions.AUTH_RESET_FULLFILED,
+    payload: resetPasswordSeller(data),
+  };
+};
+
+export const authClearState = () => {
+  return {
+    type: actions.AUTH_CLEAR_STATE,
   };
 };
 

@@ -5,6 +5,7 @@ export const AUTH_REGISTER_USER = 'authRegisterUser'
 export const AUTH_LOGOUT_USER = 'authLogoutUser'
 export const AUTH_RESET_PASSWORD = 'authResetPassword'
 export const AUTH_RESET_FULLFILED = 'authResetFullfiled'
+export const AUTH_CLEAR_STATE = 'authClearState'
 
 export const FETCH_ALL_PRODUCT = "fetchAllProduct";
 export const GET_PRODUCT_BY_ID = "getProductById";

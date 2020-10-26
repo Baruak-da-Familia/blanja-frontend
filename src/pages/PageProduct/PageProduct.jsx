@@ -58,17 +58,6 @@ const PageProduct = (props) => {
 	});
 
 	const kirim = () => {
-		// console.log(cart.filter(item => item.selected === true));
-		// stateCarts.filter(item => item.selected === true)
-		// brand: stateProductDetail.brand,
-		// 	id: stateProductDetail.id,
-		// 		images: stateProductDetail.images[0],
-		// 			name: stateProductDetail.name,
-		// 				price: Number(stateProductDetail.price),
-		// 					qty: qty,
-		// 						seller_id: stateProductDetail.seller_id,
-		// 							seller_name: stateProductDetail.seller_name,
-		// 								selected: false,
 		let invoice = Math.floor(Math.random() * 100001) + 1;
 		const sendData = {
 			brand: stateProductDetail.brand,
