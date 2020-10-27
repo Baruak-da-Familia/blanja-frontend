@@ -115,7 +115,7 @@ const ResetPasswordCustomer = ({ location, history }) => {
                         </div>
                         <p style={{ fontSize: 16, color: 'red', width: 400 }}>
 
-                            {errors.password && errors.password.message}
+                            {errors.passwordRepeat && errors.passwordRepeat.message}
                         </p>
                         <button
                             style={{ marginTop: 20 }}
