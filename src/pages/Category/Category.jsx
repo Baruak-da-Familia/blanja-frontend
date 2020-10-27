@@ -7,6 +7,8 @@ import text from "../../assets/text.module.css";
 import { newData, categoryData } from "../../utils/dummydata";
 import { fetchAllProduct } from "../../redux/actions/product";
 import { useDispatch, useSelector } from "react-redux";
+import NotFound from "../../components/NotFound/NotFound";
+import {isEmpty} from "underscore";
 
 const Category = (props) => {
 	const currentPath = props.location.pathname;
@@ -25,9 +27,17 @@ const Category = (props) => {
 	});
 
 	React.useEffect(() => {
-		document.title = categoryData[idx].name + " | Blanja";
+		try{
+			document.title = categoryData[idx].name + " | Blanja";
+		} catch{
+			document.title = "404 Not Found | Blanja";
+		}
+		
 	}, []);
 
+	if (idx < 0) {
+		return <NotFound />;
+	}
 	return (
 		<div className={styles.category}>
 			<nav className={classname(styles.nav)}>
@@ -48,7 +58,7 @@ const Category = (props) => {
 				{categoryData[idx].name}
 			</h5>
 			<div className={classname("row", "no-gutters", styles.mt25)}>
-				{stateProduct.map((item) => {
+				{isEmpty(stateProduct) ? <h1>No product found with this category.</h1> : stateProduct.map((item) => {
 					return (
 						<Card
 							key={item.id}
