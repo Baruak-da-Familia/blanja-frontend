@@ -25,7 +25,7 @@ const Search = (props) => {
 
 	React.useEffect(() => {
 		if (nameQuery) dispatch(fetchAllProduct(null, nameQuery[1]));
-	}, [dispatch, nameQuery]);
+	}, [props.location.search]);
 
 	if (isPending) {
 		return <Loader />;
