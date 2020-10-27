@@ -60,22 +60,17 @@ const PageProduct = (props) => {
 	const joinedAdrress = `${stateAuth.address}, ${stateAuth.city_of_subdistrict}, ${stateAuth.postal_code}, ${stateAuth.recipient_telp_number}`;
 
 	const kirim = () => {
-		let invoice = Math.floor(Math.random() * 100001) + 1;
 		const sendData = {
 			brand: stateProductDetail.brand,
-			id: invoice,
+			id: stateProductDetail.id,
 			images: stateProductDetail.images[0],
 			name: stateProductDetail.name,
-			customer_id: stateAuth.id,
-			price: Number(stateProductDetail.price),
+			price: Number(
+				stateProductDetail.price
+			),
 			qty: qty,
 			seller_id: stateProductDetail.seller_id,
-			amount: stateProductDetail.price * qty,
 			seller_name: stateProductDetail.seller_name,
-			payment_method: "",
-			// "address": stateAddres,
-			address: joinedAdrress,
-			products: [{ id: stateProductDetail.id, qty: qty }],
 			selected: true,
 		};
 		dispatch(addToCart(sendData));

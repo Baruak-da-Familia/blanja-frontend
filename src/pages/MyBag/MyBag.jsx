@@ -107,7 +107,6 @@ const MyBag = () => {
 					};
 				}),
 		};
-		console.log(sendData);
 		dispatch(addToCheckout({ sendData }));
 	};
 
