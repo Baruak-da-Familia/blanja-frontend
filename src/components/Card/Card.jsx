@@ -6,10 +6,14 @@ import star from "../../assets/img/Star.png";
 import styles from "./styles.module.css";
 import text from "../../assets/text.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import {API_URL} from "../../utils/environment";
+import { API_URL } from "../../utils/environment";
 
 const Rating = (props) => {
-	const _rate = [...Array(props.rate).keys()];
+	const _rate = [
+		...Array(
+			props.rating ? props.rating : Math.round(Math.random() * 4) + 1
+		).keys(),
+	];
 	return (
 		<div className={styles.ratingContainer}>
 			{_rate.map((item, index) => {
@@ -23,8 +27,7 @@ const Rating = (props) => {
 				);
 			})}
 			<p className={classname(text.helperText, styles.ratingText)}>
-				{/* ini dummy bro */}
-				(10)
+				({Math.round(Math.random() * 150)})
 			</p>
 		</div>
 	);
@@ -55,9 +58,7 @@ const Card = (props) => {
 				}}
 			>
 				<Img
-					source={`${API_URL}${
-						props.image.split(",")[0]
-					}`}
+					source={`${API_URL}${props.image.split(",")[0]}`}
 					containerStyle={styles.cardImgContainer}
 					imgStyle={styles.cardImg}
 				/>
