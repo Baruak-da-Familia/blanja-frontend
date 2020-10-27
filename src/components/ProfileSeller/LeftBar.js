@@ -3,9 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from "./leftbar.module.css";
 import userDefault from "../../assets/img/default.png";
 import { Accordion, Card } from "react-bootstrap";
-import { getProductBySellerIdCreator } from "../../redux/actions/product";
+import {
+  getProductBySellerIdCreator,
+  getOrderSellerCreator,
+} from "../../redux/actions/product";
 import { API_URL } from "../../utils/environment";
-import { getOrderSellerCreator } from "../../redux/actions/product";
+import { authClearState } from "../../redux/actions/auth";
 
 export default function LeftBar(props) {
   const [arrow, setArrow] = useState({
@@ -285,6 +288,13 @@ export default function LeftBar(props) {
           </Card>
         </Accordion>
       </div>
+      <button
+        onClick={() => {
+          dispatch(authClearState());
+        }}
+        className={styles.btnsave}>
+        Logout
+      </button>
     </div>
   );
 }

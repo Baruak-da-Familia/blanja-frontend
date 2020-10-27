@@ -55,8 +55,7 @@ const authReducer = (state = initialState, { type, payload }) => {
           status: payload.data.status,
           errMsg: payload.data.error.msg,
         };
-      }
-      else {
+      } else {
         return {
           ...state,
           isFulfilled: true,
@@ -88,8 +87,7 @@ const authReducer = (state = initialState, { type, payload }) => {
           status: payload.data.status,
           errMsg: payload.data.error.msg,
         };
-      }
-      else {
+      } else {
         return {
           ...state,
           isFulfilled: true,
@@ -284,6 +282,13 @@ const authReducer = (state = initialState, { type, payload }) => {
         isUpdateStoreRejected: true,
         isUpdateStorePending: false,
         isUpdateStoreFulFilled: false,
+      };
+    case "RESET_STATUS_UPDATE":
+      return {
+        ...state,
+        statusUpdateStore: null,
+        statusUpdateCustomer: null,
+        statusAddAddress: null,
       };
     default:
       return state;

@@ -42,13 +42,13 @@
   align-items: center;
 }
 .itemcheckbox {
-  margin-right: 10px;
-  line-height: 20px;
-  margin-bottom: 3px;
+  margin-right: calc((10 / 1440) * 100vw);
+  line-height: calc((20 / 1440) * 100vw);
+  margin-bottom: calc((4 / 1440) * 100vw);
   vertical-align: middle;
-  border-radius: 8px;
-  height: 100%;
-  margin-top: -1.5px;
+  /* border-radius: calc((8 / 1440) * 100vw); */
+  /* height: 100%; */
+  /* margin-top: -1.5px; */
 }
 .contentinput {
   display: flex;

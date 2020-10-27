@@ -375,6 +375,11 @@ const productReducer = (state = initialState, { type, payload }) => {
         isGetOrderSellPending: false,
         isGetOrderSellFulFilled: false,
       };
+    case "RESET_STATUS_PRODUCT":
+      return {
+        ...state,
+        statusAddProd: null,
+      };
     default:
       return state;
   }

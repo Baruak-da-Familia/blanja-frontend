@@ -4,6 +4,7 @@ import styles from "./leftbar.module.css";
 import userDefault from "../../assets/img/default.png";
 import { API_URL } from "../../utils/environment";
 import { getOrderCustomerCreator } from "../../redux/actions/product";
+import { authClearState } from "../../redux/actions/auth";
 
 export default function LeftBar(props) {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ export default function LeftBar(props) {
         </div>
 
         <div className={styles.info} onClick={setNav1}>
-          <span className='fa-stack'>
+          <span className='fa-stack fa-lg'>
             <i
               className='fa fa-circle fa-stack-2x'
               style={{ color: "#456BF3" }}></i>
@@ -51,7 +52,7 @@ export default function LeftBar(props) {
         </div>
 
         <div className={styles.info} onClick={setNav2}>
-          <span className='fa-stack'>
+          <span className='fa-stack fa-lg'>
             <i
               className='fa fa-circle fa-stack-2x'
               style={{ color: "#F36F45" }}></i>
@@ -71,7 +72,7 @@ export default function LeftBar(props) {
             setNav3();
             dispatch(getOrderCustomerCreator(Number(user.id)));
           }}>
-          <span className='fa-stack'>
+          <span className='fa-stack fa-lg'>
             <i
               className='fa fa-circle fa-stack-2x'
               style={{ color: "#F3456F" }}></i>
@@ -82,6 +83,13 @@ export default function LeftBar(props) {
           </p>
         </div>
       </div>
+      <button
+        onClick={() => {
+          dispatch(authClearState());
+        }}
+        className={styles.btnsave}>
+        Logout
+      </button>
     </div>
   );
 }

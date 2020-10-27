@@ -8,10 +8,11 @@
   z-index: 1;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: center;
   margin-top: 100px;
   width: calc((395 / 1440) * 100vw);
+  flex-direction: column;
 }
 .infoitem {
   position: flex;
@@ -86,8 +87,23 @@
   flex: 1;
   display: flex;
   justify-content: center;
-  width: calc((100 / 1440) * 100vw);
+  width: calc((70 / 1440) * 100vw);
   font-size: calc((14 / 1440) * 100vw);
   align-items: center;
   margin-top: calc((10 / 1440) * 100vw);
+  padding-right: calc((50 / 1440) * 100vw);
+}
+.btnsave {
+  background: #db3022;
+  border-radius: calc((25 / 1440) * 100vw);
+  width: calc((120 / 1440) * 100vw);
+  height: calc((36 / 1440) * 100vw);
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: "Metropolis";
+  font-weight: 500;
+  font-size: calc((14 / 1440) * 100vw);
+  line-height: calc((20 / 1440) * 100vw);
+  margin-top: calc((120 / 1440) * 100vw);
 }

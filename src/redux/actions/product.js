@@ -124,3 +124,9 @@ export const getOrderSellerCreator = createAsyncAction(
     return res.data;
   }
 );
+
+export const resetStatusProduct = () => {
+  return {
+    type: "RESET_STATUS_PRODUCT",
+  };
+};

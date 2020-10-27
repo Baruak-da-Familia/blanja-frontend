@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./myprofile.module.css";
 import "./myprofile.module.css";
 import userDefault from "../../assets/img/default.png";
-import { updateProfileStoreCreator } from "../../redux/actions/auth";
+import {
+  updateProfileStoreCreator,
+  resetStatusUpdate,
+} from "../../redux/actions/auth";
 import { API_URL } from "../../utils/environment";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function MyProfile(props) {
   const dispatch = useDispatch();
-  const { user, isUpdateStorePending } = useSelector((state) => state.auth);
+  const { user, isUpdateStorePending, statusUpdateStore } = useSelector(
+    (state) => state.auth
+  );
   const [store, setDataStore] = useState({
     name: user.store_name ? user.store_name : "",
     email: user.email ? user.email : "",
@@ -44,131 +50,178 @@ export default function MyProfile(props) {
     reader.readAsDataURL(file);
   };
 
+  const notifyError = () =>
+    toast.error("Error updating store", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  const notifySuccess = () =>
+    toast.success("Success updating store", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+  useEffect(() => {
+    if (statusUpdateStore === 200) {
+      notifySuccess();
+      setTimeout(() => {
+        dispatch(resetStatusUpdate());
+      }, 2500);
+    } else if (statusUpdateStore === 500) {
+      notifyError();
+      setTimeout(() => {
+        dispatch(resetStatusUpdate());
+      }, 2500);
+    }
+  }, [statusUpdateStore, dispatch]);
   return (
-    <div className={styles.container}>
-      <input
-        onChange={(e) => handleChangeFile(e)}
-        ref={inputRef}
-        type='file'
-        className={styles.hiddeninput}
+    <>
+      <ToastContainer
+        position='bottom-right'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
       />
-      {/* Header */}
-      <div className={styles.header}>
-        <h6 className={styles.title}>My profile store</h6>
-        <p className={styles.subtitle}>Manage your profile information</p>
-      </div>
+      <div className={styles.container}>
+        <input
+          onChange={(e) => handleChangeFile(e)}
+          ref={inputRef}
+          type='file'
+          className={styles.hiddeninput}
+        />
+        {/* Header */}
+        <div className={styles.header}>
+          <h6 className={styles.title}>My profile store</h6>
+          <p className={styles.subtitle}>Manage your profile information</p>
+        </div>
 
-      {/* FormContainer */}
-      <div className={styles.formcontainer}>
-        {/* Form */}
-        <div className={styles.form}>
-          <div className={styles.itemform}>
-            <div className={styles.label}>Store name</div>
-            <div className={styles.inputcontainer}>
-              <input
-                className={styles.input}
-                placeholder=''
-                onChange={(e) => {
-                  setDataStore({ ...store, name: e.target.value });
-                }}
-                value={store.name}
-              />
+        {/* FormContainer */}
+        <div className={styles.formcontainer}>
+          {/* Form */}
+          <div className={styles.form}>
+            <div className={styles.itemform}>
+              <div className={styles.label}>Store name</div>
+              <div className={styles.inputcontainer}>
+                <input
+                  className={styles.input}
+                  placeholder=''
+                  onChange={(e) => {
+                    setDataStore({ ...store, name: e.target.value });
+                  }}
+                  value={store.name}
+                />
+              </div>
             </div>
-          </div>
-          <div className={styles.itemform}>
-            <div className={styles.label}>Email</div>
-            <div className={styles.inputcontainer}>
-              <input
-                className={styles.input}
-                placeholder=''
-                onChange={(e) => {
-                  setDataStore({ ...store, email: e.target.value });
-                }}
-                value={store.email}
-              />
+            <div className={styles.itemform}>
+              <div className={styles.label}>Email</div>
+              <div className={styles.inputcontainer}>
+                <input
+                  className={styles.input}
+                  placeholder=''
+                  onChange={(e) => {
+                    setDataStore({ ...store, email: e.target.value });
+                  }}
+                  value={store.email}
+                />
+              </div>
             </div>
-          </div>
-          <div className={styles.itemform}>
-            <div className={styles.label}>Phone Number</div>
-            <div className={styles.inputcontainer}>
-              <input
-                className={styles.input}
-                placeholder=''
-                onChange={(e) => {
-                  setDataStore({ ...store, phone: e.target.value });
-                }}
-                value={store.phone}
-              />
+            <div className={styles.itemform}>
+              <div className={styles.label}>Phone Number</div>
+              <div className={styles.inputcontainer}>
+                <input
+                  className={styles.input}
+                  placeholder=''
+                  onChange={(e) => {
+                    setDataStore({ ...store, phone: e.target.value });
+                  }}
+                  value={store.phone}
+                />
+              </div>
             </div>
-          </div>
 
-          <div className={styles.itemform}>
-            <div className={styles.label}>Store description</div>
-            <div className={styles.inputcontainer}>
-              <textarea
-                rows={10}
-                className={styles.input}
-                style={{
-                  height: "120px",
-                  fontSize: "16px",
-                  paddingLeft: "7px",
-                }}
-                onChange={(e) => {
-                  setDataStore({ ...store, desc: e.target.value });
-                }}
-                value={store.desc}
-              />
+            <div className={styles.itemform}>
+              <div className={styles.label}>Store description</div>
+              <div className={styles.inputcontainer}>
+                <textarea
+                  rows={10}
+                  className={styles.input}
+                  style={{
+                    height: "120px",
+                    fontSize: "16px",
+                    paddingLeft: "7px",
+                  }}
+                  onChange={(e) => {
+                    setDataStore({ ...store, desc: e.target.value });
+                  }}
+                  value={store.desc}
+                />
+              </div>
+            </div>
+
+            <div className={styles.itemform}>
+              <div className={styles.label}>{""}</div>
+              <div className={styles.inputcontainer}>
+                {props.edit ? (
+                  <button
+                    className={styles.btnsave}
+                    onClick={(e) => {
+                      handleSubmit(e);
+                      // props.setEdit();
+                    }}>
+                    {isUpdateStorePending ? (
+                      <i className='fa fa-spinner fa-spin fa-2x fa-fw'></i>
+                    ) : (
+                      "Save"
+                    )}
+                  </button>
+                ) : null}
+              </div>
             </div>
           </div>
-
-          <div className={styles.itemform}>
-            <div className={styles.label}>{""}</div>
-            <div className={styles.inputcontainer}>
+          {/* ImageProfile */}
+          <div className={styles.imagecontainer}>
+            <div className={styles.boximage}>
+              <div className={styles.containerimage}>
+                <img
+                  className={styles.imageprofile}
+                  src={
+                    store.imagePreviewUrl
+                      ? store.imagePreviewUrl
+                      : user.avatar
+                      ? `${API_URL}${user.avatar}`
+                      : userDefault
+                  }
+                  alt=''
+                />
+              </div>
               {props.edit ? (
                 <button
-                  className={styles.btnsave}
-                  onClick={(e) => {
-                    handleSubmit(e);
-                    // props.setEdit();
+                  className={styles.btnedit}
+                  onClick={() => {
+                    inputRef.current.click();
                   }}>
-                  {isUpdateStorePending ? (
-                    <i className='fa fa-spinner fa-spin fa-2x fa-fw'></i>
-                  ) : (
-                    "Save"
-                  )}
+                  Select image
                 </button>
               ) : null}
             </div>
           </div>
         </div>
-        {/* ImageProfile */}
-        <div className={styles.imagecontainer}>
-          <div className={styles.boximage}>
-            <div className={styles.containerimage}>
-              <img
-                className={styles.imageprofile}
-                src={
-                  store.imagePreviewUrl
-                    ? store.imagePreviewUrl
-                    : user.avatar
-                    ? `${API_URL}${user.avatar}`
-                    : userDefault
-                }
-                alt=''
-              />
-            </div>
-            {props.edit ? (
-              <button
-                className={styles.btnedit}
-                onClick={() => {
-                  inputRef.current.click();
-                }}>
-                Select image
-              </button>
-            ) : null}
-          </div>
-        </div>
       </div>
-    </div>
+    </>
   );
 }

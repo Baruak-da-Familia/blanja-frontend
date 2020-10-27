@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
 import styles from "./modal.module.css";
@@ -14,7 +14,9 @@ export default function ModalAddAddress(props) {
     city: "",
     primary: "",
   });
-  const { user } = useSelector((state) => state.auth);
+  const { user, statusAddAddress, isAddAddressPending } = useSelector(
+    (state) => state.auth
+  );
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,8 +37,14 @@ export default function ModalAddAddress(props) {
     formData.append("recipient_telp_number", phone);
     formData.append("postal_code", post);
     dispatch(addAddressCustomerCreator(Number(user.id), body));
-    props.onHide();
   };
+  useEffect(() => {
+    if (statusAddAddress === 200) {
+      props.onHide();
+    } else if (statusAddAddress === 500) {
+      props.onHide();
+    }
+  }, [statusAddAddress, dispatch]);
   return (
     <Modal
       {...props}
@@ -161,7 +169,11 @@ export default function ModalAddAddress(props) {
               <button
                 onClick={(e) => handleSubmit(e)}
                 className={styles.btnsave}>
-                Save
+                {isAddAddressPending ? (
+                  <i className='fa fa-spinner fa-spin fa-2x fa-fw'></i>
+                ) : (
+                  "Save"
+                )}
               </button>
             </div>
           </div>

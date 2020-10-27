@@ -94,3 +94,9 @@ export const addAddressCustomerCreator = createAsyncAction(
     return res.data;
   }
 );
+
+export const resetStatusUpdate = () => {
+  return {
+    type: "RESET_STATUS_UPDATE",
+  };
+};
