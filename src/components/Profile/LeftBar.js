@@ -9,7 +9,7 @@ import { authClearState } from "../../redux/actions/auth";
 export default function LeftBar(props) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { nav, setNav1, setNav2, setNav3, setEdit } = props;
+  const { nav, setNav1, setNav2, setNav3, setEdit, onShow } = props;
   return (
     <div className={styles.container}>
       <div className={styles.infoitem}>
@@ -85,7 +85,8 @@ export default function LeftBar(props) {
       </div>
       <button
         onClick={() => {
-          dispatch(authClearState());
+          // dispatch(authClearState());
+          onShow();
         }}
         className={styles.btnsave}>
         Logout
