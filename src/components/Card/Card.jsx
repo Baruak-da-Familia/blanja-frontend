@@ -11,7 +11,9 @@ import { API_URL } from "../../utils/environment";
 const Rating = (props) => {
 	const _rate = [
 		...Array(
-			props.rating ? props.rating : Math.round(Math.random() * 4) + 1
+			props.rating
+				? props.rating
+				: Math.round((Math.random() * 9 + 1) / 2)
 		).keys(),
 	];
 	return (

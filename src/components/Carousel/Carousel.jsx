@@ -98,7 +98,7 @@ const CategoryItem = (props) => {
 };
 
 const getSettingsPreview = (width) => {
-	const centerPadding = Math.round(-0.44 * width + 780);
+	const centerPadding = Math.abs(Math.round(-0.44 * width + 780));
 	return {
 		className: "center",
 		centerMode: true,

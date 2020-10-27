@@ -4,7 +4,7 @@ import classname from "../../helpers/classJoiner";
 import styles from "./styles.module.css";
 import mainImg from "../../assets/img/page_product.png";
 import secImg from "../../assets/img/card.png";
-import starMedium from "../../assets/img/Star.png";
+import starMedium from "../../assets/img/StarMedium.png";
 import { newData } from "../../utils/dummydata";
 import Card from "../../components/Card/Card";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +24,9 @@ import text from "../../assets/text.module.css";
 const Rating = (props) => {
 	const _rate = [
 		...Array(
-			props.rating ? props.rating : Math.round(Math.random() * 4) + 1
+			props.rating
+				? Math.round(props.rating / 2)
+				: Math.round((Math.random() * 9 + 1) / 2)
 		).keys(),
 	];
 	return (
@@ -59,6 +61,9 @@ const PageProduct = (props) => {
 
 	const divRef = React.useRef();
 	const dispatch = useDispatch();
+
+	const rating = Math.round(Math.random() * 9 + 1);
+	const star = [...Array(Math.round(rating / 2)).keys()];
 
 	React.useEffect(() => {
 		dispatch(getProductById(props.match.params.id));
@@ -179,7 +184,7 @@ const PageProduct = (props) => {
 								{stateProductDetail.brand}
 							</p>
 							{/* <p style={{ marginTop: 15.29 }}>[rating]</p> */}
-							<Rating />
+							<Rating rating={rating} />
 							<p
 								style={{
 									fontWeight: 500,
@@ -419,7 +424,13 @@ const PageProduct = (props) => {
 						>
 							Description
 						</p>
-						<p style={{ marginTop: 10, fontSize: 14 }}>
+						<p
+							style={{
+								marginTop: 10,
+								fontSize: 14,
+								whiteSpace: "pre-wrap",
+							}}
+						>
 							{stateProductDetail.description}
 						</p>
 						<p
@@ -439,7 +450,9 @@ const PageProduct = (props) => {
 							marginTop: 50,
 						}}
 					>
-						<p style={{ fontSize: 60, fontWeight: 500 }}>5.0</p>
+						<p style={{ fontSize: 60, fontWeight: 500 }}>
+							{rating.toFixed(1)}
+						</p>
 						<p
 							style={{
 								fontSize: 20,
@@ -553,7 +566,20 @@ const PageProduct = (props) => {
 							marginTop: -30,
 						}}
 					>
-						<img
+						{star.map((item, index) => {
+							return (
+								<img
+									alt={`star-${index}`}
+									style={{
+										marginRight: 8.57,
+										height: 20.57,
+										width: 22.29,
+									}}
+									src={starMedium}
+								/>
+							);
+						})}
+						{/* <img
 							alt=""
 							style={{
 								marginRight: 8.57,
@@ -597,7 +623,7 @@ const PageProduct = (props) => {
 								width: 22.29,
 							}}
 							src={starMedium}
-						/>
+						/> */}
 					</div>
 					<hr style={{ marginTop: 51.29, borderColor: "black" }} />
 					<div style={{ marginTop: 50 }}>
