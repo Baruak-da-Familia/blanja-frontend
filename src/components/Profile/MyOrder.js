@@ -33,17 +33,17 @@ export default function MyOrder() {
                   style={{ backgroundColor: "#F7F7F7", border: "none" }}
                   className={styles.headertable}>
                   <tr>
-                    <th style={{ width: "15%" }}>No.</th>
+                    <th style={{ width: "10%" }}>No.</th>
                     <th style={{ width: "20%" }}>
-                      Store <img src={sort} />{" "}
+                      Invoice <img src={sort} />{" "}
                     </th>
-                    <th style={{ width: "35%" }}>
-                      Product <img src={sort} />
+                    <th style={{ width: "25%" }}>
+                      Store <img src={sort} />
                     </th>
-                    <th style={{ width: "15%", textAlign: "center" }}>
+                    <th style={{ width: "20%", textAlign: "center" }}>
                       Total <img src={sort} />
                     </th>
-                    <th style={{ width: "15%", textAlign: "center" }}>
+                    <th style={{ width: "25%", textAlign: "center" }}>
                       Dates <img src={sort} />
                     </th>
                   </tr>
@@ -53,10 +53,14 @@ export default function MyOrder() {
                     return (
                       <tr key={index.toString()}>
                         <td>{index + 1}</td>
-                        <td>{item.user_name}</td>
+                        <td>{item.transaction_id}</td>
                         <td>{item.name}</td>
-                        <td>Rp{formatRupiah(Number(item.total_amount))}</td>
-                        <td style={{ textAlign: "center" }}>{item.date}</td>
+                        <td>Rp{formatRupiah(Number(item.amount))}</td>
+                        <td style={{ textAlign: "center" }}>
+                          {item.date
+                            ? item.date.toString().split("T")[0]
+                            : null}
+                        </td>
                       </tr>
                     );
                   })}
