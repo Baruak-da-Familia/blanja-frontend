@@ -8,6 +8,7 @@ import formattext from "../../assets/image/formattext.png";
 import {
   addProductCreator,
   resetStatusProduct,
+  fetchAllProduct,
 } from "../../redux/actions/product";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -74,6 +75,16 @@ export default function SellingProduct(props) {
   useEffect(() => {
     if (statusAddProd === 200) {
       notifySuccess();
+      dispatch(fetchAllProduct());
+      setProduct({
+        name: "",
+        price: "",
+        qty: "",
+        category_id: "",
+        status: "",
+        description: "",
+        img: [],
+      });
       setTimeout(() => {
         dispatch(resetStatusProduct());
       }, 2500);
@@ -124,6 +135,7 @@ export default function SellingProduct(props) {
             <div className={styles.form}>
               <label className={styles.label}>Name of goods</label>
               <input
+                value={product.name}
                 className={styles.input}
                 onChange={(e) => {
                   setProduct({ ...product, name: e.target.value });
@@ -145,6 +157,7 @@ export default function SellingProduct(props) {
             <div className={styles.form}>
               <label className={styles.label}>Unit price</label>
               <input
+                value={product.price}
                 className={styles.input}
                 onChange={(e) => {
                   setProduct({ ...product, price: e.target.value });
@@ -154,6 +167,7 @@ export default function SellingProduct(props) {
             <div className={styles.form}>
               <label className={styles.label}>Stock</label>
               <input
+                value={product.qty}
                 className={styles.input}
                 onChange={(e) => {
                   setProduct({ ...product, qty: e.target.value });
@@ -168,6 +182,7 @@ export default function SellingProduct(props) {
                 onChange={(e) => {
                   setProduct({ ...product, category_id: e.target.value });
                 }}
+                value={product.category_id}
                 defaultValue='1'>
                 <optgroup label='Category...'>
                   <option value='1'>T-Shirts</option>
@@ -312,6 +327,7 @@ export default function SellingProduct(props) {
             <div className={(styles.form, styles.formcontainer_description)}>
               <img src={formattext} alt='' />
               <textarea
+                value={product.description}
                 className={styles.content_description}
                 onChange={(e) => {
                   setProduct({ ...product, description: e.target.value });

@@ -70,6 +70,7 @@
   border-radius: calc((4 / 1440) * 100vw);
   padding-left: calc((11 / 1440) * 100vw);
   font-size: 16px;
+  outline: none;
 }
 .radioselect {
   height: calc((48 / 1440) * 100vw);
@@ -153,6 +154,9 @@
   padding-bottom: 0;
   font-size: 16px;
   padding-left: calc((11 / 1440) * 100vw);
+  outline: none;
+  border: none;
+  border-top: 1px solid #d4d4d4;
 }
 .btnsell {
   background: #db3022;
@@ -164,6 +168,7 @@
   color: #ffffff;
   align-self: flex-end;
   font-size: 16px;
+  outline: none;
 }
 .hiddeninput {
   visibility: hidden;
