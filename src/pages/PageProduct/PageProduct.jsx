@@ -17,6 +17,34 @@ import { isEmpty } from "underscore";
 import { API_URL, WEB_URL } from "../../utils/environment";
 import Loader from "../../components/Loader/Loader";
 import NotFound from "../../components/NotFound/NotFound";
+import star from "../../assets/img/Star.png";
+import Img from "../../components/ImgWithContainer/ImgWithContainer";
+import text from "../../assets/text.module.css";
+
+const Rating = (props) => {
+	const _rate = [
+		...Array(
+			props.rating ? props.rating : Math.round(Math.random() * 4) + 1
+		).keys(),
+	];
+	return (
+		<div className={styles.ratingContainer}>
+			{_rate.map((item, index) => {
+				return (
+					<Img
+						key={index}
+						source={star}
+						containerStyle={styles.star}
+						imgStyle={styles.starImg}
+					/>
+				);
+			})}
+			<p className={classname(text.helperText, styles.ratingText)}>
+				({Math.round(Math.random() * 150)})
+			</p>
+		</div>
+	);
+};
 
 const PageProduct = (props) => {
 	const [qty, setQty] = useState(1);
@@ -46,7 +74,6 @@ const PageProduct = (props) => {
 		} catch {
 			document.title = "404 Not Found | Blanja";
 		}
-
 	}, [stateProductDetail]);
 
 	React.useEffect(() => {
@@ -59,10 +86,6 @@ const PageProduct = (props) => {
 		props.history.push(`/product/detail/${id}`);
 	};
 
-	const index = stateCart.findIndex((item) => {
-		return item.id === stateProductDetail.id;
-	});
-
 	const joinedAdrress = `${stateAuth.address}, ${stateAuth.city_of_subdistrict}, ${stateAuth.postal_code}, ${stateAuth.recipient_telp_number}`;
 
 	const kirim = () => {
@@ -71,9 +94,7 @@ const PageProduct = (props) => {
 			id: stateProductDetail.id,
 			images: stateProductDetail.images[0],
 			name: stateProductDetail.name,
-			price: Number(
-				stateProductDetail.price
-			),
+			price: Number(stateProductDetail.price),
 			qty: qty,
 			seller_id: stateProductDetail.seller_id,
 			seller_name: stateProductDetail.seller_name,
@@ -87,8 +108,11 @@ const PageProduct = (props) => {
 		return <Loader />;
 	} else {
 		if (isEmpty(stateProductDetail)) {
-			return <NotFound />
+			return <NotFound />;
 		} else {
+			const index = stateCart.findIndex((item) => {
+				return item.id === stateProductDetail.id;
+			});
 			return (
 				<div className={classname(styles.body)} ref={divRef}>
 					<div className={classname(styles.topContainer)}>
@@ -121,22 +145,22 @@ const PageProduct = (props) => {
 								>
 									{stateProductDetail.images !== undefined
 										? stateProductDetail.images.map(
-											(image, index) => {
-												return (
-													<img
-														key={index}
-														alt=""
-														className={classname(
-															styles.exampleImg
-														)}
-														src={`${API_URL}${image}`}
-														onClick={() => {
-															setImgId(index);
-														}}
-													/>
-												);
-											}
-										)
+												(image, index) => {
+													return (
+														<img
+															key={index}
+															alt=""
+															className={classname(
+																styles.exampleImg
+															)}
+															src={`${API_URL}${image}`}
+															onClick={() => {
+																setImgId(index);
+															}}
+														/>
+													);
+												}
+										  )
 										: null}
 								</div>
 							</div>
@@ -154,7 +178,8 @@ const PageProduct = (props) => {
 							>
 								{stateProductDetail.brand}
 							</p>
-							<p style={{ marginTop: 15.29 }}>[rating]</p>
+							{/* <p style={{ marginTop: 15.29 }}>[rating]</p> */}
+							<Rating />
 							<p
 								style={{
 									fontWeight: 500,
@@ -163,7 +188,7 @@ const PageProduct = (props) => {
 								}}
 							>
 								Price
-						</p>
+							</p>
 							<p
 								style={{
 									fontWeight: "bold",
@@ -172,9 +197,9 @@ const PageProduct = (props) => {
 								}}
 							>
 								Rp
-							{Number(stateProductDetail.price).toLocaleString(
-								"id-ID"
-							)}
+								{Number(
+									stateProductDetail.price
+								).toLocaleString("id-ID")}
 							</p>
 							<p
 								style={{
@@ -184,7 +209,7 @@ const PageProduct = (props) => {
 								}}
 							>
 								color
-						</p>
+							</p>
 							<div className={classname(styles.colorContainer)}>
 								<button
 									className={classname(styles.colorBtn)}
@@ -208,19 +233,26 @@ const PageProduct = (props) => {
 								<div>
 									<p className={classname(styles.sizeQtyTxt)}>
 										size
-								</p>
+									</p>
 								</div>
 								<div>
 									<p className={classname(styles.sizeQtyTxt)}>
 										quantity
-								</p>
+									</p>
 								</div>
 							</div>
 							<div className={classname(styles.sizeQtyActCont)}>
-								<button className={classname(styles.sizeQtyBtn)}>
-									<p style={{ fontSize: 50, marginTop: -20.5 }}>
+								<button
+									className={classname(styles.sizeQtyBtn)}
+								>
+									<p
+										style={{
+											fontSize: 50,
+											marginTop: -20.5,
+										}}
+									>
 										-
-								</p>
+									</p>
 								</button>
 								<p
 									style={{
@@ -230,15 +262,20 @@ const PageProduct = (props) => {
 									}}
 								>
 									28
-							</p>
+								</p>
 
 								<button
 									className={classname(styles.sizeQtyBtn)}
 									style={{ marginLeft: 10 }}
 								>
-									<p style={{ fontSize: 30, marginTop: -3.5 }}>
+									<p
+										style={{
+											fontSize: 30,
+											marginTop: -3.5,
+										}}
+									>
 										+
-								</p>
+									</p>
 								</button>
 								<button
 									className={classname(styles.sizeQtyBtn)}
@@ -251,9 +288,14 @@ const PageProduct = (props) => {
 										}
 									}}
 								>
-									<p style={{ fontSize: 50, marginTop: -20.5 }}>
+									<p
+										style={{
+											fontSize: 50,
+											marginTop: -20.5,
+										}}
+									>
 										-
-								</p>
+									</p>
 								</button>
 								<p
 									style={{
@@ -272,12 +314,19 @@ const PageProduct = (props) => {
 										setQty(qty + 1);
 									}}
 								>
-									<p style={{ fontSize: 30, marginTop: -3.5 }}>
+									<p
+										style={{
+											fontSize: 30,
+											marginTop: -3.5,
+										}}
+									>
 										+
-								</p>
+									</p>
 								</button>
 							</div>
-							<div className={classname(styles.actionBtnContainer)}>
+							<div
+								className={classname(styles.actionBtnContainer)}
+							>
 								<button
 									className={classname(styles.chatAddBtn)}
 									onClick={() => {
@@ -287,7 +336,7 @@ const PageProduct = (props) => {
 									}}
 								>
 									chat
-							</button>
+								</button>
 								{index >= 0 ? (
 									<button
 										style={{
@@ -299,50 +348,58 @@ const PageProduct = (props) => {
 										item already in bag
 									</button>
 								) : (
-										<button
-											className={classname(styles.chatAddBtn)}
-											onClick={() =>
-												dispatch(
-													addToCart({
-														brand: stateProductDetail.brand,
-														id: stateProductDetail.id,
-														images:
-															stateProductDetail
-																.images[0],
-														name: stateProductDetail.name,
-														price: Number(
-															stateProductDetail.price
-														),
-														qty: qty,
-														seller_id:
-															stateProductDetail.seller_id,
-														seller_name:
-															stateProductDetail.seller_name,
-														selected: false,
-													})
-												)
-											}
-										>
-											add bag
-										</button>
-									)}
+									<button
+										className={classname(styles.chatAddBtn)}
+										onClick={() =>
+											dispatch(
+												addToCart({
+													brand:
+														stateProductDetail.brand,
+													id: stateProductDetail.id,
+													images:
+														stateProductDetail
+															.images[0],
+													name:
+														stateProductDetail.name,
+													price: Number(
+														stateProductDetail.price
+													),
+													qty: qty,
+													seller_id:
+														stateProductDetail.seller_id,
+													seller_name:
+														stateProductDetail.seller_name,
+													selected: false,
+												})
+											)
+										}
+									>
+										add bag
+									</button>
+								)}
 
 								<button
 									className={classname(styles.buyBtn)}
 									onClick={kirim}
 								>
 									buy now
-							</button>
+								</button>
 							</div>
 						</div>
 					</div>
 					<div style={{ marginTop: 38 }}>
 						<p style={{ fontSize: 28, fontWeight: 600 }}>
 							Product Information
-					</p>
-						<p style={{ marginTop: 40, fontSize: 20, fontWeight: 600 }}>
+						</p>
+						<p
+							style={{
+								marginTop: 40,
+								fontSize: 20,
+								fontWeight: 600,
+							}}
+						>
 							Condition
-					</p>
+						</p>
 						<p
 							style={{
 								marginTop: 10,
@@ -353,15 +410,27 @@ const PageProduct = (props) => {
 						>
 							{stateProductDetail.status}
 						</p>
-						<p style={{ marginTop: 40, fontSize: 20, fontWeight: 600 }}>
+						<p
+							style={{
+								marginTop: 40,
+								fontSize: 20,
+								fontWeight: 600,
+							}}
+						>
 							Description
-					</p>
+						</p>
 						<p style={{ marginTop: 10, fontSize: 14 }}>
 							{stateProductDetail.description}
 						</p>
-						<p style={{ fontSize: 28, fontWeight: 600, marginTop: 50 }}>
+						<p
+							style={{
+								fontSize: 28,
+								fontWeight: 600,
+								marginTop: 50,
+							}}
+						>
 							Product review
-					</p>
+						</p>
 					</div>
 					<div
 						style={{
@@ -381,7 +450,7 @@ const PageProduct = (props) => {
 							}}
 						>
 							/10
-					</p>
+						</p>
 
 						<div
 							style={{
@@ -390,7 +459,12 @@ const PageProduct = (props) => {
 								marginLeft: 60.64,
 							}}
 						>
-							<div style={{ display: "flex", flexDirection: "row" }}>
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "row",
+								}}
+							>
 								<img
 									alt=""
 									style={{
@@ -402,7 +476,12 @@ const PageProduct = (props) => {
 								/>
 								<p style={{ marginLeft: 10.64 }}>5</p>
 							</div>
-							<div style={{ display: "flex", flexDirection: "row" }}>
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "row",
+								}}
+							>
 								<img
 									alt=""
 									style={{
@@ -414,7 +493,12 @@ const PageProduct = (props) => {
 								/>
 								<p style={{ marginLeft: 10.64 }}>4</p>
 							</div>
-							<div style={{ display: "flex", flexDirection: "row" }}>
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "row",
+								}}
+							>
 								<img
 									alt=""
 									style={{
@@ -426,7 +510,12 @@ const PageProduct = (props) => {
 								/>
 								<p style={{ marginLeft: 10.64 }}>3</p>
 							</div>
-							<div style={{ display: "flex", flexDirection: "row" }}>
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "row",
+								}}
+							>
 								<img
 									alt=""
 									style={{
@@ -438,7 +527,12 @@ const PageProduct = (props) => {
 								/>
 								<p style={{ marginLeft: 10.64 }}>2</p>
 							</div>
-							<div style={{ display: "flex", flexDirection: "row" }}>
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "row",
+								}}
+							>
 								<img
 									alt=""
 									style={{
@@ -509,10 +603,16 @@ const PageProduct = (props) => {
 					<div style={{ marginTop: 50 }}>
 						<p style={{ fontSize: 34, fontWeight: 700 }}>
 							You can also like this
-					</p>
-						<p style={{ fontSize: 12 }}>You've never seen it before</p>
+						</p>
+						<p style={{ fontSize: 12 }}>
+							You've never seen it before
+						</p>
 						<div
-							className={classname("row", "no-gutters", styles.mt25)}
+							className={classname(
+								"row",
+								"no-gutters",
+								styles.mt25
+							)}
 						>
 							{stateProduct.map((item) => {
 								return (

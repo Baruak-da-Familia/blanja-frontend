@@ -7,12 +7,15 @@ import text from "../../assets/text.module.css";
 import { newData, categoryData } from "../../utils/dummydata";
 import { fetchAllProduct } from "../../redux/actions/product";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "../../components/Loader/Loader";
 
 const Search = (props) => {
 	const currentPath = props.location.pathname;
 	const nameQuery = props.location.search.split("=");
 	const dispatch = useDispatch();
-	const stateProduct = useSelector((state) => state.product.product);
+	const { product: stateProduct, isPending } = useSelector(
+		(state) => state.product
+	);
 	const onClickHandler = (id) => {
 		props.history.push(`/product/detail/${id}`);
 	};
@@ -23,6 +26,10 @@ const Search = (props) => {
 	React.useEffect(() => {
 		if (nameQuery) dispatch(fetchAllProduct(null, nameQuery[1]));
 	}, [dispatch, nameQuery]);
+
+	if (isPending) {
+		return <Loader />;
+	}
 
 	return (
 		<div className={styles.category}>
