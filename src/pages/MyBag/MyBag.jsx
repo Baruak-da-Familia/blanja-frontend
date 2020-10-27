@@ -14,6 +14,7 @@ import {
 	decreaseQuantity,
 	addToCheckout,
 	clearCart,
+	clearCheckout,
 } from "../../redux/actions/product";
 import { API_URL } from "../../utils/environment";
 
@@ -106,6 +107,7 @@ const MyBag = () => {
 					};
 				}),
 		};
+		console.log(sendData);
 		dispatch(addToCheckout({ sendData }));
 	};
 
@@ -113,6 +115,7 @@ const MyBag = () => {
 		e.preventDefault()
 		if (window.confirm("Are you sure to delete the bag?")) {
 			dispatch(clearCart());
+			dispatch(clearCheckout());
 		} else {
 			return;
 		}
