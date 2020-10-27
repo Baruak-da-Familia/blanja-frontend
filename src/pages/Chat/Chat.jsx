@@ -393,6 +393,10 @@ const Chat = (props) => {
 		);
 	};
 
+	if (fetchingChat) {
+		return <Loader />;
+	}
+
 	return (
 		<>
 			<div className={classname(styles.chat)}>
@@ -473,11 +477,7 @@ const Chat = (props) => {
 								className={classname(styles.chatroom)}
 							>
 								{!isEmpty(messages[idx].messages) ? (
-									fetchingChat ? (
-										<Loader />
-									) : (
-										renderChat(messages[idx], user.id)
-									)
+									renderChat(messages[idx], user.id)
 								) : (
 									<h1
 										className={classname(

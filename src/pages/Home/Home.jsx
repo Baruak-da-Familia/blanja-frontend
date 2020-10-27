@@ -8,10 +8,13 @@ import text from "../../assets/text.module.css";
 import { previewData, categoryData, newData } from "../../utils/dummydata";
 import { fetchAllProduct } from "../../redux/actions/product";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "../../components/Loader/Loader";
 
 const Home = (props) => {
 	const dispatch = useDispatch();
-	const stateProduct = useSelector((state) => state.product.product);
+	const { product: stateProduct, isPending } = useSelector(
+		(state) => state.product
+	);
 
 	const onClickHandler = (id) => {
 		props.history.push(`/product/detail/${id}`);
@@ -21,6 +24,10 @@ const Home = (props) => {
 		document.title = "Mau belanja? ya di Blanja! | Blanja";
 		dispatch(fetchAllProduct());
 	}, [dispatch]);
+
+	if (isPending) {
+		return <Loader />;
+	}
 
 	return (
 		<main className={styles.home}>
