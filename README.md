@@ -50,10 +50,13 @@ REACT_APP_SOCKET_URL = "http://host_backend:port_socket";
 REACT_APP_WEB_URL = "http://host_frontend:port_frontend";
 ```
 
-Example : http://host_backend:port_backend is http://localhost:8000
-http://host_backend:port_socket is http://localhost:8001
-http://host_frontend:port_frontend is http://localhost:3000 so, you can write in
-.env file like this :
+Example :
+
+- http://host_backend:port_backend is http://localhost:8000
+- http://host_backend:port_socket is http://localhost:8001
+- http://host_frontend:port_frontend is http://localhost:3000
+
+so, you can write in .env file like this :
 
 ```bash
 REACT_APP_API_URL = "http://localhost:8000";
@@ -61,9 +64,9 @@ REACT_APP_SOCKET_URL = "http://localhost:8001";
 REACT_APP_WEB_URL = "http://localhost:3000";
 ```
 
-4. Before run this, you must installation backend and then run backend
-5. Type `npm start` in terminal for running this project.
-6. If you want to build, type `npm run build`.
+5. Before run this, you must installation backend and then run backend
+6. Type `npm start` in terminal for running this project.
+7. If you want to build, type `npm run build`.
 
 ## Screenshoots
 
