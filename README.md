@@ -88,6 +88,6 @@ This is Blanja Web build version, let's try it.
 
 RESTful API for this web application, clone this for development Blanja Web.
 
-<a href="hhttps://github.com/Baruak-da-Familia/blanja-api.git">
+<a href="https://github.com/Baruak-da-Familia/blanja-api.git">
 <img src="https://img.shields.io/badge/Blanja%20Backend-Repository-blue.svg?style=popout&logo=github"/>
 </a>
