@@ -45,9 +45,9 @@ sellers.
 4. Create file **_.env_** in root directory with the following contents :
 
 ```bash
-REACT_APP_API_URL = "http://host_backend:port_backend";
-REACT_APP_SOCKET_URL = "http://host_backend:port_socket";
-REACT_APP_WEB_URL = "http://host_frontend:port_frontend";
+REACT_APP_API_URL = "http://host_backend:port_backend"
+REACT_APP_SOCKET_URL = "http://host_backend:port_socket"
+REACT_APP_WEB_URL = "http://host_frontend:port_frontend"
 ```
 
 Example :
@@ -59,9 +59,9 @@ Example :
 so, you can write in .env file like this :
 
 ```bash
-REACT_APP_API_URL = "http://localhost:8000";
-REACT_APP_SOCKET_URL = "http://localhost:8001";
-REACT_APP_WEB_URL = "http://localhost:3000";
+REACT_APP_API_URL = "http://localhost:8000"
+REACT_APP_SOCKET_URL = "http://localhost:8001"
+REACT_APP_WEB_URL = "http://localhost:3000"
 ```
 
 5. Before run this, you must installation backend and then run backend
