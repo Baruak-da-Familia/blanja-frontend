@@ -24,7 +24,7 @@ sellers.
 
 - Order product
 - History transaction
-- Add product (seller only)
+- Add product (sellers only)
 - Chat
 - Edit profile
 - Reset Password
