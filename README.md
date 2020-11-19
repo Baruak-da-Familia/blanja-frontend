@@ -80,7 +80,7 @@ REACT_APP_WEB_URL = "http://localhost:3000"
 
 This is Blanja Web build version, let's try it.
 
-<a href="http://54.152.234.61:3000">
+<a href="http://54.175.146.137:3000/">
   <img src="https://img.shields.io/badge/Blanja%20Web-Link%20Demo-blue.svg?style=popout&logo=firefox"/>
 </a>
 
